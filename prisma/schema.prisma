@@ -27,11 +27,11 @@ model Thread {
   id   String @id @default(uuid()) // Assuming MongoDB uses "_id" for the primary ke
   text String
 
-  userId User   @relation(fields: [author], references: [id])
-  author String // relation scalar field (used in the `@relation` attribute above)
+  author User   @relation(fields: [authorId], references: [id])
+  authorId String // relation scalar field (used in the `@relation` attribute above)
 
-  communityId Community? @relation(fields: [community], references: [id])
-  community   String?
+  community Community? @relation(fields: [communityId], references: [id])
+  communityId   String?
 
   children   Thread  @relation(fields: [id], references: [id], name: "ParentOf", map: "ParentOf")
   childrenId Thread? @relation("ParentOf")

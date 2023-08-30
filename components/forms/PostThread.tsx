@@ -52,7 +52,7 @@ export default function PostThread({ userId }: { userId: string }) {
                 <Textarea
                   rows={7}
                   placeholder="Enter your bio"
-                  className="account-form_input no-focus"
+                  className="account-form_input no-focus text-white"
                   {...field}
                 />
               </FormControl>
