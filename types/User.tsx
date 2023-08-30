@@ -1,5 +1,5 @@
 export interface UserData {
-  id: string | null | undefined;
+  id: string | undefined;
   objectId: string | null | undefined;
   username: string;
   name: string;

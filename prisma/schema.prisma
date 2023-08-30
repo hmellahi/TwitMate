@@ -7,5 +7,49 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("POSTGRES_URL") // uses connection pooling
+  // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection TODO
+}
+
+model User {
+  id                String      @id @default(uuid()) // Assuming MongoDB uses "_id" for the primary key
+  username          String      @unique
+  name              String
+  image             String?
+  bio               String?
+  threads           Thread[]
+  communities       Community[] @relation("MemberOf")
+  CreatedCommunites Community[] @relation("CreatedCommunity")
+  onboarded         Boolean     @default(false)
+}
+
+model Thread {
+  id   String @id @default(uuid()) // Assuming MongoDB uses "_id" for the primary ke
+  text String
+
+  userId User   @relation(fields: [author], references: [id])
+  author String // relation scalar field (used in the `@relation` attribute above)
+
+  communityId Community? @relation(fields: [community], references: [id])
+  community   String?
+
+  children   Thread  @relation(fields: [id], references: [id], name: "ParentOf", map: "ParentOf")
+  childrenId Thread? @relation("ParentOf")
+
+  parentThread Thread   @relation(fields: [id], references: [id], name: "ChildrenOf")
+  parentId     Thread[] @relation("ChildrenOf")
+
+  createdAt DateTime @default(now())
+}
+
+model Community {
+  id        String   @id @default(uuid()) // Assuming MongoDB uses "_id" for the primary key
+  username  String   @unique
+  name      String
+  image     String?
+  bio       String?
+  Creator   User     @relation(fields: [createdBy], references: [id], name: "CreatedCommunity")
+  createdBy String
+  threads   Thread[]
+  members   User[]   @relation("MemberOf")
 }

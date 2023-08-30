@@ -21,6 +21,8 @@ import { UserData } from "@/types/User";
 import { isBigInt64Array } from "util/types";
 import { isBase64Image } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadThing";
+import { updateUser } from "@/lib/actions/user.actions";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function AccountProfile({
   user,
@@ -31,6 +33,8 @@ export default function AccountProfile({
 }) {
   const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
   const { startUpload } = useUploadThing("media");
+  const router = useRouter();
+  const pathname = usePathname();
 
   const form = useForm({
     resolver: zodResolver(UserValidation),
@@ -51,7 +55,7 @@ export default function AccountProfile({
 
     const hasImageChanged = isBase64Image(blob);
 
-    if (profilePhoto) {
+    if (hasImageChanged && profilePhoto) {
       const imgRes = await startUpload([profilePhoto]);
 
       if (imgRes) {
@@ -60,7 +64,20 @@ export default function AccountProfile({
     }
 
     console.log(values);
-    // TODO: update user profile
+    // update user profile
+    // const { objectId, ...updatedUser } = values;
+    await updateUser({
+      id: user.id,
+      image: values.profile_photo,
+      ...values,
+    });
+
+    if (pathname === "/profile/edit") {
+      router.back();
+    } else {
+      // First Time
+      router.push("/");
+    }
   }
 
   function updateProfilePhoto(

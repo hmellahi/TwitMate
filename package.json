@@ -12,12 +12,14 @@
     "@clerk/nextjs": "^4.23.2",
     "@clerk/themes": "^1.7.5",
     "@hookform/resolvers": "^3.3.1",
+    "@prisma/client": "^5.2.0",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@types/node": "20.5.6",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "@uploadthing/react": "^5.3.0",
+    "@vercel/postgres": "^0.4.1",
     "autoprefixer": "10.4.15",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
@@ -35,5 +37,8 @@
     "typescript": "5.2.2",
     "uploadthing": "^5.3.3",
     "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "prisma": "^5.2.0"
   }
 }
