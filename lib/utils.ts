@@ -42,3 +42,13 @@ export function formatThreadCount(count: number): string {
   }
 }
 
+export const catchAsync = async (promise: Function) => {
+  return async () => {
+    try {
+      await promise();
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  };
+};

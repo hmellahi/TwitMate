@@ -33,7 +33,6 @@ export default function PostThread({ userId }: { userId: string }) {
     },
   });
 
-  // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof CreateThreadValidation>) {
     await createThread({ userId, ...values });
     router.push("/");

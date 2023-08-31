@@ -1,7 +1,8 @@
 "use server";
 
-import { Prisma, User } from "@prisma/client";
+import { Prisma, Thread, User } from "@prisma/client";
 import { prisma } from "../prisma";
+import { catchAsync } from "../utils";
 
 interface CreateThread {
   text: string;
@@ -24,17 +25,27 @@ export async function createThread({ userId, community, text }: CreateThread) {
     return updateThread;
   } catch (error: any) {
     console.log(error);
-    throw error
+    throw error;
   }
 }
 
-export async function fetchThread(threadId: string) {
+export async function fetchThread({
+  authorId,
+  threadId,
+}: {
+  authorId: string;
+  threadId: string;
+}) {
   try {
     return await prisma.thread.findFirst({
-      where: { id: threadId },
+      where: { id: threadId, authorId },
+      include: {
+        author: true,
+      },
     });
   } catch (error: any) {
     console.log(error);
+    throw error;
   }
 }
 
@@ -44,8 +55,8 @@ export async function fetchThreads({
   limit = 20,
 }: {
   userId: string;
-  offset: number;
-  limit: number;
+  offset?: number;
+  limit?: number;
 }) {
   const query: Prisma.categoriesFindManyArgs = {
     where: { NOT: { id: "4" } },
@@ -70,7 +81,18 @@ export async function fetchThreads({
     return { threads, count, isLastPage };
   } catch (error: any) {
     console.log(error);
-    throw error
-    // throw new Error("wtf");
+    throw error;
   }
 }
+
+export const createComment = async ({
+  userId,
+  parentThreadId,
+  thread,
+}: {
+  thread: Thread;
+  userId: String;
+  parentThreadId: String;
+}) => {
+  let commentThread = await createThread(thread);
+};
