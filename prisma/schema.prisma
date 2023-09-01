@@ -21,6 +21,7 @@ model User {
   communities       Community[] @relation("MemberOf")
   CreatedCommunites Community[] @relation("CreatedCommunity")
   onboarded         Boolean     @default(false)
+  createdAt DateTime @default(now())
 }
 
 model Thread {
@@ -33,10 +34,10 @@ model Thread {
   community Community? @relation(fields: [communityId], references: [id])
   communityId   String?
 
-  children   Thread  @relation(fields: [id], references: [id], name: "ParentOf", map: "ParentOf")
-  childrenId Thread? @relation("ParentOf")
+  // children   Thread?  @relation(fields: [id], references: [id], name: "ParentOf", map: "ParentOf")
+  // childrenId Thread? @relation("ParentOf")
 
-  parentThread Thread   @relation(fields: [id], references: [id], name: "ChildrenOf")
+  parent Thread?   @relation(fields: [id], references: [id], name: "ChildrenOf")
   parentId     Thread? @relation("ChildrenOf")
 
   createdAt DateTime @default(now())

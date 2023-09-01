@@ -94,5 +94,43 @@ export const createComment = async ({
   userId: String;
   parentThreadId: String;
 }) => {
-  let commentThread = await createThread(thread);
+  // let commentThread = await createThread(thread);
 };
+
+export async function fetchUserThreads({
+  userId,
+  offset = 0,
+  limit = 20,
+}: {
+  userId: string;
+  offset?: number;v  
+  limit?: number;
+}) {
+  console.log({ userId });
+  const query: Prisma.categoriesFindManyArgs = {
+    // where: { id: userId },
+  };
+  try {
+    let [threads, count] = await prisma.$transaction([
+      prisma.thread.findMany({
+        where: query.where,
+        skip: offset,
+        take: limit,
+        orderBy: {
+          createdAt: "desc",
+        },
+        include: {
+          author: true,
+        },
+      }),
+      prisma.thread.count({ where: query.where }),
+    ]);
+
+    console.log({ threads, count });
+    const isLastPage = offset + limit >= count;
+    return { threads, count, isLastPage };
+  } catch (error: any) {
+    console.log(error);
+    throw error;
+  }
+}

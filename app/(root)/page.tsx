@@ -11,11 +11,8 @@ export default async function Home() {
     userId: user.id,
   });
 
-  console.log({ threads });
-
   return (
     <div className="text-white flex gap-4 flex-col">
-      {/* Conditional rendering based on threads */}
       {threads.length < 1 ? (
         <div>no result</div>
       ) : (

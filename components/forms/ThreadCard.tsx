@@ -12,7 +12,7 @@ export default function ThreadCard({
   user: any;
 }) {
   const { text, author } = thread;
-  console.log(text);
+  console.log({ author });
 
   const actions = [
     { icon: "heart-gray", action: null },
@@ -22,8 +22,8 @@ export default function ThreadCard({
   ];
 
   return (
-    <div className="bg-dark-2 text-white">
-      <div className="p-7 rounded-md flex gap-5">
+    <div className="bg-dark-2 text-white rounded-lg">
+      <div className="p-7 flex gap-5">
         <div className="flex flex-col items-center">
           <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
             <Image
@@ -36,7 +36,11 @@ export default function ThreadCard({
           <div className="thread-card_bar" />
         </div>
         <div>
-          <h3 className="mb-3 text-xl">{user?.username}</h3>
+          <h3 className="mb-3 text-xl">
+            <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
+              {user?.username}
+            </Link>
+          </h3>
           <p>{text}</p>
           <div className="flex gap-2 mt-4 text-white">
             {actions.map((action, index) => (

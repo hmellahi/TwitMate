@@ -33,7 +33,6 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: Request) {
   try {
-    console.log("wtf");
     const json = await request.json();
 
     const feedback = await prisma.feedback.create({

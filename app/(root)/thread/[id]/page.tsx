@@ -23,7 +23,6 @@ export default async function page({ params }: { params: { id: string } }) {
     return null;
   }
 
-  console.log({ thread });
   return (
     <div>
       <ThreadCard thread={thread} user={userInfo} />

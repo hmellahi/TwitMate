@@ -9,7 +9,9 @@ export function SidebarLink({ sidebarLink }) {
   const router = useRouter();
   // const isActive =
   // implement isActiveRoute
-  const isActive = pathname === sidebarLink.route;
+  const isActive =
+    pathname === sidebarLink.route ||
+    (pathname.includes(sidebarLink.route) && sidebarLink.route != "/");
 
   return (
     <Link

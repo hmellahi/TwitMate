@@ -9,7 +9,6 @@ export default async function page() {
   const user = await currentUser();
   if (!user) return null;
   const userInfo = await fetchUser(user.id);
-  console.log(userInfo);
 
   return (
     <div>

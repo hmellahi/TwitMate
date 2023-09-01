@@ -48,3 +48,41 @@ export async function fetchUser(userId: string) {
     console.log(error);
   }
 }
+
+export async function fetchUsers({
+  userId,
+  searchKeyword = "",
+}: {
+  userId: string;
+  searchKeyword?: string;
+}) {
+  console.log({ searchKeyword });
+  try {
+    let users = await prisma.user.findMany({
+      where: {
+        NOT: { id: userId },
+        OR: [
+          {
+            username: {
+              contains: searchKeyword,
+              mode: "insensitive",
+            },
+          },
+          {
+            name: {
+              contains: searchKeyword,
+              mode: "insensitive",
+            },
+          },
+        ],
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    console.log(users);
+    return users;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
