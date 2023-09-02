@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import AppHeader from "@/components/shared/AppHeader";
 import LeftSidebar from "@/components/shared/LeftSidebar";
-import RightSidebar from "@/components/shared/RightSidebar";
+import RightSidebar from "@/components/shared/RightSidebar/RightSidebar";
 import BottomBar from "@/components/shared/BottomBar";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";

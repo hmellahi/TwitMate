@@ -25,9 +25,7 @@ export default function UserCard({ user }: { user: User }) {
         </div>
       </div>
       <Link href={`/profile/${user.id}`}>
-        <Button className="bg-primary-500 rounded-md w-dfull">
-          {/* <Link href="/">View</Link> */}View
-        </Button>
+        <Button className="bg-primary-500 rounded-md w-dfull">View</Button>
       </Link>
     </div>
   );

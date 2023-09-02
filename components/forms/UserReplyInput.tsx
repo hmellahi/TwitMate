@@ -19,9 +19,6 @@ export default function UserReplyInput({
   user: User;
   parentThreadId: string;
 }) {
-  // const router = useRouter();
-  // const pathname = usePathname();
-
   const form = useForm({
     resolver: zodResolver(CreateThreadValidation),
     defaultValues: {
@@ -46,7 +43,7 @@ export default function UserReplyInput({
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-8 p-4 flex justify-between w-full mt-9 items-center"
       >
-        <div className="relative !h-14 !w-14 rounded-full">
+        <div className="relative h-14 w-14">
           <Image
             src={userImage}
             fill

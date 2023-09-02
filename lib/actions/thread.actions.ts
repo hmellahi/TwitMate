@@ -47,9 +47,12 @@ export async function fetchThread({
       where: { id: threadId, authorId },
       include: {
         author: true,
+        likes: true,
         childrens: {
           include: {
             author: true,
+            likes: true,
+            childrens: true,
           },
         },
       },
@@ -84,6 +87,7 @@ export async function fetchThreads({
         include: {
           author: true,
           likes: true,
+          childrens: true,
         },
       }),
       prisma.thread.count({ where: query.where }),
@@ -118,7 +122,7 @@ export async function fetchUserThreads({
   limit?: number;
 }) {
   const query: Prisma.ThreadFindManyArgs = {
-    where: { id: userId },
+    // where: { id: userId },
   };
   try {
     let [threads, count] = await prisma.$transaction([
@@ -131,6 +135,8 @@ export async function fetchUserThreads({
         },
         include: {
           author: true,
+          likes: true,
+          childrens: true,
         },
       }),
       prisma.thread.count({ where: query.where }),
@@ -157,6 +163,18 @@ export async function likeThread({
   };
 
   try {
+    const existingLike = await prisma.threadLikes.findFirst({
+      where: {
+        threadId,
+        userId,
+      },
+    });
+
+    if (existingLike) {
+      // A like with the same threadId and userId already exists, so do nothing.
+      return null;
+    }
+
     return await prisma.threadLikes.create({
       data: newLike,
     });
@@ -166,19 +184,11 @@ export async function likeThread({
   }
 }
 
-export async function unLikeThread({
-  threadId,
-  userId,
-}: {
-  threadId: string;
-  userId: string;
-}) {
+export async function unLikeThread({ likeId }: { likeId: string }) {
   try {
     return await prisma.threadLikes.delete({
       where: {
-        // threadId,
-        // userId,
-        id: "wtf",
+        id: likeId,
       },
     });
   } catch (e) {

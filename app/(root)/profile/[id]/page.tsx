@@ -65,9 +65,7 @@ export default async function profile({ params }: { params: { id: string } }) {
                 <div className="flex gap-4 flex-col">
                   {threads.map((thread: Thread, index: number) => {
                     return (
-                      <Link href={`/thread/${thread.id}`} key={index}>
-                        <ThreadCard key={index} thread={thread} user={user} />
-                      </Link>
+                      <ThreadCard key={index} thread={thread} user={user} />
                     );
                   })}
                 </div>

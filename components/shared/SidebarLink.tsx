@@ -16,7 +16,9 @@ export function SidebarLink({ sidebarLink }: { sidebarLink: sidebarLink }) {
   return (
     <Link
       href={sidebarLink.route}
-      className={`leftsidebar_link ${isActive && "bg-primary-500"}`}
+      className={`leftsidebar_link dlg:flex jdustify-center ${
+        isActive && "bg-primary-500"
+      }`}
     >
       <Image src={sidebarLink.imgURL} alt="img" width="20" height="20"></Image>
       <p className="max-lg:hidden">{sidebarLink.label}</p>

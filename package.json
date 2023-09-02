@@ -42,7 +42,6 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
-    "babel-plugin-inline-react-svg": "^2.0.2",
     "prisma": "^5.2.0"
   }
 }

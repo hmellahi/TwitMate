@@ -1,8 +1,7 @@
 import ThreadCard from "@/components/forms/ThreadCard";
 import { fetchThreads } from "@/lib/actions/thread.actions";
-import { UserButton, currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { Thread } from "@prisma/client";
-import Link from "next/link";
 
 export default async function Home() {
   const user = await currentUser();
@@ -17,11 +16,7 @@ export default async function Home() {
         <div>no result</div>
       ) : (
         threads.map((thread: Thread, index: number) => {
-          return (
-            <Link href={`/thread/${thread.id}`}>
-              <ThreadCard key={index} thread={thread} user={user} />
-            </Link>
-          );
+          return <ThreadCard key={index} thread={thread} user={user} />;
         })
       )}
     </div>
