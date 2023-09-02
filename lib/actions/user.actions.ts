@@ -21,7 +21,6 @@ export async function updateUser(newUserData: UpdateUser) {
     onboarded: true,
     id,
   };
-  console.log({ newUserData });
 
   try {
     const updateUser = await prisma.user.upsert({
@@ -56,7 +55,6 @@ export async function fetchUsers({
   userId: string;
   searchKeyword?: string;
 }) {
-  console.log({ searchKeyword });
   try {
     let users = await prisma.user.findMany({
       where: {
@@ -80,7 +78,6 @@ export async function fetchUsers({
         createdAt: "desc",
       },
     });
-    console.log(users);
     return users;
   } catch (error: any) {
     console.log(error);

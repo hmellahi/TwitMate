@@ -18,7 +18,7 @@ export default async function Home() {
   };
 
   return (
-    <div className="bg-dark-1 h-full">
+    <div className="h-full">
       <main className=" mx-auto px-10 bg-redd-200 max-w-3xl py-20 text-white ">
         <div className="head-text">Onboarding</div>
         <p className="mt-4 mb-10">Complete your profile to use Threads</p>

@@ -5,16 +5,24 @@ import { SidebarLink } from "./SidebarLink";
 import { SignOutButton, SignedIn } from "@clerk/nextjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { User } from "@clerk/nextjs/server";
 
-export default function LeftSidebar() {
+export default function LeftSidebar({ currentUser }: { currentUser: User }) {
   const router = useRouter();
+  if (!currentUser) {
+    return null;
+  }
 
   return (
     <div className="custom-scrollbar leftsidebar text-white">
       <div className="flex flex-col gap-4 px-5">
-        {sidebarLinks.map((sidebarLink, index) => (
-          <SidebarLink sidebarLink={sidebarLink} key={index}></SidebarLink>
-        ))}
+        {sidebarLinks.map((sidebarLink, index) => {
+          if (sidebarLink.route == "/profile")
+            sidebarLink.route += `/${currentUser.id}`;
+          return (
+            <SidebarLink sidebarLink={sidebarLink} key={index}></SidebarLink>
+          );
+        })}
       </div>
       <div>
         <SignedIn>

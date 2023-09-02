@@ -5,12 +5,10 @@ import { User, currentUser } from "@clerk/nextjs/server";
 import React, { useState } from "react";
 
 export default async function page({ searchParams: { query } }) {
-  console.log({ query });
   const searchKeyword: string = query || "";
   const user: User | null = await currentUser();
   if (!user) return null;
   const users = await fetchUsers({ userId: user.id, searchKeyword });
-  console.log({ users, searchKeyword });
 
   return (
     <div className="flex flex-col gap-9">

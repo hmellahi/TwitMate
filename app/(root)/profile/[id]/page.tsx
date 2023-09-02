@@ -31,14 +31,11 @@ export default async function profile({ params }: { params: { id: string } }) {
             <p className="text-heading3-bold font-bold capitalize">
               {user.username}
             </p>
-            {/* <h3>{user.bio}</h3> */}
             <h3 className="text-gray-1">@{user.username}</h3>
           </div>
         </div>
         <h3 className="text-body-medium mb-10">{user.bio}</h3>
 
-        {/* <TabsContent tabs={profileTabs} /> */}
-        {/* <TabsList/> */}
         <Tabs defaultValue="threads" className="w-full">
           <TabsList className="w-full flex justify-between text-center tab">
             {profileTabs.map((tab) => (
@@ -67,7 +64,7 @@ export default async function profile({ params }: { params: { id: string } }) {
                 <div className="flex gap-4 flex-col">
                   {threads.map((thread, index) => {
                     return (
-                      <Link href={`/thread/${thread.id}`}>
+                      <Link href={`/thread/${thread.id}`} key={index}>
                         <ThreadCard key={index} thread={thread} user={user} />
                       </Link>
                     );

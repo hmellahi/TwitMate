@@ -6,15 +6,22 @@ import { catchAsync } from "../utils";
 
 interface CreateThread {
   text: string;
-  community: String | undefined;
+  communityId?: String;
+  parentId?: String;
   userId: String;
 }
 
-export async function createThread({ userId, community, text }: CreateThread) {
+export async function createThread({
+  userId,
+  communityId,
+  text,
+  parentId,
+}: CreateThread) {
   const newThread = {
     authorId: userId,
-    communityId: null,
+    communityId,
     text,
+    parentId,
   };
 
   try {
@@ -41,6 +48,11 @@ export async function fetchThread({
       where: { id: threadId, authorId },
       include: {
         author: true,
+        childrens: {
+          include: {
+            author: true,
+          },
+        },
       },
     });
   } catch (error: any) {
@@ -72,11 +84,12 @@ export async function fetchThreads({
         },
         include: {
           author: true,
+          likes: true,
+          // childrens: true,
         },
       }),
       prisma.thread.count({ where: query.where }),
     ]);
-    console.log({ threads });
     const isLastPage = offset + limit >= count;
     return { threads, count, isLastPage };
   } catch (error: any) {
@@ -103,10 +116,9 @@ export async function fetchUserThreads({
   limit = 20,
 }: {
   userId: string;
-  offset?: number;v  
+  offset?: number;
   limit?: number;
 }) {
-  console.log({ userId });
   const query: Prisma.categoriesFindManyArgs = {
     // where: { id: userId },
   };
@@ -126,11 +138,52 @@ export async function fetchUserThreads({
       prisma.thread.count({ where: query.where }),
     ]);
 
-    console.log({ threads, count });
     const isLastPage = offset + limit >= count;
     return { threads, count, isLastPage };
   } catch (error: any) {
     console.log(error);
     throw error;
+  }
+}
+
+export async function likeThread({
+  threadId,
+  userId,
+}: {
+  threadId: string;
+  userId: string;
+}) {
+  let newLike = {
+    threadId,
+    userId,
+  };
+
+  try {
+    return await prisma.threadLikes.create({
+      data: newLike,
+    });
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}
+
+export async function unLikeThread({
+  threadId,
+  userId,
+}: {
+  threadId: string;
+  userId: string;
+}) {
+  try {
+    return await prisma.threadLikes.delete({
+      where: {
+        threadId,
+        userId,
+      },
+    });
+  } catch (e) {
+    console.log(e);
+    // throw e;
   }
 }

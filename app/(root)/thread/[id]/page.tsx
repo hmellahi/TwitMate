@@ -22,14 +22,19 @@ export default async function page({ params }: { params: { id: string } }) {
   if (!thread) {
     return null;
   }
+  console.log(thread);
 
   return (
     <div>
       <ThreadCard thread={thread} user={userInfo} />
-      <UserReplyInput className="mt-14" user={userInfo} />
+      <UserReplyInput
+        className="mt-14"
+        user={userInfo}
+        parentThreadId={thread.id}
+      />
       <div className="mt-8">
-        {[1, 3, 3].map((comment) => (
-          <Comment thread={thread} />
+        {thread.childrens?.map((comment: Thread) => (
+          <ThreadCard thread={comment} user={userInfo} isComment={true} />
         ))}
       </div>
     </div>
