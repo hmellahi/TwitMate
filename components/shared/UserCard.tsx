@@ -8,13 +8,17 @@ export default function UserCard({ user }: { user: User }) {
   return (
     <div className="flex justify-between text-white items-center">
       <div className="flex gap-4 items-center">
-        <Image
-          width="49"
-          height="40"
-          alt="avatar"
-          src={user.image}
-          className="cursor-pointer object-contadin rounded-full"
-        />
+        {user.image ? (
+          <Image
+            width="49"
+            height="40"
+            alt="avatar"
+            src={user.image}
+            className="cursor-pointer object-contadin rounded-full"
+          />
+        ) : (
+          <></>
+        )}
         <div>
           <p>{user.name}</p>
           <p className="text-gray-300 text-small-medium">@{user.username}</p>

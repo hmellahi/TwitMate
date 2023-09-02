@@ -1,9 +1,8 @@
 "use client";
 
-import React, { ChangeEvent, useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UserValidation } from "@/lib/validations/user";
 import { Textarea } from "@/components/ui/Textarea";
 import {
   Form,
@@ -13,17 +12,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import * as z from "zod";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { createThread } from "@/lib/actions/thread.actions";
 import { CreateThreadValidation } from "@/lib/validations/thread";
 
 export default function PostThread({ userId }: { userId: string }) {
   const router = useRouter();
-  const pathname = usePathname();
 
   const form = useForm({
     resolver: zodResolver(CreateThreadValidation),

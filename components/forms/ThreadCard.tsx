@@ -6,20 +6,21 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Heart } from "../svgs";
+import { ThreadWithDetails } from "@/types/Thread";
 
 export default function ThreadCard({
   thread,
   user,
   isComment = false,
 }: {
-  thread: Thread;
+  thread: ThreadWithDetails;
   user: any;
   isComment?: boolean;
 }) {
   const { text, author } = thread;
 
   const [isUserLikeThread, setIsUserLikeThread] = useState(
-    thread.likes ? true : false
+    thread?.likes ? true : false
   );
 
   function reactToThread() {

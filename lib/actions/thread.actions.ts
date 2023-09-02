@@ -1,8 +1,7 @@
 "use server";
 
-import { Prisma, Thread, User } from "@prisma/client";
+import { Prisma, Thread } from "@prisma/client";
 import { prisma } from "../prisma";
-import { catchAsync } from "../utils";
 
 interface CreateThread {
   text: string;
@@ -19,9 +18,9 @@ export async function createThread({
 }: CreateThread) {
   const newThread = {
     authorId: userId,
-    communityId,
+    communityId: communityId,
     text,
-    parentId,
+    parentId: parentId || null,
   };
 
   try {
@@ -70,8 +69,8 @@ export async function fetchThreads({
   offset?: number;
   limit?: number;
 }) {
-  const query: Prisma.categoriesFindManyArgs = {
-    where: { NOT: { id: "4" } },
+  const query: Prisma.ThreadFindManyArgs = {
+    where: { NOT: { id: userId } },
   };
   try {
     let [threads, count] = await prisma.$transaction([
@@ -85,7 +84,6 @@ export async function fetchThreads({
         include: {
           author: true,
           likes: true,
-          // childrens: true,
         },
       }),
       prisma.thread.count({ where: query.where }),
@@ -119,8 +117,8 @@ export async function fetchUserThreads({
   offset?: number;
   limit?: number;
 }) {
-  const query: Prisma.categoriesFindManyArgs = {
-    // where: { id: userId },
+  const query: Prisma.ThreadFindManyArgs = {
+    where: { id: userId },
   };
   try {
     let [threads, count] = await prisma.$transaction([
@@ -178,8 +176,9 @@ export async function unLikeThread({
   try {
     return await prisma.threadLikes.delete({
       where: {
-        threadId,
-        userId,
+        // threadId,
+        // userId,
+        id: "wtf",
       },
     });
   } catch (e) {

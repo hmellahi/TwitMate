@@ -38,6 +38,8 @@ export default function UserReplyInput({
     form.setValue("text", "");
   }
 
+  const userImage = user?.image || "";
+
   return (
     <Form {...form}>
       <form
@@ -46,7 +48,7 @@ export default function UserReplyInput({
       >
         <div className="relative !h-14 !w-14 rounded-full">
           <Image
-            src={user.image}
+            src={userImage}
             fill
             alt="avatar"
             className="rounded-full object-contain mt-8"

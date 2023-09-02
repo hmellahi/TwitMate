@@ -1,14 +1,14 @@
 "use client";
 
+import { sidebarLink } from "@/types/SidebarLink";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
-export function SidebarLink({ sidebarLink }) {
+export function SidebarLink({ sidebarLink }: { sidebarLink: sidebarLink }) {
   const pathname = usePathname();
   const router = useRouter();
-  // const isActive =
-  // implement isActiveRoute
+
   const isActive =
     pathname === sidebarLink.route ||
     (pathname.includes(sidebarLink.route) && sidebarLink.route != "/");

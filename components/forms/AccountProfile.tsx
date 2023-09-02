@@ -4,7 +4,7 @@ import React, { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserValidation } from "@/lib/validations/user";
-import { Textarea } from "@/components/ui/Textarea";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Form,
   FormControl,
@@ -18,7 +18,6 @@ import { Button } from "@/components/ui/button";
 import * as z from "zod";
 import Image from "next/image";
 import { UserData } from "@/types/User";
-import { isBigInt64Array } from "util/types";
 import { isBase64Image } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadThing";
 import { updateUser } from "@/lib/actions/user.actions";
@@ -48,9 +47,6 @@ export default function AccountProfile({
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof UserValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
     const blob = values.profile_photo;
 
     const hasImageChanged = isBase64Image(blob);
@@ -63,9 +59,7 @@ export default function AccountProfile({
       }
     }
 
-    console.log(values);
     // update user profile
-    // const { objectId, ...updatedUser } = values;
     await updateUser({
       id: user.id,
       image: values.profile_photo,

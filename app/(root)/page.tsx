@@ -16,7 +16,7 @@ export default async function Home() {
       {threads.length < 1 ? (
         <div>no result</div>
       ) : (
-        threads.map((thread, index) => {
+        threads.map((thread: Thread, index: number) => {
           return (
             <Link href={`/thread/${thread.id}`}>
               <ThreadCard key={index} thread={thread} user={user} />
