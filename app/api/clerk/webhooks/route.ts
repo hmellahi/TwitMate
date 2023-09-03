@@ -156,7 +156,10 @@ export const POST = async (request: Request) => {
       console.log("removed", evnt?.data);
 
       // @ts-ignore
-      await removeUserFromCommunity(public_user_data.user_id, organization.id);
+      await removeUserFromCommunity({
+        userId: public_user_data.user_id,
+        communityId: organization.id,
+      });
 
       return NextResponse.json({ message: "Member removed" }, { status: 201 });
     } catch (err) {
@@ -174,11 +177,11 @@ export const POST = async (request: Request) => {
     try {
       // Resource: https://clerk.com/docs/reference/backend-api/tag/Organizations#operation/UpdateOrganization
       // Show what evnt?.data sends from above resource
-      const { id, logo_url, name, slug } = evnt?.data;
+      const { id, logo_url, name, slug, bio } = evnt?.data;
       console.log("updated", evnt?.data);
 
       // @ts-ignore
-      await updateCommunityInfo(id, name, slug, logo_url);
+      await updateCommunityInfo({ id, name, slug, logo_url, bio });
 
       return NextResponse.json({ message: "Member removed" }, { status: 201 });
     } catch (err) {

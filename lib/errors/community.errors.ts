@@ -11,3 +11,10 @@ export class UserAlreadyMemberError extends Error {
     this.name = "UserAlreadyMemberError";
   }
 }
+
+export class UserNotMemberError extends Error {
+  constructor() {
+    super("User is not a member of the community");
+    this.name = "UserNotMemberError";
+  }
+}
