@@ -15,7 +15,6 @@ export default async function SuggestedUsers() {
         {users?.map((user: User) => (
           <>
             <UserCard user={user} />
-            <UserCard user={user} />
           </>
         ))}
       </div>

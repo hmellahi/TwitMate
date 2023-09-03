@@ -11,20 +11,24 @@ export default function ThreadCard({
   thread,
   user,
   isComment = false,
+  path
 }: {
   thread: ThreadWithDetails;
   user: any;
   isComment?: boolean;
+  path:string
 }) {
   const { text, author } = thread;
-  console.log({ li: thread.likes });
   const userLikeId = thread?.likes?.find((like) => like.userId === user.id)?.id;
   const isLikedByCurrentUser = userLikeId != undefined;
 
   const [isUserLikeThread, setIsUserLikeThread] =
     useState(isLikedByCurrentUser);
 
-  async function reactToThread() {
+  async function reactToThread(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
     setIsUserLikeThread(!isUserLikeThread);
     // let reactToThreadDebounce =  setTimeout(async () => {
     //   clearTimeout(reactToThreadDebounce);
@@ -32,11 +36,12 @@ export default function ThreadCard({
     //     return;
     //   }
     if (userLikeId) {
-      await unLikeThread({ likeId: userLikeId });
+      await unLikeThread({ likeId: userLikeId , path });
     } else {
       await likeThread({
         userId: user.id,
         threadId: thread.id,
+        path
       });
     }
     // }, 300); // 300ms
@@ -50,7 +55,7 @@ export default function ThreadCard({
       <div className={`${bg} text-white rounded-lg pb-4`}>
         <div
           className={`{
-              ${!isComment ? "p-7" : "px-7"} flex gap-5`}
+              ${!isComment ? "pt-6 py-0" : ""} px-7 flex gap-5`}
         >
           <div className="flex flex-col items-center">
             <Link href={`/profile/${author.id}`} className="relative h-14 w-14">
@@ -67,7 +72,7 @@ export default function ThreadCard({
             <h3 className="mb-3 text-xl">
               <Link
                 href={`/profile/${author.id}`}
-                className="relative h-11 w-11"
+                className="relative h-11 w-11 text-body-bold"
               >
                 {user?.username}
               </Link>
@@ -88,13 +93,13 @@ export default function ThreadCard({
               <Repost width="25" height="25" />
               <Share width="25" height="25" />
             </div>
-            {(thread?.childrens?.length || thread?.likes?.length) && (
-              <div className="mt-2 text-[#A0A0A0] flex items-center gap-x-2">
-                {thread?.childrens?.length} replies
-                <div className="rounded-full w-2 h-2 bg-[#A0A0A0]"></div>
-                {thread?.likes?.length} likes
-              </div>
-            )}
+            {/* {(thread?.childrens?.length || thread?.likes?.length) ? ( */}
+            <div className="mt-2 text-[#A0A0A0] flex items-center gap-x-2">
+              {thread?.childrens?.length} replies
+              <div className="rounded-full w-1 h-1 bg-[#A0A0A0]"></div>
+              {thread?.likes?.length} likes
+            </div>
+            {/* ) : (<></>)} */}
           </div>
         </div>
       </div>

@@ -11,6 +11,7 @@ import { CreateThreadValidation } from "@/lib/validations/thread";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { createThread } from "@/lib/actions/thread.actions";
+import { usePathname } from "next/navigation";
 
 export default function UserReplyInput({
   user,
@@ -26,11 +27,14 @@ export default function UserReplyInput({
     },
   });
 
+  const pathname = usePathname();
+
   async function onSubmit(thread: z.infer<typeof CreateThreadValidation>) {
     await createThread({
       ...thread,
       userId: user.id,
       parentId: parentThreadId,
+      pathToRevalidate: pathname,
     });
     form.setValue("text", "");
   }
@@ -43,13 +47,15 @@ export default function UserReplyInput({
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-8 p-4 flex justify-between w-full mt-9 items-center"
       >
-        <div className="relative h-14 w-14">
-          <Image
-            src={userImage}
-            fill
-            alt="avatar"
-            className="rounded-full object-contain mt-8"
-          />
+        <div className="">
+          <div className="relative h-14 w-14 mt-8">
+            <Image
+              src={userImage}
+              fill
+              alt="avatar"
+              className="rounded-full object-contain"
+            />
+          </div>
         </div>
         <FormField
           control={form.control}

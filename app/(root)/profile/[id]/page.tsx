@@ -1,6 +1,7 @@
-// 'use client'
+"use server";
 
 import ThreadCard from "@/components/forms/ThreadCard";
+import { Reply } from "@/components/svgs";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { profileTabs } from "@/constants";
 import { fetchUserThreads } from "@/lib/actions/thread.actions";
@@ -8,7 +9,13 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { Thread } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
+
+const components = {
+  threads: Reply,
+  // replies
+};
 
 export default async function profile({ params }: { params: { id: string } }) {
   const userId = params.id;
@@ -16,6 +23,14 @@ export default async function profile({ params }: { params: { id: string } }) {
   const user = await fetchUser(userId);
   if (!user) return null;
   let { threads } = await fetchUserThreads({ userId: user.id });
+  // const pathname = usePathname();
+
+  const getActionIcon = (tabIconName: string) => {
+    // "use server"
+    // import('')
+    // retu
+    return Reply;
+  };
 
   return (
     <div>
@@ -48,6 +63,9 @@ export default async function profile({ params }: { params: { id: string } }) {
                   alt="tab"
                   className="object-contain"
                 />
+
+                {/* {getActionIcon(tab.icon)} */}
+                {/* {components["threads"]} */}
                 <p className="max-sm:hidden">{tab.label}</p>
                 {tab.value == "threads" && (
                   <div className="bg-gray-600 px-3 py-1 box-shadow-count-badge rounded-md">
@@ -65,7 +83,12 @@ export default async function profile({ params }: { params: { id: string } }) {
                 <div className="flex gap-4 flex-col">
                   {threads.map((thread: Thread, index: number) => {
                     return (
-                      <ThreadCard key={index} thread={thread} user={user} />
+                      <ThreadCard
+                        key={index}
+                        thread={thread}
+                        user={user}
+                        path="/profile"
+                      />
                     );
                   })}
                 </div>

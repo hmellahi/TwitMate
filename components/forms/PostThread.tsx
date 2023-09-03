@@ -30,7 +30,7 @@ export default function PostThread({ userId }: { userId: string }) {
   });
 
   async function onSubmit(values: z.infer<typeof CreateThreadValidation>) {
-    await createThread({ userId, ...values });
+    await createThread({ userId, ...values, pathToRevalidate: "/" });
     router.push("/");
   }
 

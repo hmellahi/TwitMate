@@ -12,3 +12,11 @@ export type ThreadWithDetails = Prisma.ThreadGetPayload<{
     likes: true;
   };
 }>;
+
+export interface CreateThread {
+  text: string;
+  communityId?: String;
+  parentId?: String;
+  userId: String;
+  pathToRevalidate: string;
+}

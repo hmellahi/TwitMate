@@ -16,22 +16,25 @@ export default async function page({ params }: { params: { id: string } }) {
   if (!userInfo) return null;
 
   const thread: ThreadWithDetails | null = await fetchThread({
-    authorId: user.id,
     threadId,
   });
 
   if (!thread) {
     return null;
   }
-  console.log(thread);
 
   return (
     <div>
-      <ThreadCard thread={thread} user={userInfo} />
+      <ThreadCard thread={thread} user={userInfo} path="/thread" />
       <UserReplyInput user={userInfo} parentThreadId={thread.id} />
       <div className="mt-8">
         {thread.childrens?.map((comment: Thread) => (
-          <ThreadCard thread={comment} user={userInfo} isComment={true} />
+          <ThreadCard
+            thread={comment}
+            user={userInfo}
+            isComment={true}
+            path="/thread"
+          />
         ))}
       </div>
     </div>

@@ -23,7 +23,6 @@ export default async function page({
         {users?.map((user: User) => (
           <>
             <UserCard user={user} />
-            <UserCard user={user} />
           </>
         ))}
       </div>

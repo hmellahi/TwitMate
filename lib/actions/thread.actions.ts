@@ -2,19 +2,15 @@
 
 import { Prisma, Thread } from "@prisma/client";
 import { prisma } from "../prisma";
-
-interface CreateThread {
-  text: string;
-  communityId?: String;
-  parentId?: String;
-  userId: String;
-}
+import { revalidatePath } from "next/cache";
+import { CreateThread } from "@/types/Thread";
 
 export async function createThread({
   userId,
   communityId,
   text,
   parentId,
+  pathToRevalidate,
 }: CreateThread) {
   const newThread = {
     authorId: userId,
@@ -28,6 +24,8 @@ export async function createThread({
       data: newThread,
     });
 
+    revalidatePath(pathToRevalidate);
+
     return updateThread;
   } catch (error: any) {
     console.log(error);
@@ -35,16 +33,10 @@ export async function createThread({
   }
 }
 
-export async function fetchThread({
-  authorId,
-  threadId,
-}: {
-  authorId: string;
-  threadId: string;
-}) {
+export async function fetchThread({ threadId }: { threadId: string }) {
   try {
     return await prisma.thread.findFirst({
-      where: { id: threadId, authorId },
+      where: { id: threadId },
       include: {
         author: true,
         likes: true,
@@ -67,10 +59,12 @@ export async function fetchThreads({
   userId,
   offset = 0,
   limit = 20,
+  path,
 }: {
   userId: string;
   offset?: number;
   limit?: number;
+  path: string;
 }) {
   const query: Prisma.ThreadFindManyArgs = {
     where: { NOT: { id: userId } },
@@ -93,24 +87,13 @@ export async function fetchThreads({
       prisma.thread.count({ where: query.where }),
     ]);
     const isLastPage = offset + limit >= count;
+    // revalidatePath(path);
     return { threads, count, isLastPage };
   } catch (error: any) {
     console.log(error);
     throw error;
   }
 }
-
-export const createComment = async ({
-  userId,
-  parentThreadId,
-  thread,
-}: {
-  thread: Thread;
-  userId: String;
-  parentThreadId: String;
-}) => {
-  // let commentThread = await createThread(thread);
-};
 
 export async function fetchUserThreads({
   userId,
@@ -122,7 +105,7 @@ export async function fetchUserThreads({
   limit?: number;
 }) {
   const query: Prisma.ThreadFindManyArgs = {
-    // where: { id: userId },
+    where: { authorId: userId },
   };
   try {
     let [threads, count] = await prisma.$transaction([
@@ -153,9 +136,11 @@ export async function fetchUserThreads({
 export async function likeThread({
   threadId,
   userId,
+  path,
 }: {
   threadId: string;
   userId: string;
+  path: string;
 }) {
   let newLike = {
     threadId,
@@ -175,22 +160,31 @@ export async function likeThread({
       return null;
     }
 
-    return await prisma.threadLikes.create({
+    await prisma.threadLikes.create({
       data: newLike,
     });
+
+    revalidatePath(path);
   } catch (e) {
     console.log(e);
     throw e;
   }
 }
 
-export async function unLikeThread({ likeId }: { likeId: string }) {
+export async function unLikeThread({
+  likeId,
+  path,
+}: {
+  likeId: string;
+  path: string;
+}) {
   try {
-    return await prisma.threadLikes.delete({
+    await prisma.threadLikes.delete({
       where: {
         id: likeId,
       },
     });
+    revalidatePath(path);
   } catch (e) {
     console.log(e);
     // throw e;

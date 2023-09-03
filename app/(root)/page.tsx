@@ -8,6 +8,7 @@ export default async function Home() {
   if (!user) return null;
   const { threads } = await fetchThreads({
     userId: user.id,
+    path: "/",
   });
 
   return (
@@ -16,7 +17,9 @@ export default async function Home() {
         <div>no result</div>
       ) : (
         threads.map((thread: Thread, index: number) => {
-          return <ThreadCard key={index} thread={thread} user={user} />;
+          return (
+            <ThreadCard key={index} thread={thread} user={user} path="/" />
+          );
         })
       )}
     </div>
