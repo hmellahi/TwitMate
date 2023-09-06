@@ -11,43 +11,41 @@ export default function ThreadCard({
   thread,
   user,
   isComment = false,
-  path
+  path,
 }: {
   thread: ThreadWithDetails;
   user: any;
   isComment?: boolean;
-  path:string
+  path: string;
 }) {
   const { text, author } = thread;
   const userLikeId = thread?.likes?.find((like) => like.userId === user.id)?.id;
   const isLikedByCurrentUser = userLikeId != undefined;
 
-  const [isUserLikeThread, setIsUserLikeThread] =
+  const [isUserLikedThread, setisUserLikedThread] =
     useState(isLikedByCurrentUser);
 
   async function reactToThread(e) {
     e.preventDefault();
     e.stopPropagation();
 
-    setIsUserLikeThread(!isUserLikeThread);
-    // let reactToThreadDebounce =  setTimeout(async () => {
-    //   clearTimeout(reactToThreadDebounce);
-    //   if (isLikedByCurrentUser === !isUserLikeThread) {
-    //     return;
-    //   }
-    if (userLikeId) {
-      await unLikeThread({ likeId: userLikeId , path });
-    } else {
-      await likeThread({
-        userId: user.id,
-        threadId: thread.id,
-        path
-      });
-    }
-    // }, 300); // 300ms
+    setisUserLikedThread(!isUserLikedThread);
+    let reactToThreadDebounce = setTimeout(async () => {
+      clearTimeout(reactToThreadDebounce);
+      console.log({ isUserLikedThread });
+      if (isUserLikedThread) {
+        await unLikeThread({ likeId: userLikeId, path });
+      } else {
+        await likeThread({
+          userId: user.id,
+          threadId: thread.id,
+          path,
+        });
+      }
+    }, 600); // 300ms
   }
 
-  const LikeIcon = isUserLikeThread ? HeartFilled : Heart;
+  const LikeIcon = isUserLikedThread ? HeartFilled : Heart;
   const bg = isComment ? "bg-transparent" : "bg-dark-2";
 
   return (
@@ -74,7 +72,7 @@ export default function ThreadCard({
                 href={`/profile/${author.id}`}
                 className="relative h-11 w-11 text-body-bold"
               >
-                {user?.username}
+                {author?.username}
               </Link>
             </h3>
             <p>{text}</p>
@@ -83,23 +81,23 @@ export default function ThreadCard({
                 isComment && "pb-2"
               }`}
             >
-              <LikeIcon
-                width="25"
-                height="25"
-                className="cursor-pointer"
-                onClick={reactToThread}
-              />
+              <div className="hover:bg-[rgba(241,77,77,.5)] rounded-full p-1  relative">
+                <LikeIcon
+                  width="25"
+                  height="25"
+                  className="cursor-pointer hover:text-[rgba(241,77,77,.5)]"
+                  onClick={reactToThread}
+                />
+              </div>
               <Reply width="25" height="25" />
               <Repost width="25" height="25" />
               <Share width="25" height="25" />
             </div>
-            {/* {(thread?.childrens?.length || thread?.likes?.length) ? ( */}
             <div className="mt-2 text-[#A0A0A0] flex items-center gap-x-2">
               {thread?.childrens?.length} replies
               <div className="rounded-full w-1 h-1 bg-[#A0A0A0]"></div>
               {thread?.likes?.length} likes
             </div>
-            {/* ) : (<></>)} */}
           </div>
         </div>
       </div>

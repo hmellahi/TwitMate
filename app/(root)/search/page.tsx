@@ -18,12 +18,15 @@ export default async function page({
   return (
     <div className="flex flex-col gap-9">
       <h3 className="text-heading1-bold text-white">Search</h3>
-      <SearchInput keyword={searchKeyword}></SearchInput>
-      <div className="flex flex-col gap-6 mt-5 ">
+      <SearchInput
+        className="w-[23rem]"
+        keyword={searchKeyword}
+        route="search"
+        placeholder="Type username or name"
+      ></SearchInput>
+      <div className="flex flex-col gap-6 mt-3 ">
         {users?.map((user: User) => (
-          <>
-            <UserCard user={user} />
-          </>
+          <UserCard user={user} />
         ))}
       </div>
     </div>

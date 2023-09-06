@@ -4,6 +4,7 @@ import { sidebarLink } from "@/types/SidebarLink";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Search } from "../svgs";
 
 export function MobileSidebarLink({
   sidebarLink,
@@ -19,9 +20,18 @@ export function MobileSidebarLink({
     <Link
       key={sidebarLink.route}
       href={sidebarLink.route}
-      className={`bottombar_link ${isActive && "bg-primary-500"}`}
+      className={`text-white bottombar_link ${isActive && "bg-primary-500"}`}
     >
-      <Image src={sidebarLink.imgURL} alt="img" width="23" height="23"></Image>{" "}
+      {sidebarLink.imgURL.includes("search") ? (
+        <Search width="20" height="20"></Search>
+      ) : (
+        <Image
+          src={sidebarLink.imgURL}
+          alt="img"
+          width="20"
+          height="20"
+        ></Image>
+      )}
       <p className="max-sm:hidden text-white text-subtle-medium">
         {sidebarLink.label.split(" ")[0]}
       </p>

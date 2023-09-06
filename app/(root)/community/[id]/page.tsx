@@ -11,7 +11,7 @@ import Link from "next/link";
 import React from "react";
 
 export default async function profile({ params }: { params: { id: string } }) {
-  const userId = "user_2UkssZYBiLGd4vWDJu75PhbAmtX" || params.id;
+  const userId = params.id;
   if (!userId) return null;
   const user = await fetchUser(userId);
   if (!user) return null;
@@ -42,8 +42,8 @@ export default async function profile({ params }: { params: { id: string } }) {
         {/* <TabsList/> */}
         <Tabs defaultValue="threads" className="w-full">
           <TabsList className="w-full flex justify-between text-center tab">
-            {communityTabs.map((tab) => (
-              <TabsTrigger value={tab.value} className="tab">
+            {communityTabs.map((tab, index) => (
+              <TabsTrigger key={index} value={tab.value} className="tab">
                 <Image
                   src={tab.icon}
                   width={30}

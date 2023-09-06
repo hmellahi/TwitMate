@@ -35,7 +35,7 @@ type Event = {
 };
 
 export const POST = async (request: Request) => {
-  console.log('was here')
+  console.log("was here");
   const payload = await request.json();
   const header = headers();
 
@@ -179,7 +179,7 @@ export const POST = async (request: Request) => {
       // Resource: https://clerk.com/docs/reference/backend-api/tag/Organizations#operation/UpdateOrganization
       // Show what evnt?.data sends from above resource
       const { id, logo_url, name, slug, bio } = evnt?.data;
-      console.log("updated", evnt?.data);
+      console.log("updated", { data: evnt?.data });
 
       // @ts-ignore
       await updateCommunityInfo({ id, name, slug, logo_url, bio });

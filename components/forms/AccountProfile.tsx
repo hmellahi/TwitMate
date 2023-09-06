@@ -22,6 +22,7 @@ import { isBase64Image } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadThing";
 import { updateUser } from "@/lib/actions/user.actions";
 import { usePathname, useRouter } from "next/navigation";
+import { Label } from "../ui/label";
 
 export default function AccountProfile({
   user,
@@ -60,11 +61,14 @@ export default function AccountProfile({
     }
 
     // update user profile
-    await updateUser({
-      id: user.id,
-      image: values.profile_photo,
-      ...values,
-    });
+    await updateUser(
+      {
+        id: user.id,
+        image: values.profile_photo,
+        ...values,
+      },
+      "/"
+    );
 
     if (pathname === "/profile/edit") {
       router.back();
@@ -103,12 +107,15 @@ export default function AccountProfile({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 text-white "
+      >
         <FormField
           control={form.control}
           name="profile_photo"
           render={({ field }) => (
-            <FormItem className="flex items-center">
+            <FormItem className="flex items-center gap-5">
               <FormLabel className="account-form_image-label rounded-full">
                 {field.value ? (
                   <Image
@@ -129,13 +136,16 @@ export default function AccountProfile({
                 )}
               </FormLabel>
               <FormControl className="text-gray-200 text-base-semibold flex-1">
-                <Input
-                  id="picture"
-                  type="file"
-                  placeholder="upload a photo"
-                  className="account-form_image-input"
-                  onChange={(e) => updateProfilePhoto(e, field.onChange)}
-                />
+                <>
+                  <Label htmlFor="picture">Upload Profile Img</Label>
+                  <Input
+                    id="picture"
+                    type="file"
+                    placeholder="upload a photo"
+                    className="account-form_image-input hidden"
+                    onChange={(e) => updateProfilePhoto(e, field.onChange)}
+                  />
+                </>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -199,7 +209,7 @@ export default function AccountProfile({
           )}
         />
         <Button type="submit" className="bg-primary-500 w-full">
-          Submit
+          {btnTitle}
         </Button>
       </form>
     </Form>

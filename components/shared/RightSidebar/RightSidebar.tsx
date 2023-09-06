@@ -1,14 +1,13 @@
+import SuggestedCommunities from "./SuggestedCommunities";
 import SuggestedUsers from "./SuggestedUsers";
 
 export default function RightSidebar() {
   return (
     <section className="custom-scrollbar rightsidebar">
       <div className="flex flex-1 flex-col justify-start">
-        <h3 className="text-heading4-medium text-light-1">
-          Suggested Communites
-        </h3>
+        <SuggestedCommunities />
       </div>
-      <div className="flex flex-1 flex-col justify-start p-0 m-0">
+      <div className="flex flex-1 flex-col justify-start ">
         <SuggestedUsers />
       </div>
     </section>

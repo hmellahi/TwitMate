@@ -133,6 +133,27 @@ export async function fetchUserThreads({
   }
 }
 
+export async function toggleThread({
+  value,
+  threadId,
+  userId,
+  path,
+}: {
+  value: boolean;
+  threadId: string;
+  userId: string;
+  path: string;
+}) {
+  // if (value){
+  const action: Function = value ? likeThread : unLikeThread;
+
+  await action({
+    threadId,
+    userId,
+    path,
+  });
+}
+
 export async function likeThread({
   threadId,
   userId,

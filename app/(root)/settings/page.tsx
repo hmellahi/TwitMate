@@ -1,10 +1,9 @@
 import AccountProfile from "@/components/forms/AccountProfile";
 import { fetchUser } from "@/lib/actions/user.actions";
-import { UserData } from "@/types/User";
 import { currentUser } from "@clerk/nextjs";
-import { User } from "@clerk/nextjs/server";
+import React from "react";
 
-export default async function Home() {
+export default async function page() {
   const user: User | null = await currentUser();
   if (!user) return null;
   const userInfo = await fetchUser(user.id);
@@ -17,16 +16,11 @@ export default async function Home() {
     bio: userInfo?.bio || "",
     image: userInfo?.image || user?.imageUrl,
   };
-
   return (
-    <div className="h-full w-12/12 sm:w-11/12 md:w-8/12 lg:w-6/12">
-      <main className="px-10 py-20 text-white ">
-        <div className="head-text">Onboarding</div>
-        <p className="mt-4 mb-10">Complete your profile to use Threads</p>
-        <div className="bg-dark-2 p-10 mt-4 w-full">
-          <AccountProfile btnTitle="Submit" user={userData} />
-        </div>
-      </main>
+    <div className="text-white">
+      <div className="head-text">Account Settings</div>
+      <p className="mt-4 mb-10">Edit your profile</p>
+      <AccountProfile btnTitle="Save" user={userData} />
     </div>
   );
 }

@@ -144,7 +144,7 @@ async function updateCommunityInfo(
   try {
     // Assuming you have a valid structure for updating a community
     const { id: communityId, ...communityUpdateData } = updatedCommunityData;
-
+    console.log({communityUpdateData, communityId})
     // Update the community information
     const updatedCommunity = await prisma.community.update({
       where: { id: communityId },
@@ -158,10 +158,42 @@ async function updateCommunityInfo(
   }
 }
 
+async function fetchCommunities({
+  userId,
+  searchKeyword = "",
+}: {
+  userId: string;
+  searchKeyword?: string;
+}) {
+  try {
+    let communities = await prisma.community.findMany({
+      where: {
+        NOT: { id: userId },
+        name: {
+          contains: searchKeyword,
+          mode: "insensitive",
+        },
+      },
+      include: {
+        members: {
+          take: 4,
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    return communities;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
 export {
   addMemberToCommunity,
   createCommunity,
   deleteCommunity,
   removeUserFromCommunity,
   updateCommunityInfo,
+  fetchCommunities,
 };

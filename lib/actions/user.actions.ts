@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { prisma } from "../prisma";
 
 interface UpdateUser {
@@ -10,7 +11,7 @@ interface UpdateUser {
   image: string;
 }
 
-export async function updateUser(newUserData: UpdateUser) {
+export async function updateUser(newUserData: UpdateUser, path: string) {
   const { username, name, bio, image, id } = newUserData;
 
   const updatedUser = {
@@ -31,6 +32,7 @@ export async function updateUser(newUserData: UpdateUser) {
       create: updatedUser,
     });
 
+    revalidatePath(path);
     return updateUser;
   } catch (error: any) {
     console.log(error);

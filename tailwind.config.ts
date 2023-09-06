@@ -187,6 +187,10 @@ module.exports = {
         "light-3": "#7878A3",
         "light-4": "#5C5C7B",
         "gray-1": "#697C89",
+        "gray-2": "#A0A0A0",
+        "gray-3": "#1A1A1A",
+        "gray-4":"#B8B8B8",
+        "gray-5":'#3F3F3F',
         glassmorphism: "rgba(16, 16, 18, 0.60)",
       },
       boxShadow: {
@@ -214,4 +218,3 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate")],
 };
-
