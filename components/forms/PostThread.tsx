@@ -17,9 +17,11 @@ import * as z from "zod";
 import { usePathname, useRouter } from "next/navigation";
 import { createThread } from "@/lib/actions/thread.actions";
 import { CreateThreadValidation } from "@/lib/validations/thread";
+import { useOrganization } from "@clerk/nextjs";
 
 export default function PostThread({ userId }: { userId: string }) {
   const router = useRouter();
+  const { organization } = useOrganization();
 
   const form = useForm({
     resolver: zodResolver(CreateThreadValidation),
@@ -30,7 +32,13 @@ export default function PostThread({ userId }: { userId: string }) {
   });
 
   async function onSubmit(values: z.infer<typeof CreateThreadValidation>) {
-    await createThread({ userId, ...values, pathToRevalidate: "/" });
+    console.log(organization?.id);
+    await createThread({
+      userId,
+      ...values,
+      pathToRevalidate: "/",
+      communityId: organization?.id,
+    });
     router.push("/");
   }
 

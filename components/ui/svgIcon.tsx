@@ -1,5 +1,5 @@
 import React from "react";
-import { Members, Reply } from "../svgs";
+import { Members, Reply, Request } from "../svgs";
 
 // Use unique and capitalized enum values
 enum IconNames {
@@ -11,6 +11,8 @@ enum IconNames {
 const svgIcons = {
   threads: Reply,
   replies: Members,
+  members: Members,
+  requests: Request,
 };
 
 export default function SvgIcon({
@@ -21,6 +23,6 @@ export default function SvgIcon({
   props: any;
 }) {
   const Icon = svgIcons[iconName];
-  console.log({ iconName });
+  if (!Icon) return null;
   return <Icon {...props} />;
 }

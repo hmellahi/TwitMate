@@ -1,8 +1,9 @@
 import { camelToSnakeCase } from "@/lib/utils";
-import { Community, User } from "@prisma/client";
+import { Community } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { UsersList } from "./UsersList";
 
 export default function CommunityCard({
   community,
@@ -12,7 +13,9 @@ export default function CommunityCard({
   className: string;
 }) {
   return (
-    <div className={`text-white bg-dark-3 pt-7 pb-3 px-4 rounded-md ${className}`}>
+    <div
+      className={`text-white bg-dark-3 pt-7 pb-3 px-4 rounded-md ${className}`}
+    >
       <div className="flex gap-4 items-center ">
         <Link href={`/community/${community.id}`}>
           <Image
@@ -38,19 +41,7 @@ export default function CommunityCard({
             View
           </button>
         </Link>
-        <div className="flex">
-          {community.members.map((user: User) => (
-            <Link href={`/profile/${user.id}`}>
-              <Image
-                src={user.image}
-                width={25}
-                height={20}
-                alt="pdp"
-                className="rounded-full mr-[-3px]"
-              />
-            </Link>
-          ))}
-        </div>
+        <UsersList users={community.members}></UsersList>
       </div>
     </div>
   );

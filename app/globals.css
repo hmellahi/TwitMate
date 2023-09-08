@@ -91,6 +91,18 @@
   }
 }
 
+/* .avatar:not(:first-child) {
+  background-color: red;
+  padding: 3px;
+  margin-left: -20px!important;
+  -webkit-mask: radial-gradient(
+    circle 55px at 5px 50%,
+    transparent 99%,
+    #fff 100%
+  );
+  mask: radial-gradient(circle 55px at 5px 50%, transparent 99%, #fff 100%);
+} */
+
 @layer utilities {
   .css-invert {
     @apply invert-[50%] brightness-200;
@@ -158,4 +170,43 @@
 
 .comment-form_btn {
   @apply rounded-3xl bg-primary-500 px-8 py-2 !text-small-regular text-light-1 max-xs:w-full !important;
+}
+
+@layer base {
+  :root {
+    /* --primary-color: #877eff;
+    --white-color: black;
+    --black-color: white;
+    --dark-1: white;
+    --dark-2: white;
+    --dark-3: white;
+    --dark-4: white; 
+    */
+    --primary-color: #877eff;
+    --white-color: white;
+    --dark-1: #000000;
+    --dark-2: #121417;
+    --dark-3: #101012;
+    --dark-4: #1f1f22;
+  }
+
+  :root[data-theme="dark"] {
+    --primary-color: #877eff;
+    --white-color: white;
+    --dark-1: #000000;
+    --dark-2: #121417;
+    --dark-3: #101012;
+    --dark-4: #1f1f22;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root[data-theme="dark"] {
+      --primary-color: #877eff;
+      --white-color: white;
+      --dark-1: #000000;
+      --dark-2: #121417;
+      --dark-3: #101012;
+      --dark-4: #1f1f22;
+    }
+  }
 }

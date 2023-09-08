@@ -1,4 +1,5 @@
 "use server";
+
 import ReplyTab from "@/components/activity/ReplyTab";
 import ThreadCard from "@/components/forms/ThreadCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -56,7 +57,7 @@ export default async function ProfileTabs({
           )}
         </TabsContent>
         <TabsContent value="replies">
-          <ReplyTab />
+          <ReplyTab user={user} />
         </TabsContent>
         <TabsContent value="tagged"></TabsContent>
       </div>

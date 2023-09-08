@@ -9,7 +9,7 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
 
 export const metadata = {
-  title: "Layout",
+  title: "Threads",
 };
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,9 +24,9 @@ export default async function AuthLayout({
   const userInfos = await fetchUser(user.id);
   if (!userInfos) return null;
 
-  // if (!userInfos.onboarded) {
-    // redirect("/onboarding");
-  // }
+  if (!userInfos.onboarded) {
+    redirect("/onboarding");
+  }
 
   return (
     <ClerkProvider>

@@ -88,6 +88,20 @@ async function createCommunity(newCommunity: addCommunity) {
   }
 }
 
+async function fetchCommunity({ communityId }: { communityId: string }) {
+  try {
+    const community = await prisma.community.findFirst({
+      where: { id: communityId },
+      include:{
+        members:true
+      }
+    });
+    return community;
+  } catch (error) {
+    throw new Error(`Failed to create the community: ${error.message}`);
+  }
+}
+
 async function deleteCommunity(communityId: string) {
   try {
     await prisma.community.delete({
@@ -144,7 +158,7 @@ async function updateCommunityInfo(
   try {
     // Assuming you have a valid structure for updating a community
     const { id: communityId, ...communityUpdateData } = updatedCommunityData;
-    console.log({communityUpdateData, communityId})
+    console.log({ communityUpdateData, communityId });
     // Update the community information
     const updatedCommunity = await prisma.community.update({
       where: { id: communityId },
@@ -196,4 +210,5 @@ export {
   removeUserFromCommunity,
   updateCommunityInfo,
   fetchCommunities,
+  fetchCommunity,
 };

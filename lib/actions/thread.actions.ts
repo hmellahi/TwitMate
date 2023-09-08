@@ -14,7 +14,7 @@ export async function createThread({
 }: CreateThread) {
   const newThread = {
     authorId: userId,
-    communityId: communityId,
+    communityId,
     text,
     parentId: parentId || null,
   };
@@ -44,7 +44,12 @@ export async function fetchThread({ threadId }: { threadId: string }) {
           include: {
             author: true,
             likes: true,
-            childrens: true,
+            childrens: {
+              select: {
+                author: true,
+              },
+              take: 4,
+            },
           },
         },
       },
@@ -60,14 +65,16 @@ export async function fetchThreads({
   offset = 0,
   limit = 20,
   path,
+  communityId,
 }: {
   userId: string;
   offset?: number;
   limit?: number;
-  path: string;
+  path?: string;
+  communityId: null | string;
 }) {
   const query: Prisma.ThreadFindManyArgs = {
-    where: { NOT: { id: userId } },
+    where: { NOT: { id: userId }, communityId },
   };
   try {
     let [threads, count] = await prisma.$transaction([
@@ -81,7 +88,11 @@ export async function fetchThreads({
         include: {
           author: true,
           likes: true,
-          childrens: true,
+          childrens: {
+            select: {
+              author: true,
+            },
+          },
         },
       }),
       prisma.thread.count({ where: query.where }),
@@ -119,7 +130,11 @@ export async function fetchUserThreads({
         include: {
           author: true,
           likes: true,
-          childrens: true,
+          childrens: {
+            select: {
+              author: true,
+            },
+          },
         },
       }),
       prisma.thread.count({ where: query.where }),
@@ -206,6 +221,48 @@ export async function unLikeThread({
       },
     });
     revalidatePath(path);
+  } catch (e) {
+    console.log(e);
+    // throw e;
+  }
+}
+
+// let userReplies = await prisma.user.findMany({
+//   where: {
+//     id: userId,
+//   },
+//   select: {
+//     threads: {
+//       select: {
+//         author: true,
+//         createdAt: true,
+//       },
+//     },
+//   },
+// });
+
+export async function getUserReplies({
+  userId,
+  path,
+}: {
+  userId: string;
+  path: string;
+}) {
+  try {
+    let userReplies = await prisma.thread.findMany({
+      where: {
+        authorId: userId,
+        NOT: {
+          parentId: null,
+        },
+      },
+      select: {
+        id: true,
+        createdAt: true,
+      },
+    });
+    revalidatePath(path);
+    return userReplies;
   } catch (e) {
     console.log(e);
     // throw e;

@@ -2,16 +2,19 @@ import React from "react";
 import Reply from "./Reply";
 import { currentUser } from "@clerk/nextjs";
 import { fetchUser } from "@/lib/actions/user.actions";
+import { getUserReplies } from "@/lib/actions/thread.actions";
+import { User } from "@prisma/client";
 
-export default async function ReplyTab() {
-  const userFromClerk = await currentUser();
-  if (!userFromClerk) return null;
-  const user = await fetchUser(userFromClerk.id);
-  if (!user) return null;
+export default async function ReplyTab({ user }: { user: User }) {
+  const userReplies = await getUserReplies({
+    userId: user.id,
+    path: `/profile/${user.id}`,
+  });
+  if (!userReplies) return null;
   return (
     <div className="flex flex-col gap-y-6 px-6  ">
-      {[1, 3, 3].map((reply) => (
-        <Reply user={user} />
+      {userReplies.map((reply) => (
+        <Reply reply={reply} author={user} />
       ))}
     </div>
   );

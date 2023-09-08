@@ -6,6 +6,7 @@ export { default as Repost } from "@/../public/assets/repost.svg";
 
 export { default as Search } from "@/../public/assets/search.svg";
 export { default as Members } from "@/../public/assets/members.svg";
+export { default as Request } from "@/../public/assets/request.svg";
 
 // export { default as Repost } from "@/../public/assets/repost.svg";
 // export { default as Repost } from "@/../public/assets/repost.svg";

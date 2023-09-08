@@ -30,11 +30,11 @@ export default async function page({
       ></SearchInput>
       <div className="flex gap-6 mt-10 flex-wrap items-center">
         {communities?.map((community: Community) => (
-          <CommunityCard community={community} className="basis-[90%] sm:basis-[46%] box-border"/>
+          <CommunityCard
+            community={community}
+            className="basis-[90%] sm:basis-[46%] box-border"
+          />
         ))}
-        {/* {communities?.map((community: Community) => ( */}
-        {/* <CommunityCard community={community} /> */}
-        {/* ))} */}
       </div>
     </div>
   );
