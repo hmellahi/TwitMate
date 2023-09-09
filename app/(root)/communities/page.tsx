@@ -1,5 +1,5 @@
 import React from "react";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser, useOrganization } from "@clerk/nextjs";
 import { fetchCommunities } from "@/lib/actions/community.actions";
 import { Community } from "@prisma/client";
 import CommunityCard from "@/components/community/CommunityCard";
@@ -18,6 +18,17 @@ export default async function page({
     userId: user.id,
     searchKeyword,
   });
+
+  // const { organization } = useOrganization();
+
+  // try {
+  //   await organization?.addMember({
+  //     userId: user.id,
+  //     role: "basic_member",
+  //   });  
+  // } catch (e) {
+  //   console.log(e);
+  // }
 
   return (
     <div>

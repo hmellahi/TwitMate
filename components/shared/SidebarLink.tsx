@@ -17,9 +17,7 @@ export function SidebarLink({ sidebarLink }: { sidebarLink: sidebarLink }) {
   return (
     <Link
       href={sidebarLink.route}
-      className={`leftsidebar_link ${
-        isActive && "bg-primary-500"
-      }`}
+      className={`leftsidebar_link ${isActive && "bg-primary-500"}`}
     >
       {sidebarLink.imgURL.includes("search") ? (
         <Search width="20" height="20"></Search>
@@ -27,7 +25,7 @@ export function SidebarLink({ sidebarLink }: { sidebarLink: sidebarLink }) {
         <Image
           src={sidebarLink.imgURL}
           alt="img"
-          width="20"
+          width="24"
           height="20"
         ></Image>
       )}

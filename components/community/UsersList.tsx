@@ -2,7 +2,6 @@ import { User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { classNames } from "uploadthing/client";
 
 export function UsersList({
   users,
