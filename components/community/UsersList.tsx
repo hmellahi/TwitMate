@@ -6,9 +6,11 @@ import React from "react";
 export function UsersList({
   users,
   className = "",
+  children,
 }: {
   users: User[];
   className?: string;
+  children: React.ReactNode;
 }) {
   if (!users) {
     return null;
@@ -19,9 +21,10 @@ export function UsersList({
         <Link
           href={`/profile/${user.id}`}
           key={index}
-          className={`w-7 h-7 relative rounded-full overflow-hidden  avatar -ml-[.6rem] border-2 border-dark-2
+          className={`w-6 h-6 relative rounded-full overflow-hidden  avatar -ml-[.6rem] border-2 border-dark-2
           `}
         >
+          {children}
           <Image
             src={user.image}
             alt={`Avatar ${index + 1}`}

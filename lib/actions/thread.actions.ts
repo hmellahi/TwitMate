@@ -71,7 +71,7 @@ export async function fetchThreads({
   offset?: number;
   limit?: number;
   path?: string;
-  communityId: null | string;
+  communityId?: null | string;
 }) {
   const query: Prisma.ThreadFindManyArgs = {
     where: { NOT: { id: userId }, communityId },

@@ -12,13 +12,13 @@ export default async function Home() {
   });
 
   return (
-    <div className="text-white flex gap-4 flex-col">
+    <div className="text-white flex gap-0 flex-col lg:px-32">
       {threads.length < 1 ? (
         <div>no result</div>
       ) : (
         threads.map((thread: Thread, index: number) => {
           return (
-            <ThreadCard key={index} thread={thread} user={user} path="/" />
+            <ThreadCard key={index} thread={thread} user={user} path="/" className="border-t-[.01px] border-[#2A2C2E]"/>
           );
         })
       )}

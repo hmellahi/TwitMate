@@ -12,17 +12,20 @@ import { formatDateString } from "@/lib/utils";
 import { timeAgo } from "@/lib/time-converter";
 import { UsersList } from "../community/UsersList";
 import { Thread } from "@prisma/client";
+import { classNames } from "uploadthing/client";
 
 export default function ThreadCard({
   thread,
   user,
   isComment = false,
   path,
+  className = "",
 }: {
   thread: ThreadWithDetails;
   user: any;
   isComment?: boolean;
   path: string;
+  className: string;
 }) {
   const { text, author } = thread;
   const userLikeId = thread?.likes?.find((like) => like.userId === user.id)?.id;
@@ -65,11 +68,18 @@ export default function ThreadCard({
     }, 600); // 300ms
   }
 
+  const hasReplies = thread?.childrens?.length > 0;
+  const hasLikes = thread?.likes?.length > 0;
+
   const LikeIcon = isUserLikedThread ? HeartFilled : Heart;
-  const bg = isComment ? "bg-transparent" : "bg-dark-2";
+  const bg = isComment ? "bg-transparent" : "bg-dark-2d";
 
   return (
-    <Link href={`/thread/${thread.id}`} onClick={(e) => e.stopPropagation()}>
+    <Link
+      href={`/thread/${thread.id}`}
+      onClick={(e) => e.stopPropagation()}
+      className={className}
+    >
       <div className={`${bg} text-white rounded-lg pb-4`}>
         <div className="flex justify-between">
           <div
@@ -79,7 +89,7 @@ export default function ThreadCard({
             <div className="flex flex-col items-center">
               <Link
                 href={`/profile/${author.id}`}
-                className="relative h-14 w-14"
+                className="relative h-10 w-10"
               >
                 <Image
                   src={author.image || ""}
@@ -99,13 +109,13 @@ export default function ThreadCard({
                   {author?.username}
                 </Link>
               </h3>
-              <p>{text}</p>
+              <p className="whitespace-pre-line	">{text}</p>
               <div
-                className={`flex gap-2 mt-4 text-white items-center ${
+                className={`flex gap-2 mt-2 text-white items-center ${
                   isComment && "pb-2"
                 }`}
               >
-                <div className="hover:bg-[rgba(241,77,77,.5)] rounded-full p-1  relative">
+                <div className="hover:bg-light-gray rounded-full p-1  relative">
                   <LikeIcon
                     width="25"
                     height="25"
@@ -114,13 +124,13 @@ export default function ThreadCard({
                     onClick={reactToThread}
                   />
                 </div>
-                <div className="hover:bg-[rgba(241,77,77,.5)] p-1 rounded-full">
+                <div className="hover:bg-light-gray p-1 rounded-full">
                   <Reply width="25" height="25" />
                 </div>
-                <div className="hover:bg-[rgba(241,77,77,.5)] p-1 rounded-full">
+                <div className="hover:bg-light-gray p-1 rounded-full">
                   <Repost width="25" height="25" />
                 </div>
-                <div className="hover:bg-[rgba(241,77,77,.5)] p-1 rounded-full">
+                <div className="hover:bg-light-gray p-1 rounded-full">
                   <Share width="25" height="25" />
                 </div>
               </div>
@@ -133,17 +143,28 @@ export default function ThreadCard({
             {timeAgo(thread.createdAt)}
           </div>
         </div>
-        <div className="flex items-center mt-1">
-          <UsersList
-            className="z-20 w-[7.5rem] justify-center"
-            users={threadRepliers}
-          ></UsersList>
-          <div className="text-[#A0A0A0] flex items-center gap-x-2 -ml-4">
-            {thread?.childrens?.length} replies
-            <div className="rounded-full w-1 h-1 bg-[#A0A0A0]"></div>
-            {thread?.likes?.length} likes
+        {(hasReplies || hasLikes) && (
+          <div className="flex items-center">
+            {/* <div className="relative"> */}
+            {/* <div className="thread-card_bar absolute h-full pl-[3.25rem] w-0.5" /> */}
+            <UsersList
+              className="z-20 w-[7rem] justify-center"
+              users={threadRepliers}
+              width={15}
+              height={15}
+            ></UsersList>
+            {/* </div> */}
+            <div className="text-[#A0A0A0] flex items-center gap-x-2 -ml-6">
+              {hasReplies && (
+                <>
+                  <p>{thread?.childrens?.length} replies</p>
+                  <div className="rounded-full w-1 h-1 bg-[#A0A0A0]"></div>
+                </>
+              )}
+              {thread?.likes?.length} likes
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </Link>
   );
