@@ -21,9 +21,7 @@ export default async function SuggestedCommunities() {
       </h3>
       <div className="flex flex-col gap-6 mt-5 ">
         {communities?.map((community: Community) => (
-          <>
-            <CommunityCard community={community} isSmall={true} />
-          </>
+          <CommunityCard community={community} isSmall={true} />
         ))}
       </div>
     </div>

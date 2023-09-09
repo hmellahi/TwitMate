@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { UsersList } from "./UsersList";
+import { Button } from "../ui/button";
 
 export default function CommunityCard({
   community,
@@ -14,7 +15,7 @@ export default function CommunityCard({
 }) {
   return (
     <div
-      className={`text-white bg-dark-3 pt-7 pb-3 px-4 rounded-md ${className}`}
+      className={`border-[1px] border-white text-white bg-dark-3 pt-7 pb-3 px-4 rounded-md ${className}`}
     >
       <div className="flex gap-4 items-center ">
         <Link href={`/community/${community.id}`}>
@@ -37,9 +38,7 @@ export default function CommunityCard({
 
       <div className="flex justify-between items-center mt-10">
         <Link href={`/community/${community.id}`}>
-          <button className={"bg-primary-500 rounded-md px-5 !py-1"}>
-            View
-          </button>
+          <Button className={" px-5 !py-1"}>View</Button>
         </Link>
         <UsersList users={community.members}></UsersList>
       </div>

@@ -65,7 +65,7 @@ export default function UserReplyInput({
               <FormControl className="text-gray-200 text-base-semibold flex-1">
                 <Input
                   type="text"
-                placeholder="Comment...."
+                  placeholder="Comment...."
                   className=" no-focus bg-transparent border-0 text-white py-4"
                   {...field}
                 />
@@ -73,7 +73,7 @@ export default function UserReplyInput({
             </FormItem>
           )}
         />
-        <Button type="submit" className="bg-primary-500 rounded-full px-10">
+        <Button type="submit" className="px-10">
           Reply
         </Button>
       </form>

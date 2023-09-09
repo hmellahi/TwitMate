@@ -104,7 +104,7 @@ export default function ThreadCard({
               <h3 className="mb-1 text-xl">
                 <Link
                   href={`/profile/${author.id}`}
-                  className="relative h-11 w-11 text-body-bold"
+                  className="relative h-11 w-11"
                 >
                   {author?.username}
                 </Link>

@@ -13,9 +13,7 @@ export default async function SuggestedUsers() {
       <h3 className="text-heading3-medium text-light-1">Similair Minds</h3>
       <div className="flex flex-col gap-6 mt-5 ">
         {users?.map((user: User) => (
-          <>
-            <UserCard user={user} isSmall={true} />
-          </>
+          <UserCard user={user} isSmall={true} />
         ))}
       </div>
     </div>

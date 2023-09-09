@@ -63,7 +63,7 @@ export default function PostThread({ userId }: { userId: string }) {
             </FormItem>
           )}
         />
-        <Button type="submit" className="bg-primary-500 w-full">
+        <Button type="submit" className="w-full">
           Post
         </Button>
       </form>

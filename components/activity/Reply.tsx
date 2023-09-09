@@ -40,18 +40,13 @@ export default function Reply({
               href={`/thread/${reply.id}`}
               className="text-primary-500 text-bold"
             >
-              {" "}
-              thread{" "}
+              {" "} thread
             </Link>
           </p>
         </div>
       </div>
       <Link href={`/thread/${reply.id}`}>
-        <Button
-          className={`bg-primary-500 rounded-md px-8 !py-3 ${
-            isSmall && "text-small-medium"
-          }`}
-        >
+        <Button className={`px-8 ${isSmall && "text-small-medium"}`}>
           View
         </Button>
       </Link>

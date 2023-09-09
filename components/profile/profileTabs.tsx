@@ -8,6 +8,7 @@ import { ThreadWithDetails } from "@/types/Thread";
 import { Thread, User } from "@prisma/client";
 import React from "react";
 import SvgIcon from "../ui/svgIcon";
+import { ThreadsList } from "../shared/ThreadsList";
 
 export default async function ProfileTabs({
   threads,
@@ -39,7 +40,7 @@ export default async function ProfileTabs({
       </TabsList>
       <div className="mt-10">
         <TabsContent value="threads">
-          {threads.length < 1 ? (
+          {/* {threads.length < 1 ? (
             <div>no result</div>
           ) : (
             <div className="flex gap-4 flex-col">
@@ -53,8 +54,8 @@ export default async function ProfileTabs({
                   />
                 );
               })}
-            </div>
-          )}
+            </div> */}
+          <ThreadsList threads={threads} path="/profile" user={user} />
         </TabsContent>
         <TabsContent value="replies">
           <ReplyTab user={user} />

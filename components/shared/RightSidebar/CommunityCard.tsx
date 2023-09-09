@@ -37,13 +37,7 @@ export default function CommunityCard({
       </div>
 
       <Link href={`/community/${community.id}`}>
-        <button
-          className={`bg-primary-500 rounded-md px-6 !py-2 ${
-            isSmall && "text-subtle-medium"
-          }`}
-        >
-          View
-        </button>
+        <Button className={`${isSmall && "text-subtle-medium"}`}>View</Button>
       </Link>
     </div>
   );

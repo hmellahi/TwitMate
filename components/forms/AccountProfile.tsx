@@ -208,7 +208,7 @@ export default function AccountProfile({
             </FormItem>
           )}
         />
-        <Button type="submit" className="bg-primary-500 w-full">
+        <Button type="submit" className=" w-full">
           {btnTitle}
         </Button>
       </form>
