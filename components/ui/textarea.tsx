@@ -9,7 +9,7 @@ export interface TextareaProps
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, ...props }, ref) => {
     const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
-    console.log(textAreaRef.current?.value);
+    // console.log(textAreaRef.current?.value);
     useAutosizeTextArea(textAreaRef.current, textAreaRef?.current?.value);
 
     return (

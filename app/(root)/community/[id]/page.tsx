@@ -86,14 +86,7 @@ export default async function profile({ params }: { params: { id: string } }) {
               ) : (
                 <div className="flex gap-4 flex-col">
                   {members.map((member: User, index: number) => {
-                    return (
-                      <Link
-                        href={`/profile/${member.id}`}
-                        className="border-b-2 border-light-gray pb-3"
-                      >
-                        <UserCard key={index} user={user} />
-                      </Link>
-                    );
+                    return <UserCard key={index} user={user} className="border-b-2 border-light-gray pb-3"/>;
                   })}
                 </div>
               )}

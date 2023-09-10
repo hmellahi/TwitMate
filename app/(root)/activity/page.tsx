@@ -12,8 +12,14 @@ export default async function page() {
     <div className="text-white">
       <h3 className="text-body-normal text-[40px] mb-10">Activity</h3>
       <div className=" flex flex-col gap-4">
-        {userActivity.map((activity) => {
-          return <Activity activity={activity} className="border-b-2 border-light-gray pb-3"></Activity>;
+        {userActivity.map((activity, index) => {
+          return (
+            <Activity
+              key={index}
+              activity={activity}
+              className="border-b-2 border-light-gray pb-3"
+            ></Activity>
+          );
         })}
       </div>
     </div>

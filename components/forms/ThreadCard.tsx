@@ -41,8 +41,6 @@ export default function ThreadCard({
     }
   });
 
-  console.log({ threadRepliers });
-
   const [isUserLikedThread, setisUserLikedThread] =
     useState(isLikedByCurrentUser);
 
@@ -53,7 +51,6 @@ export default function ThreadCard({
     setisUserLikedThread(!isUserLikedThread);
     let reactToThreadDebounce = setTimeout(async () => {
       clearTimeout(reactToThreadDebounce);
-      console.log({ isUserLikedThread });
       if (isUserLikedThread) {
         await unLikeThread({ likeId: userLikeId, path });
       } else {
@@ -72,107 +69,99 @@ export default function ThreadCard({
   const LikeIcon = isUserLikedThread ? HeartFilled : Heart;
   const bg = isComment ? "bg-transparent" : "bg-dark-2d";
   const threadImages = thread?.images?.map((image) => image.imageUrl);
-  console.log({ threadImages });
 
   return (
-    <Link
-      href={`/thread/${thread.id}`}
-      onClick={(e) => e.stopPropagation()}
-      className={className}
-      {...props}
-    >
-      <div className={`${bg} text-white rounded-lg py-7`}>
-        <div className="flex justify-between items-start">
-          <div className={`px-7 flex gap-3 relative w-full bg-dred-300`}>
-            <div className="flex flex-col items-center">
-              <Link
-                href={`/profile/${author.id}`}
-                className="relative h-10 w-10"
-              >
-                <Image
-                  src={author.image || ""}
-                  alt="avatar"
-                  fill
-                  className="cursor-pointer rounded-full"
-                ></Image>
-              </Link>
-              <div className="thread-card_bar" />
-            </div>
-            <div className="w-full">
-              <div className="flex justify-between w-full">
-                <h3 className="text-xl">
-                  <Link
-                    href={`/profile/${author.id}`}
-                    className="relative h-11 w-11"
-                  >
-                    {author?.username}
-                  </Link>
-                  <p className="whitespace-pre-line	text-small-regular font-light mt-1">
-                    {text}
-                  </p>
-                </h3>
-                <div
-                  className={`text-gray-2 mr-4 mt-3 flex gap-2 items-center `}
+    <div className={`${bg} ${className} text-white rounded-lg py-7`}>
+      <div className="flex justify-between items-start">
+        <div className={`px-7 flex gap-3 relative w-full bg-dred-300`}>
+          <div className="flex flex-col items-center">
+            <Link href={`/profile/${author.id}`} className="relative h-10 w-10">
+              <Image
+                src={author.image || ""}
+                alt="avatar"
+                fill
+                className="cursor-pointer rounded-full"
+              ></Image>
+            </Link>
+            <div className="thread-card_bar" />
+          </div>
+          <div className="w-full">
+            <div className="flex justify-between w-full">
+              <h3 className="text-xl">
+                <Link
+                  href={`/profile/${author.id}`}
+                  className="relative h-11 w-11"
                 >
-                  {timeAgo(thread.createdAt)}{" "}
-                  {author.id === user.id && (
-                    <ThreadActions
-                      threadId={thread.id}
-                      authorId={author.id}
-                      path={path}
-                    />
-                  )}
-                </div>
-              </div>
-              {threadImages?.length > 0 && (
-                <MediaViewer
-                  className="mt-4"
-                  imageURLs={threadImages}
-                ></MediaViewer>
-              )}
-              <div className={`flex gap-2 mt-2 text-white items-center`}>
-                <div className="icon-hover relative">
-                  <LikeIcon
-                    width="25"
-                    height="25"
-                    className="cursor-pointer"
-                    onClick={reactToThread}
+                  {author?.username}
+                </Link>
+                <p className="whitespace-pre-line	text-small-regular font-light mt-1">
+                  {text}
+                </p>
+              </h3>
+              <div className={`text-gray-2 mr-4 mt-3 flex gap-2 items-center `}>
+                {timeAgo(thread.createdAt)}{" "}
+                {author.id === user.id && (
+                  <ThreadActions
+                    threadId={thread.id}
+                    authorId={author.id}
+                    path={path}
                   />
-                </div>
-                <div className="icon-hover">
+                )}
+              </div>
+            </div>
+            {threadImages?.length > 0 && (
+              <MediaViewer
+                className="mt-4"
+                imageURLs={threadImages}
+              ></MediaViewer>
+            )}
+            <div className={`flex gap-2 mt-2 text-white items-center`}>
+              <div className="icon-hover relative">
+                <LikeIcon
+                  width="25"
+                  height="25"
+                  className="cursor-pointer"
+                  onClick={reactToThread}
+                />
+              </div>
+              <div className="icon-hover">
+                <Link
+                  href={`/thread/${thread.id}`}
+                  className={className}
+                  {...props}
+                >
                   <Reply width="25" height="25" />
-                </div>
-                <div className="icon-hover">
-                  <Repost width="25" height="25" />
-                </div>
-                <div className="icon-hover">
-                  <Share width="25" height="25" />
-                </div>
+                </Link>
+              </div>
+              <div className="icon-hover">
+                <Repost width="25" height="25" />
+              </div>
+              <div className="icon-hover">
+                <Share width="25" height="25" />
               </div>
             </div>
           </div>
         </div>
-        {(hasReplies || hasLikes) && (
-          <div className="flex items-center">
-            <UsersList
-              className="z-20 w-[7rem] justify-center"
-              users={threadRepliers}
-              width={15}
-              height={15}
-            ></UsersList>
-            {/* </div> */}
-            <div className="text-[#A0A0A0] flex items-center gap-x-2 -ml-6">
-              {hasReplies && (
-                <>
-                  <p>{thread?.childrens?.length} replies</p>
-                  <div className="rounded-full w-1 h-1 bg-[#A0A0A0]"></div>
-                </>
-              )}
-              {thread?.likes?.length} likes
-            </div>
-          </div>
-        )}
       </div>
-    </Link>
+      {(hasReplies || hasLikes) && (
+        <div className="flex items-center">
+          <UsersList
+            className="z-20 w-[7rem] justify-center"
+            users={threadRepliers}
+            width={15}
+            height={15}
+          ></UsersList>
+          <div className="text-[#A0A0A0] flex items-center gap-x-2 -ml-6">
+            {hasReplies && (
+              <>
+                <p>{thread?.childrens?.length} replies</p>
+                <div className="rounded-full w-1 h-1 bg-[#A0A0A0]"></div>
+              </>
+            )}
+            {thread?.likes?.length} likes
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

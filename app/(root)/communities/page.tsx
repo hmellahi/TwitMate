@@ -25,7 +25,7 @@ export default async function page({
   //   await organization?.addMember({
   //     userId: user.id,
   //     role: "basic_member",
-  //   });  
+  //   });
   // } catch (e) {
   //   console.log(e);
   // }
@@ -40,8 +40,9 @@ export default async function page({
         placeholder="Community Name"
       ></SearchInput>
       <div className="flex gap-6 mt-10 flex-wrap items-center">
-        {communities?.map((community: Community) => (
+        {communities?.map((community: Community, index: number) => (
           <CommunityCard
+            key={index}
             community={community}
             className="basis-[90%] sm:basis-[46%] box-border"
           />

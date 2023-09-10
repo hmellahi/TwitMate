@@ -91,7 +91,7 @@
   }
 
   .icon-hover {
-    @apply hover:bg-light-gray p-1 rounded-full;
+    @apply hover:bg-light-gray p-1 rounded-full cursor-pointer;
   }
 }
 

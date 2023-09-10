@@ -6,8 +6,6 @@ export const metadata = {
   title: "Threads",
 };
 
-const inter = Inter({ subsets: ["latin"] });
-
 export default function AuthLayout({
   children,
 }: {
@@ -15,11 +13,9 @@ export default function AuthLayout({
 }) {
   return (
     <ClerkProvider>
-      <body className={inter.className}>
-        <div className="flex justify-center items-center bg-dark-1 w-full h-[100vh] overflow-y-auto">
-          {children}
-        </div>
-      </body>
+      <div className="flex justify-center items-center bg-dark-1 w-full h-[100vh] overflow-y-auto">
+        {children}
+      </div>
     </ClerkProvider>
   );
 }

@@ -7,12 +7,14 @@ import Link from "next/link";
 export default function UserCard({
   user,
   isSmall = false,
+  className = ""
 }: {
   user: User;
   isSmall?: boolean;
+  className:string
 }) {
   return (
-    <div className="flex justify-between text-white items-center">
+    <div className={`flex justify-between text-white items-center ${className}`}>
       <div className="flex gap-2 items-center">
         {user.image ? (
           <Link href={`/profile/${user.id}`}>

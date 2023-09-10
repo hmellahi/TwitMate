@@ -13,7 +13,7 @@ export default async function Home() {
 
   return (
     <>
-      <div>
+      <div className="mb-4">
         <h1 className="head-text">Create Thread</h1>
         <PostThread userId={user?.id} />
       </div>
@@ -21,7 +21,6 @@ export default async function Home() {
         user={user}
         threads={threads}
         path="/"
-        className=""
       ></ThreadsList>
     </>
   );

@@ -13,9 +13,14 @@ export function MediaViewer({
       className={`w-full h-[22rem] relative flex itemds-center ${className}`}
       {...props}
     >
-      {imageURLs.map((imageSrc) => (
-        <div className="object-contain rounded-lg">
-          <Image src={imageSrc} fill className="relative w-full rounded-md" />
+      {imageURLs.map((imageSrc, index) => (
+        <div key={index} className="object-contain rounded-lg">
+          <Image
+            src={imageSrc}
+            fill
+            className="relative w-full rounded-md"
+            alt={`Avatar ${index + 1}`}
+          />
         </div>
       ))}
     </div>
