@@ -12,22 +12,23 @@ datasource db {
 }
 
 model User {
-  id                String        @id @default(uuid())
-  username          String        @unique
+  id                String         @id @default(uuid())
+  username          String         @unique
   name              String
   image             String
   bio               String?
   threads           Thread[]
-  communities       Community[]   @relation("MemberOf")
-  CreatedCommunites Community[]   @relation("CreatedCommunity")
-  onboarded         Boolean       @default(false)
+  communities       Community[]    @relation("MemberOf")
+  CreatedCommunites Community[]    @relation("CreatedCommunity")
+  onboarded         Boolean        @default(false)
   likes             ThreadLikes[]
+  images            ThreadImages[]
 
   followeBy User[] @relation("UserFollows")
   following User[] @relation("UserFollows")
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Thread {
@@ -44,10 +45,11 @@ model Thread {
   parent    Thread?  @relation(name: "ParentChildrens", fields: [parentId], references: [id])
   childrens Thread[] @relation("ParentChildrens")
 
-  likes ThreadLikes[]
+  likes  ThreadLikes[]
+  images ThreadImages[]
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Community {
@@ -61,12 +63,23 @@ model Community {
   threads   Thread[]
   members   User[]   @relation("MemberOf")
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model ThreadLikes {
   id        String   @id @default(uuid())
   user      User     @relation(fields: [userId], references: [id], map: "liker")
+  userId    String
+  thread    Thread   @relation(fields: [threadId], references: [id])
+  threadId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ThreadImages {
+  id        String   @id @default(uuid())
+  imageUrl  String
+  user      User     @relation(fields: [userId], references: [id], map: "author")
   userId    String
   thread    Thread   @relation(fields: [threadId], references: [id])
   threadId  String

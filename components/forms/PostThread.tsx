@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/ui/textarea";
@@ -18,10 +18,24 @@ import { usePathname, useRouter } from "next/navigation";
 import { createThread } from "@/lib/actions/thread.actions";
 import { CreateThreadValidation } from "@/lib/validations/thread";
 import { useOrganization } from "@clerk/nextjs";
+import MediaUploader from "../shared/Thread/MediaUploader";
+import { UploadFileResponse } from "uploadthing/client";
+import { useUploadThing } from "@/lib/uploadThing";
+import useAutosizeTextArea from "@/lib/hooks/useAutosizeTextArea";
 
-export default function PostThread({ userId }: { userId: string }) {
+export default function PostThread({
+  userId,
+  postBtnClass = "",
+}: {
+  userId: string;
+  postBtnClass: string;
+}) {
   const router = useRouter();
+  // const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
   const { organization } = useOrganization();
+  const [threadImages, setThreadImages] = useState<Array<File>>([]);
+  const { startUpload } = useUploadThing("media");
 
   const form = useForm({
     resolver: zodResolver(CreateThreadValidation),
@@ -31,15 +45,30 @@ export default function PostThread({ userId }: { userId: string }) {
     },
   });
 
+  // console.log(form.getValues("text"), textAreaRef.current);
+
   async function onSubmit(values: z.infer<typeof CreateThreadValidation>) {
-    console.log(organization?.id);
-    await createThread({
-      userId,
-      ...values,
-      pathToRevalidate: "/",
-      communityId: organization?.id,
-    });
-    router.push("/");
+    try {
+      let uploadedImages = await startUpload(threadImages);
+      let uploadedImagesUrls: Array<string> = [];
+      if (uploadedImages) {
+        uploadedImagesUrls = uploadedImages.map(
+          (uploadedImage: UploadFileResponse) => uploadedImage.url
+        );
+      }
+      await createThread({
+        userId,
+        ...values,
+        pathToRevalidate: "/",
+        communityId: organization?.id,
+        images: uploadedImagesUrls,
+      });
+
+      form.setValue("text", "");
+      router.push("/");
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return (
@@ -49,13 +78,12 @@ export default function PostThread({ userId }: { userId: string }) {
           control={form.control}
           name="text"
           render={({ field }) => (
-            <FormItem className="flex flex-col gap-2">
-              <FormLabel>Bio</FormLabel>
+            <FormItem className="flex flex-col gap-2 mt-4">
               <FormControl className="text-gray-200 text-base-semibold flex-1">
                 <Textarea
-                  rows={7}
-                  placeholder="Enter your bio"
-                  className="account-form_input no-focus text-white"
+                  rows={4}
+                  placeholder="Say Something..."
+                  className="account-form_input no-focus text-body1-normal"
                   {...field}
                 />
               </FormControl>
@@ -63,7 +91,8 @@ export default function PostThread({ userId }: { userId: string }) {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
+        <MediaUploader images={threadImages} setImages={setThreadImages} />
+        <Button type="submit" className={`${postBtnClass}`}>
           Post
         </Button>
       </form>

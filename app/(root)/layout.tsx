@@ -30,7 +30,9 @@ export default async function AuthLayout({
 
   return (
     <ClerkProvider>
-      <body className={inter.className}>
+      <div
+        className={`xl:px-[8rem] 2xl:px-[13rem] bg-dark-1 ${inter.className}`}
+      >
         <AppHeader />
         <main className="flex">
           <LeftSidebar currentUser={user} />
@@ -40,7 +42,7 @@ export default async function AuthLayout({
           <RightSidebar />
         </main>
         <BottomBar />
-      </body>
+      </div>
     </ClerkProvider>
   );
 }

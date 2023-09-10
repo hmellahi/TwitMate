@@ -5,7 +5,7 @@
 @layer components {
   /* main */
   .main-container {
-    @apply flex min-h-screen flex-1 flex-col items-center bg-dark-1 px-0 pb-10 pt-28 max-md:pb-32 sm:px-10 lg:px-52;
+    @apply flex min-h-screen flex-1 flex-col items-center bg-dark-1 px-0 pb-10 pt-28 max-md:pb-32 sm:px-10 lg:px-40;
   }
 
   /* Head Text */
@@ -89,19 +89,11 @@
   .rightsidebar {
     @apply sticky right-0 top-0 z-20 flex h-screen w-fit flex-col justify-between gap-12 overflow-auto border-l border-l-dark-4 bg-dark-1 px-7 pb-6 pt-28 max-xl:hidden;
   }
-}
 
-/* .avatar:not(:first-child) {
-  background-color: red;
-  padding: 3px;
-  margin-left: -20px!important;
-  -webkit-mask: radial-gradient(
-    circle 55px at 5px 50%,
-    transparent 99%,
-    #fff 100%
-  );
-  mask: radial-gradient(circle 55px at 5px 50%, transparent 99%, #fff 100%);
-} */
+  .icon-hover {
+    @apply hover:bg-light-gray p-1 rounded-full;
+  }
+}
 
 @layer utilities {
   .css-invert {
@@ -143,7 +135,7 @@
 
 /* Tab */
 .tab {
-  @apply flex min-h-[50px] flex-1 items-center gap-3 bg-dark-2 text-light-2 data-[state=active]:bg-[#0e0e12] data-[state=active]:text-light-2 !important;
+  @apply border-b-gray-6 flex min-h-[50px] flex-1 items-center  text-gray-6 data-[state=active]:text-white data-[state=active]:border-b-white border-2 border-transparent bg-dark-1 !important;
 }
 
 .no-focus {
@@ -160,7 +152,7 @@
 }
 
 .account-form_input {
-  @apply border border-dark-4 bg-dark-3 text-light-1 !important;
+  @apply border border-dark-4 text-white bg-light-gray placeholder:text-[#474349] !important;
 }
 
 /* Comment Form */

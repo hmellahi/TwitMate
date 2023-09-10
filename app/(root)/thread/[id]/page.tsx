@@ -1,5 +1,6 @@
 import ThreadCard from "@/components/forms/ThreadCard";
 import UserReplyInput from "@/components/forms/UserReplyInput";
+import { ThreadsList } from "@/components/shared/ThreadsList";
 import { fetchThread } from "@/lib/actions/thread.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { ThreadWithDetails } from "@/types/Thread";
@@ -27,15 +28,14 @@ export default async function page({ params }: { params: { id: string } }) {
     <div>
       <ThreadCard thread={thread} user={userInfo} path="/thread" />
       <UserReplyInput user={userInfo} parentThreadId={thread.id} />
-      <div className="mt-8">
-        {thread.childrens?.map((comment: Thread) => (
-          <ThreadCard
-            thread={comment}
-            user={userInfo}
-            isComment={true}
-            path="/thread"
-          />
-        ))}
+      <div className="mt-4">
+        <ThreadsList
+          user={userInfo}
+          threads={thread.childrens}
+          path="/thread"
+          isComment={true}
+          className=""
+        ></ThreadsList>
       </div>
     </div>
   );

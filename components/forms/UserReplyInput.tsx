@@ -45,10 +45,10 @@ export default function UserReplyInput({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 p-4 flex justify-between w-full mt-9 items-center"
+        className="space-y-0 p-4 flex justify-between w-full mt-4 items-center border-y-[1px] border-light-gray"
       >
         <div className="">
-          <div className="relative h-14 w-14 mt-8">
+          <div className="relative h-11 w-11 ">
             <Image
               src={userImage}
               fill

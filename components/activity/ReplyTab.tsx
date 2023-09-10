@@ -12,9 +12,13 @@ export default async function ReplyTab({ user }: { user: User }) {
   });
   if (!userReplies) return null;
   return (
-    <div className="flex flex-col gap-y-6 px-6  ">
+    <div className="flex flex-col gap-y-6 px-6 ">
       {userReplies.map((reply) => (
-        <Reply reply={reply} author={user} />
+        <Reply
+          reply={reply}
+          author={user}
+          className="border-b-2 border-light-gray pb-3"
+        />
       ))}
     </div>
   );

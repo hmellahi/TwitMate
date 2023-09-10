@@ -6,13 +6,10 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Heart, Reply, HeartFilled, Repost, Share } from "../svgs";
 import { ThreadWithDetails } from "@/types/Thread";
-import Lottie from "lottie-react";
-import heartReact from "@/components/animations/heart-react.json";
-import { formatDateString } from "@/lib/utils";
 import { timeAgo } from "@/lib/time-converter";
 import { UsersList } from "../community/UsersList";
-import { Thread } from "@prisma/client";
-import { classNames } from "uploadthing/client";
+import ThreadActions from "../shared/Thread/ThreadActions";
+import { MediaViewer } from "../ui/MediaViewer";
 
 export default function ThreadCard({
   thread,
@@ -20,6 +17,7 @@ export default function ThreadCard({
   isComment = false,
   path,
   className = "",
+  ...props
 }: {
   thread: ThreadWithDetails;
   user: any;
@@ -73,19 +71,19 @@ export default function ThreadCard({
 
   const LikeIcon = isUserLikedThread ? HeartFilled : Heart;
   const bg = isComment ? "bg-transparent" : "bg-dark-2d";
+  const threadImages = thread?.images?.map((image) => image.imageUrl);
+  console.log({ threadImages });
 
   return (
     <Link
       href={`/thread/${thread.id}`}
       onClick={(e) => e.stopPropagation()}
       className={className}
+      {...props}
     >
-      <div className={`${bg} text-white rounded-lg pb-4`}>
-        <div className="flex justify-between">
-          <div
-            className={`{
-              ${!isComment ? "pt-6 py-0" : ""} px-7 flex gap-3 relative`}
-          >
+      <div className={`${bg} text-white rounded-lg py-7`}>
+        <div className="flex justify-between items-start">
+          <div className={`px-7 flex gap-3 relative w-full bg-dred-300`}>
             <div className="flex flex-col items-center">
               <Link
                 href={`/profile/${author.id}`}
@@ -100,53 +98,62 @@ export default function ThreadCard({
               </Link>
               <div className="thread-card_bar" />
             </div>
-            <div>
-              <h3 className="mb-1 text-xl">
-                <Link
-                  href={`/profile/${author.id}`}
-                  className="relative h-11 w-11"
+            <div className="w-full">
+              <div className="flex justify-between w-full">
+                <h3 className="text-xl">
+                  <Link
+                    href={`/profile/${author.id}`}
+                    className="relative h-11 w-11"
+                  >
+                    {author?.username}
+                  </Link>
+                  <p className="whitespace-pre-line	text-small-regular font-light mt-1">
+                    {text}
+                  </p>
+                </h3>
+                <div
+                  className={`text-gray-2 mr-4 mt-3 flex gap-2 items-center `}
                 >
-                  {author?.username}
-                </Link>
-              </h3>
-              <p className="whitespace-pre-line	">{text}</p>
-              <div
-                className={`flex gap-2 mt-2 text-white items-center ${
-                  isComment && "pb-2"
-                }`}
-              >
-                <div className="hover:bg-light-gray rounded-full p-1  relative">
+                  {timeAgo(thread.createdAt)}{" "}
+                  {author.id === user.id && (
+                    <ThreadActions
+                      threadId={thread.id}
+                      authorId={author.id}
+                      path={path}
+                    />
+                  )}
+                </div>
+              </div>
+              {threadImages?.length > 0 && (
+                <MediaViewer
+                  className="mt-4"
+                  imageURLs={threadImages}
+                ></MediaViewer>
+              )}
+              <div className={`flex gap-2 mt-2 text-white items-center`}>
+                <div className="icon-hover relative">
                   <LikeIcon
                     width="25"
                     height="25"
-                    className="cursor-pointer 
-                    dhover:text-[rgba(241,77,77,.5)]"
+                    className="cursor-pointer"
                     onClick={reactToThread}
                   />
                 </div>
-                <div className="hover:bg-light-gray p-1 rounded-full">
+                <div className="icon-hover">
                   <Reply width="25" height="25" />
                 </div>
-                <div className="hover:bg-light-gray p-1 rounded-full">
+                <div className="icon-hover">
                   <Repost width="25" height="25" />
                 </div>
-                <div className="hover:bg-light-gray p-1 rounded-full">
+                <div className="icon-hover">
                   <Share width="25" height="25" />
                 </div>
               </div>
             </div>
           </div>
-          <div
-            className={`
-         text-gray-2 mr-4 ${!isComment ? "mt-4" : "-mt-2"}`}
-          >
-            {timeAgo(thread.createdAt)}
-          </div>
         </div>
         {(hasReplies || hasLikes) && (
           <div className="flex items-center">
-            {/* <div className="relative"> */}
-            {/* <div className="thread-card_bar absolute h-full pl-[3.25rem] w-0.5" /> */}
             <UsersList
               className="z-20 w-[7rem] justify-center"
               users={threadRepliers}

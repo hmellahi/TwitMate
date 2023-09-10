@@ -193,6 +193,7 @@ module.exports = {
         "gray-3": "#1A1A1A",
         "gray-4":"#B8B8B8",
         "gray-5":'#3F3F3F',
+        'gray-6':"#777777",
         'light-gray':'#1E1E1E',
         glassmorphism: "rgba(16, 16, 18, 0.60)",
       },

@@ -1,6 +1,7 @@
 // 'use client'
 
 import ThreadCard from "@/components/forms/ThreadCard";
+import { ThreadsList } from "@/components/shared/ThreadsList";
 import UserCard from "@/components/shared/UserCard";
 import SvgIcon from "@/components/ui/svgIcon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -68,7 +69,7 @@ export default async function profile({ params }: { params: { id: string } }) {
                 />
                 <p className="max-sm:hidden">{tab.label}</p>
                 {tab.value == "threads" && (
-                  <div className="bg-gray-600 px-3 py-1 box-shadow-count-badge rounded-md">
+                  <div className="ml-2 bg-gray-600 px-3 py-1 box-shadow-count-badge rounded-md">
                     {threads?.length}
                   </div>
                 )}
@@ -77,19 +78,7 @@ export default async function profile({ params }: { params: { id: string } }) {
           </TabsList>
           <div className="mt-10">
             <TabsContent value="threads">
-              {threads.length < 1 ? (
-                <div>no result</div>
-              ) : (
-                <div className="flex gap-4 flex-col">
-                  {threads.map((thread: Thread, index: number) => {
-                    return (
-                      <Link href={`/thread/${thread.id}`}>
-                        <ThreadCard key={index} thread={thread} user={user} />
-                      </Link>
-                    );
-                  })}
-                </div>
-              )}
+              <ThreadsList threads={threads} path="/profile" user={user} />
             </TabsContent>
             <TabsContent value="members">
               {threads.length < 1 ? (
@@ -98,7 +87,10 @@ export default async function profile({ params }: { params: { id: string } }) {
                 <div className="flex gap-4 flex-col">
                   {members.map((member: User, index: number) => {
                     return (
-                      <Link href={`/profile/${member.id}`}>
+                      <Link
+                        href={`/profile/${member.id}`}
+                        className="border-b-2 border-light-gray pb-3"
+                      >
                         <UserCard key={index} user={user} />
                       </Link>
                     );

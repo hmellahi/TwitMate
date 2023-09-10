@@ -15,8 +15,9 @@ export type ThreadWithDetails = Prisma.ThreadGetPayload<{
 
 export interface CreateThread {
   text: string;
-  communityId?: String;
-  parentId?: String;
-  userId: String;
+  communityId?: string;
+  parentId?: string;
+  userId: string;
   pathToRevalidate: string;
+  images: string[];
 }

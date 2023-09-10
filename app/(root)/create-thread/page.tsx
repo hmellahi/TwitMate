@@ -9,11 +9,12 @@ export default async function page() {
   const user = await currentUser();
   if (!user) return null;
   const userInfo = await fetchUser(user.id);
+  if (!userInfo) return null;
 
   return (
     <div>
       <h1 className="head-text">Create Thread</h1>
-      <PostThread userId={userInfo?.id} />
+      <PostThread userId={userInfo.id} postBtnClass="w-full" />
     </div>
   );
 }

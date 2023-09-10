@@ -1,4 +1,5 @@
 import {
+  OrganizationProfile,
   OrganizationSwitcher,
   SignOutButton,
   SignedIn,
@@ -15,8 +16,7 @@ export default function AppHeader() {
         Threads
       </div>
 
-      <div className="flex gap-5 items-center">
-        {/* <UserButton afterSignOutUrl="/" /> */}
+      <div className="flex gap-5 items-center lg:mr-[25rem]">
         <OrganizationSwitcher
           appearance={{
             baseTheme: dark,
@@ -25,6 +25,7 @@ export default function AppHeader() {
             },
           }}
         />
+        {/* <OrganizationProfile routing="path" path="/" /> */}
         <div className="block md:hidden">
           <SignedIn>
             <SignOutButton>

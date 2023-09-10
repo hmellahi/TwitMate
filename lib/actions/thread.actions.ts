@@ -11,22 +11,35 @@ export async function createThread({
   text,
   parentId,
   pathToRevalidate,
+  images,
 }: CreateThread) {
-  const newThread = {
-    authorId: userId,
-    communityId,
-    text,
-    parentId: parentId || null,
-  };
-
   try {
-    const updateThread = await prisma.thread.create({
-      data: newThread,
+    // Create a new thread
+    const newThread = await prisma.thread.create({
+      data: {
+        authorId: userId,
+        communityId,
+        text,
+        parentId: parentId || null,
+      },
     });
+
+    // Save thread images
+    if (images && images.length > 0) {
+      for (const imageUrl of images) {
+        await prisma.threadImages.create({
+          data: {
+            imageUrl,
+            userId,
+            threadId: newThread.id,
+          },
+        });
+      }
+    }
 
     revalidatePath(pathToRevalidate);
 
-    return updateThread;
+    return newThread;
   } catch (error: any) {
     console.log(error);
     throw error;
@@ -40,10 +53,12 @@ export async function fetchThread({ threadId }: { threadId: string }) {
       include: {
         author: true,
         likes: true,
+        images: true,
         childrens: {
           include: {
             author: true,
             likes: true,
+            images: true,
             childrens: {
               select: {
                 author: true,
@@ -88,6 +103,7 @@ export async function fetchThreads({
         include: {
           author: true,
           likes: true,
+          images: true,
           childrens: {
             select: {
               author: true,
@@ -227,19 +243,28 @@ export async function unLikeThread({
   }
 }
 
-// let userReplies = await prisma.user.findMany({
-//   where: {
-//     id: userId,
-//   },
-//   select: {
-//     threads: {
-//       select: {
-//         author: true,
-//         createdAt: true,
-//       },
-//     },
-//   },
-// });
+export async function deleteThread({
+  authorId,
+  threadId,
+  path,
+}: {
+  authorId: string;
+  threadId: string;
+  path: string;
+}) {
+  try {
+    console.log({ threadId, authorId, path });
+    await prisma.thread.delete({
+      where: {
+        id: threadId,
+        authorId,
+      },
+    });
+    revalidatePath(path);
+  } catch (e) {
+    throw e;
+  }
+}
 
 export async function getUserReplies({
   userId,
@@ -256,15 +281,17 @@ export async function getUserReplies({
           parentId: null,
         },
       },
-      select: {
-        id: true,
-        createdAt: true,
+      include: {
+        // id: true,
+        // createdAt: true,
+        // parentId: true,
+        // text: true,
+        author: true,
       },
     });
     revalidatePath(path);
     return userReplies;
   } catch (e) {
-    console.log(e);
-    // throw e;
+    throw e;
   }
 }

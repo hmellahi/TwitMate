@@ -7,14 +7,16 @@ export function ThreadsList({
   user,
   path,
   className = "",
+  isComment = false,
 }: {
   threads: Thread[];
   user: User;
   path: string;
   className?: string;
+  isComment?: boolean;
 }) {
   return (
-    <div className={`text-white flex gap-0 flex-col ${className}`}>
+    <div className={`text-white flex flex-col ${className}`}>
       {threads.length < 1 ? (
         <div>no result</div>
       ) : (
@@ -25,6 +27,7 @@ export function ThreadsList({
               thread={thread}
               user={user}
               path={path}
+              isComment={isComment}
               className="border-b-[.01px] border-[#2A2C2E]"
             />
           );

@@ -3,19 +3,19 @@ import Image from "next/image";
 import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { formatDateString } from "@/lib/utils";
+import { timeAgo } from "@/lib/time-converter";
 
-export default function Reply({
-  reply,
-  author,
+export default function Activity({
+  activity,
   isSmall = false,
-  className= ""
+  className,
 }: {
-  reply: Thread;
-  author?: User;
+  activity: Thread;
   isSmall?: boolean;
-  className:string
+  className: string;
 }) {
-  if (!author) author = reply.author;
+  const author = activity.user;
   return (
     <div
       className={`flex justify-between text-white items-center ${className}`}
@@ -36,12 +36,15 @@ export default function Reply({
           <div className="flex items-center">
             <p className={isSmall ? "text-small-medium" : ""}>{author.name} </p>
             <div className="rounded-full w-1 h-1 bg-[#A0A0A0] ml-2"></div>
-            <span className="text-gray-4 ml-2">2d</span>
+            <span className="text-gray-4 ml-2">
+              {" "}
+              {timeAgo(activity.createdAt)}
+            </span>
           </div>
           <p className="text-gray-4 text-base-regular">
-            Replied to
+            {activity.type === "like" ? "liked" : "replied to"} your
             <Link
-              href={`/thread/${reply.parentId}`}
+              href={`/thread/${activity.threadId}`}
               className="text-primary-500 text-bold"
             >
               {" "}
@@ -50,7 +53,7 @@ export default function Reply({
           </p>
         </div>
       </div>
-      <Link href={`/thread/${reply.parentId}`}>
+      <Link href={`/thread/${activity.threadId}`}>
         <Button className={`px-8 ${isSmall && "text-small-medium"}`}>
           View
         </Button>

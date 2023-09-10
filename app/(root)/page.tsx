@@ -1,6 +1,7 @@
 import { fetchThreads } from "@/lib/actions/thread.actions";
 import { currentUser } from "@clerk/nextjs";
 import { ThreadsList } from "../../components/shared/ThreadsList";
+import PostThread from "@/components/forms/PostThread";
 
 export default async function Home() {
   const user = await currentUser();
@@ -11,11 +12,17 @@ export default async function Home() {
   });
 
   return (
-    <ThreadsList
-      user={user}
-      threads={threads}
-      path="/"
-      className=""
-    ></ThreadsList>
+    <>
+      <div>
+        <h1 className="head-text">Create Thread</h1>
+        <PostThread userId={user?.id} />
+      </div>
+      <ThreadsList
+        user={user}
+        threads={threads}
+        path="/"
+        className=""
+      ></ThreadsList>
+    </>
   );
 }

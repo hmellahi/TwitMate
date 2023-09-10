@@ -18,7 +18,7 @@ export default async function ProfileTabs({
   user: User;
 }) {
   return (
-    <Tabs defaultValue="threads" className="w-full">
+    <Tabs defaultValue="threads" className="w-full ">
       <TabsList className="w-full flex justify-between text-center tab">
         {profileTabs.map((tab, index) => (
           <TabsTrigger value={tab.value} className="tab" key={index}>
@@ -26,12 +26,12 @@ export default async function ProfileTabs({
               width={30}
               height={30}
               alt="tab"
-              className="object-contain text-white"
+              className="object-contain"
               iconName={tab.value}
             />
-            <p className="max-sm:hidden">{tab.label}</p>
+            <p className="max-sm:hidden ml-1">{tab.label}</p>
             {tab.value == "threads" && (
-              <div className="bg-gray-600 px-3 py-1 box-shadow-count-badge rounded-md">
+              <div className="ml-2 bg-gray-600 px-3 py-1 box-shadow-count-badge rounded-md">
                 {threads?.length}
               </div>
             )}
@@ -40,21 +40,6 @@ export default async function ProfileTabs({
       </TabsList>
       <div className="mt-10">
         <TabsContent value="threads">
-          {/* {threads.length < 1 ? (
-            <div>no result</div>
-          ) : (
-            <div className="flex gap-4 flex-col">
-              {threads.map((thread: Thread, index: number) => {
-                return (
-                  <ThreadCard
-                    key={index}
-                    thread={thread}
-                    user={user}
-                    path="/profile"
-                  />
-                );
-              })}
-            </div> */}
           <ThreadsList threads={threads} path="/profile" user={user} />
         </TabsContent>
         <TabsContent value="replies">
