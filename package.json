@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "postinstall": "prisma generate",
-    "dev": "next dev",
+    "dev": "next dev ",
     "build": "prisma generate && next build",
-    "start": "next start -p 8080",
+    "start": "next start -p 3000",
     "lint": "next lint",
     "type-check": "tsc"
   },
