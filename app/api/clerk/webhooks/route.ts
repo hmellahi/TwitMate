@@ -66,24 +66,16 @@ export const POST = async (request: Request) => {
   if (eventType === "organization.created") {
     // Resource: https://clerk.com/docs/reference/backend-api/tag/Organizations#operation/CreateOrganization
     // Show what evnt?.data sends from above resource
-    const { id, name, slug, logo_url, image_url, created_by } =
-      evnt?.data || {};
+    const { id, name, slug, imageUrl, created_by } = evnt?.data || {};
 
-    const communityData = {
-      id: id?.toString(),
-      name: name?.toString(),
-      slug: slug || "",
-      image: logo_url?.toString() || image_url?.toString(),
-      bio: "",
-      createdBy: created_by?.toString(),
-    };
+    console.log({data: evnt?.data})
 
     try {
       await createCommunity({
         id: id?.toString(),
         name: name?.toString(),
         slug: slug.toString(),
-        image: logo_url?.toString() || image_url?.toString(),
+        image: imageUrl?.toString(),
         bio: "",
         createdBy: created_by?.toString(),
       });
@@ -178,11 +170,11 @@ export const POST = async (request: Request) => {
     try {
       // Resource: https://clerk.com/docs/reference/backend-api/tag/Organizations#operation/UpdateOrganization
       // Show what evnt?.data sends from above resource
-      const { id, logo_url, name, slug, bio } = evnt?.data;
+      const { id, image_url, name, slug, bio } = evnt?.data;
       console.log("updated", { data: evnt?.data });
 
       // @ts-ignore
-      await updateCommunityInfo({ id, name, slug, logo_url, bio });
+      await updateCommunityInfo({ id, name, slug, image: image_url, bio });
 
       return NextResponse.json({ message: "Member removed" }, { status: 201 });
     } catch (err) {

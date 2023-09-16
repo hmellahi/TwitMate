@@ -117,23 +117,14 @@ export default function AccountProfile({
           render={({ field }) => (
             <FormItem className="flex items-center gap-5">
               <FormLabel className="account-form_image-label rounded-full">
-                {field.value ? (
+                <div className="w-24 h-24 relative">
                   <Image
                     src={field.value}
-                    width="96"
-                    height="96"
                     alt="avatar"
-                    className="rounded-full object-contain"
+                    className="object-cover rounded-full"
+                    fill
                   />
-                ) : (
-                  <Image
-                    src="/assets/profile.svg"
-                    width="96"
-                    height="96"
-                    alt="avatar"
-                    className="rounded-full"
-                  />
-                )}
+                </div>
               </FormLabel>
               <FormControl className="text-gray-200 text-base-semibold flex-1">
                 <>

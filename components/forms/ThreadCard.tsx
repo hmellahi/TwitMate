@@ -3,13 +3,16 @@
 import { likeThread, unLikeThread } from "@/lib/actions/thread.actions";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Heart, Reply, HeartFilled, Repost, Share } from "../svgs";
 import { ThreadWithDetails } from "@/types/Thread";
 import { timeAgo } from "@/lib/time-converter";
 import { UsersList } from "../community/UsersList";
 import ThreadActions from "../shared/Thread/ThreadActions";
 import { MediaViewer } from "../ui/MediaViewer";
+import { User } from "@prisma/client";
+import { showLikesCount } from "@/lib/utils";
+import { debounce } from "@/lib/debounce";
 
 export default function ThreadCard({
   thread,
@@ -28,14 +31,14 @@ export default function ThreadCard({
   const { text, author } = thread;
   const userLikeId = thread?.likes?.find((like) => like.userId === user.id)?.id;
   const isLikedByCurrentUser = userLikeId != undefined;
-  const threadRepliers: ThreadWithDetails[] = [];
+  const threadRepliers: User[] = [];
   const uniqueAuthors: { [id: string]: string } = {};
 
   thread.childrens.forEach((subThread: ThreadWithDetails) => {
     if (subThread?.author?.id) {
-      const authorId = subThread.authorId;
+      const authorId = subThread.author.id;
       if (!uniqueAuthors[authorId]) {
-        uniqueAuthors[authorId] = subThread.authorId;
+        uniqueAuthors[authorId] = authorId;
         threadRepliers.push(subThread.author);
       }
     }
@@ -44,13 +47,9 @@ export default function ThreadCard({
   const [isUserLikedThread, setisUserLikedThread] =
     useState(isLikedByCurrentUser);
 
-  async function reactToThread(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    setisUserLikedThread(!isUserLikedThread);
-    let reactToThreadDebounce = setTimeout(async () => {
-      clearTimeout(reactToThreadDebounce);
+  // Debounce the saveUserReaction function
+  const debouncedSaveUserReaction = debounce(
+    async (isUserLikedThread: boolean) => {
       if (isUserLikedThread) {
         await unLikeThread({ likeId: userLikeId, path });
       } else {
@@ -60,22 +59,42 @@ export default function ThreadCard({
           path,
         });
       }
-    }, 600); // 300ms
+    },
+    200
+  ); // 1000ms debounce interval
+
+  // Use useCallback to memoize the debounced function
+  const memoizedDebouncedSaveUserReaction = useCallback(
+    debouncedSaveUserReaction,
+    []
+  );
+
+  // Update reactToThread to call the memoized debounced function
+  async function reactToThread(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setisUserLikedThread(!isUserLikedThread);
+
+    // memoizedDebouncedSaveUserReaction(); // Call the memoized debounced function
+    memoizedDebouncedSaveUserReaction(isUserLikedThread);
   }
 
   const hasReplies = thread?.childrens?.length > 0;
-  const hasLikes = thread?.likes?.length > 0;
+  let likesCount = +isUserLikedThread + thread?.likes.length - 1;
+  if (isUserLikedThread && likesCount == 0) likesCount = 1;
+  const hasLikes = likesCount > 0;
 
   const LikeIcon = isUserLikedThread ? HeartFilled : Heart;
   const bg = isComment ? "bg-transparent" : "bg-dark-2d";
   const threadImages = thread?.images?.map((image) => image.imageUrl);
 
   return (
-    <div className={`${bg} ${className} text-white rounded-lg py-7`}>
+    <div className={`${bg} ${className} text-white py-7 px-0 sm:px-2 `}>
       <div className="flex justify-between items-start">
-        <div className={`px-7 flex gap-3 relative w-full bg-dred-300`}>
+        <div className={`flex gap-3 relative w-full bg-dred-300`}>
           <div className="flex flex-col items-center">
-            <Link href={`/profile/${author.id}`} className="relative h-10 w-10">
+            <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
               <Image
                 src={author.image || ""}
                 alt="avatar"
@@ -86,28 +105,33 @@ export default function ThreadCard({
             <div className="thread-card_bar" />
           </div>
           <div className="w-full">
-            <div className="flex justify-between w-full">
-              <h3 className="text-xl">
-                <Link
-                  href={`/profile/${author.id}`}
-                  className="relative h-11 w-11"
+            <div className="w-full">
+              <div className="flex justify-between w-full items-start ">
+                <div className="w-full">
+                  <Link
+                    href={`/profile/${author.id}`}
+                    className="relative h-11 w-11"
+                  >
+                    {author?.username}
+                  </Link>
+                </div>
+
+                <div
+                  className={`text-gray-2 text-small-regular mr-0 sm:mr-4 flex gap-2 items-center -mt-[.3rem] `}
                 >
-                  {author?.username}
-                </Link>
-                <p className="whitespace-pre-line	text-small-regular font-light mt-1">
-                  {text}
-                </p>
-              </h3>
-              <div className={`text-gray-2 mr-4 mt-3 flex gap-2 items-center `}>
-                {timeAgo(thread.createdAt)}{" "}
-                {author.id === user.id && (
-                  <ThreadActions
-                    threadId={thread.id}
-                    authorId={author.id}
-                    path={path}
-                  />
-                )}
+                  {timeAgo(thread.createdAt)}
+                  {author.id === user.id && (
+                    <ThreadActions
+                      threadId={thread.id}
+                      authorId={author.id}
+                      path={path}
+                    />
+                  )}
+                </div>
               </div>
+              <p className="whitespace-pre-line	text-small-regular font-light mt-1">
+                {text}
+              </p>
             </div>
             {threadImages?.length > 0 && (
               <MediaViewer
@@ -146,19 +170,19 @@ export default function ThreadCard({
       {(hasReplies || hasLikes) && (
         <div className="flex items-center">
           <UsersList
-            className="z-20 w-[7rem] justify-center"
+            className="z-20 w-[3.7rem] justify-center"
             users={threadRepliers}
             width={15}
             height={15}
           ></UsersList>
-          <div className="text-[#A0A0A0] flex items-center gap-x-2 -ml-6">
+          <div className="text-[#A0A0A0] flex items-center gap-x-2 ">
             {hasReplies && (
               <>
                 <p>{thread?.childrens?.length} replies</p>
                 <div className="rounded-full w-1 h-1 bg-[#A0A0A0]"></div>
               </>
             )}
-            {thread?.likes?.length} likes
+            {showLikesCount(likesCount)}
           </div>
         </div>
       )}

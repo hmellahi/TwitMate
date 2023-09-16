@@ -8,37 +8,34 @@ export default function Reply({
   reply,
   author,
   isSmall = false,
-  className= ""
+  className = "",
 }: {
   reply: Thread;
   author?: User;
   isSmall?: boolean;
-  className:string
+  className: string;
 }) {
   if (!author) author = reply.author;
   return (
     <div
       className={`flex justify-between text-white items-center ${className}`}
     >
-      <div className="flex gap-5 items-center">
-        {author.image ? (
+      <div className="flex gap-3 items-center">
+        <div className="w-12 h-12 relative">
           <Image
-            width="49"
-            height="40"
+            fill
             alt="avatar"
             src={author.image}
             className="cursor-pointer object-contadin rounded-full"
           />
-        ) : (
-          <></>
-        )}
+        </div>
         <div>
           <div className="flex items-center">
             <p className={isSmall ? "text-small-medium" : ""}>{author.name} </p>
             <div className="rounded-full w-1 h-1 bg-[#A0A0A0] ml-2"></div>
             <span className="text-gray-4 ml-2">2d</span>
           </div>
-          <p className="text-gray-4 text-base-regular">
+          <p className="text-gray-4 text-small-regular sm:text-base-regular">
             Replied to
             <Link
               href={`/thread/${reply.parentId}`}

@@ -7,7 +7,10 @@ export default function MediaUploader({ images, setImages }) {
   const [imageURLs, setImagesURLs] = useState<Array<string>>([]);
 
   useEffect(() => {
-    if (images.length < 1 || images.length > 3) return;
+    if (images.length < 1 || images.length > 3) {
+      setImagesURLs([]);
+      return;
+    }
     const newImageURLs: Array<string> = [];
     images.forEach((image) => newImageURLs.push(URL.createObjectURL(image)));
     setImagesURLs(newImageURLs);
@@ -21,7 +24,7 @@ export default function MediaUploader({ images, setImages }) {
       {imageURLs.length && (
         <MediaViewer className="mb-5" imageURLs={imageURLs}></MediaViewer>
       )}
-      <Label htmlFor="post" className="cursor-pointer !m-0 !p-0" >
+      <Label htmlFor="post" className="cursor-pointer !m-0 !p-0">
         <Create width={25} height={25} />
       </Label>
       <input

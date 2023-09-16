@@ -11,6 +11,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@clerk/clerk-sdk-node": "^4.12.5",
     "@clerk/nextjs": "^4.23.2",
     "@clerk/themes": "^1.7.5",
     "@hookform/resolvers": "^3.3.1",

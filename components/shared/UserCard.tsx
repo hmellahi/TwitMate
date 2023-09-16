@@ -7,28 +7,25 @@ import Link from "next/link";
 export default function UserCard({
   user,
   isSmall = false,
-  className = ""
+  className = "",
 }: {
   user: User;
   isSmall?: boolean;
-  className:string
+  className: string;
 }) {
   return (
-    <div className={`flex justify-between text-white items-center ${className}`}>
-      <div className="flex gap-2 items-center">
-        {user.image ? (
-          <Link href={`/profile/${user.id}`}>
-            <Image
-              width="49"
-              height="40"
-              alt="avatar"
-              src={user.image}
-              className="cursor-pointer object-contadin rounded-full"
-            />
-          </Link>
-        ) : (
-          <></>
-        )}
+    <div
+      className={`flex justify-between text-white items-center ${className}`}
+    >
+      <div className="flex gap-4 items-center">
+        <Link href={`/profile/${user.id} `} className="h-12 w-12 relative">
+          <Image
+            fill
+            alt="avatar"
+            src={user.image}
+            className="cursor-pointer object-contadin rounded-full"
+          />
+        </Link>
         <div>
           <p className={isSmall ? "text-small-medium" : ""}>{user.name}</p>
           <p className="text-gray-300 text-small-medium">@{user.username}</p>

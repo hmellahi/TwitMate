@@ -26,9 +26,11 @@ import useAutosizeTextArea from "@/lib/hooks/useAutosizeTextArea";
 export default function PostThread({
   userId,
   postBtnClass = "",
+  redirectUrl,
 }: {
   userId: string;
   postBtnClass: string;
+  redirectUrl?: string;
 }) {
   const router = useRouter();
   // const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -64,8 +66,12 @@ export default function PostThread({
         images: uploadedImagesUrls,
       });
 
+      if (redirectUrl) {
+        router.push("/");
+      }
       form.setValue("text", "");
-      router.push("/");
+      setThreadImages([]);
+      console.log({ redirectUrl });
     } catch (e) {
       console.log(e);
     }

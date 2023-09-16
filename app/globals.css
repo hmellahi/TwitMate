@@ -5,7 +5,7 @@
 @layer components {
   /* main */
   .main-container {
-    @apply flex min-h-screen flex-1 flex-col items-center bg-dark-1 px-0 pb-10 pt-28 max-md:pb-32 sm:px-10 lg:px-40;
+    @apply flex min-h-screen flex-1 flex-col items-center bg-dark-1 pb-10 pt-28 max-md:pb-32 px-6 sm:px-10 sm:max-w-2xl;
   }
 
   /* Head Text */
@@ -144,7 +144,7 @@
 
 /* Account Profile  */
 .account-form_image-label {
-  @apply flex h-24 w-24 items-center justify-center rounded-full bg-dark-4 !important;
+  @apply flex h-24 w-24 items-center justify-center bg-dark-4 p-0 m-0 !important;
 }
 
 .account-form_image-input {

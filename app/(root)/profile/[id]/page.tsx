@@ -23,14 +23,15 @@ export default async function profile({ params }: { params: { id: string } }) {
       <div className="text-white flex gap-y-4 gap-x-8 flex-col">
         <div className="mx-0">
           <div className="flex gap-4 mb-10 justify-between">
-            <div>
-              <Image
-                src={user.image}
-                width={70}
-                height={70}
-                alt="pdp"
-                className="rounded-full"
-              />
+            <div className="flex gap-4 items-start">
+              <div className="relative h-20 w-20">
+                <Image
+                  src={user.image}
+                  alt="avatar"
+                  fill
+                  className="cursor-pointer rounded-full"
+                ></Image>
+              </div>
               <div>
                 <p className="text-heading3-bold font-bold capitalize">
                   {user.username}
@@ -41,9 +42,9 @@ export default async function profile({ params }: { params: { id: string } }) {
             <div>
               {user.id == loggedInUser?.id && (
                 <Link href="/settings">
-                  <Button className="flex h-auto text-dark-1 items-center gap-2">
+                  <Button className="flex h-auto text-dark-1 items-center gap-2 sm:!p-3">
                     <Edit width={20} height={20} />
-                    Edit Profile
+                    <span className="hidden sm:inline">Edit Profile</span>
                   </Button>
                 </Link>
               )}

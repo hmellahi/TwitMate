@@ -20,18 +20,15 @@ export default function Activity({
     <div
       className={`flex justify-between text-white items-center ${className}`}
     >
-      <div className="flex gap-5 items-center">
-        {author.image ? (
+      <div className="flex gap-2 items-center">
+        <div className="w-12 h-12 relative">
           <Image
-            width="49"
-            height="40"
+            fill
             alt="avatar"
             src={author.image}
             className="cursor-pointer object-contadin rounded-full"
           />
-        ) : (
-          <></>
-        )}
+        </div>
         <div>
           <div className="flex items-center">
             <p className={isSmall ? "text-small-medium" : ""}>{author.name} </p>
@@ -41,7 +38,7 @@ export default function Activity({
               {timeAgo(activity.createdAt)}
             </span>
           </div>
-          <p className="text-gray-4 text-base-regular">
+          <p className="text-gray-4 text-small-regular sm:text-base-regular">
             {activity.type === "like" ? "liked" : "replied to"} your
             <Link
               href={`/thread/${activity.threadId}`}

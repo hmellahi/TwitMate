@@ -19,14 +19,14 @@ export default async function ProfileTabs({
 }) {
   return (
     <Tabs defaultValue="threads" className="w-full ">
-      <TabsList className="w-full flex justify-between text-center tab">
+      <TabsList className="w-full flex justify-between text-center tab p-0 gap-0 rounded-none">
         {profileTabs.map((tab, index) => (
           <TabsTrigger value={tab.value} className="tab" key={index}>
             <SvgIcon
               width={30}
               height={30}
               alt="tab"
-              className="object-contain"
+              className="object-cover"
               iconName={tab.value}
             />
             <p className="max-sm:hidden ml-1">{tab.label}</p>
