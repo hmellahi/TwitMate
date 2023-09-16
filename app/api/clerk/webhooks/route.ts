@@ -68,6 +68,8 @@ export const POST = async (request: Request) => {
     // Show what evnt?.data sends from above resource
     const { id, name, slug, imageUrl, created_by } = evnt?.data || {};
 
+    console.log({data: evnt?.data})
+
     try {
       await createCommunity({
         id: id?.toString(),
