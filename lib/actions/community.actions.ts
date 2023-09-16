@@ -1,6 +1,7 @@
 import { Community, User } from "@prisma/client";
 import { prisma } from "../prisma";
 import { UserNotMemberError } from "../errors/community.errors";
+import { revalidatePath } from "next/cache";
 
 interface addCommunity {
   id: string;
@@ -66,6 +67,7 @@ async function addMemberToCommunity({
       include: { members: true },
     });
 
+    revalidatePath('/communities')
     return updatedCommunity;
   } catch (error: any) {
     if (
@@ -83,6 +85,7 @@ async function createCommunity(newCommunity: addCommunity) {
     await prisma.community.create({
       data: newCommunity,
     });
+    revalidatePath('/communities')
   } catch (error) {
     throw new Error(`Failed to create the community: ${error.message}`);
   }
@@ -107,6 +110,7 @@ async function deleteCommunity(communityId: string) {
     await prisma.community.delete({
       where: { id: communityId },
     });
+    revalidatePath('/communities')
   } catch (error) {
     throw new Error(`Failed to delete the community: ${error.message}`);
   }
@@ -145,6 +149,7 @@ async function removeUserFromCommunity({
       data: { members: { disconnect: { id: userId } } },
       include: { members: true },
     });
+    revalidatePath('/communities')
 
     return updatedCommunity;
   } catch (error) {
@@ -165,6 +170,8 @@ async function updateCommunityInfo(
       data: communityUpdateData,
       include: { members: true },
     });
+
+    revalidatePath('/communities')
 
     return updatedCommunity;
   } catch (error) {
