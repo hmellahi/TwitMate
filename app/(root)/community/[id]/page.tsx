@@ -40,13 +40,14 @@ export default async function profile({ params }: { params: { id: string } }) {
     <div>
       <div className="text-white flex gap-y-4 gap-x-8 flex-col">
         <div className="flex gap-4">
-          <Image
-            src={community.image}
-            width={70}
-            height={70}
-            alt="pdp"
-            className="rounded-full"
-          />
+          <div className="h-20 w-20 relative">
+            <Image
+              fill
+              alt="avatar"
+              src={community.image}
+              className="cursor-pointer object-contadin rounded-full"
+            />
+          </div>
           <div>
             <p className="text-heading3-bold font-bold capitalize">
               {community.name}
@@ -65,7 +66,7 @@ export default async function profile({ params }: { params: { id: string } }) {
                   width={30}
                   height={30}
                   alt="tab"
-                  className="object-contain"
+                  className="object-cover"
                 />
                 <p className="max-sm:hidden">{tab.label}</p>
                 {tab.value == "threads" && (
@@ -86,7 +87,13 @@ export default async function profile({ params }: { params: { id: string } }) {
               ) : (
                 <div className="flex gap-4 flex-col">
                   {members.map((member: User, index: number) => {
-                    return <UserCard key={index} user={user} className="border-b-2 border-light-gray pb-3"/>;
+                    return (
+                      <UserCard
+                        key={index}
+                        user={user}
+                        className="border-b-2 border-light-gray pb-3"
+                      />
+                    );
                   })}
                 </div>
               )}

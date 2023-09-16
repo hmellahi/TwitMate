@@ -66,24 +66,14 @@ export const POST = async (request: Request) => {
   if (eventType === "organization.created") {
     // Resource: https://clerk.com/docs/reference/backend-api/tag/Organizations#operation/CreateOrganization
     // Show what evnt?.data sends from above resource
-    const { id, name, slug, logo_url, image_url, created_by } =
-      evnt?.data || {};
-
-    const communityData = {
-      id: id?.toString(),
-      name: name?.toString(),
-      slug: slug || "",
-      image: logo_url?.toString() || image_url?.toString(),
-      bio: "",
-      createdBy: created_by?.toString(),
-    };
+    const { id, name, slug, imageUrl, created_by } = evnt?.data || {};
 
     try {
       await createCommunity({
         id: id?.toString(),
         name: name?.toString(),
         slug: slug.toString(),
-        image: logo_url?.toString() || image_url?.toString(),
+        image: imageUrl?.toString(),
         bio: "",
         createdBy: created_by?.toString(),
       });

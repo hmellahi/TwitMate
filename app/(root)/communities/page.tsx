@@ -39,7 +39,7 @@ export default async function page({
         route="communities"
         placeholder="Community Name"
       ></SearchInput>
-      <div className="flex gap-6 mt-10 flex-wrap items-center">
+      <div className="flex gap-6 mt-10 flex-wrap items-center justify-center jdustify-start">
         {communities?.map((community: Community, index: number) => (
           <CommunityCard
             key={index}

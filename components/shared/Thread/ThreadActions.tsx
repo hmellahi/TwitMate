@@ -43,8 +43,8 @@ export default function ThreadActions({
     // </DropdownMenu>
     <div className="icon-hover">
       <Delete
-        width={22}
-        height={22}
+        width={19}
+        height={19}
         className="text-red-500"
         onClick={removeThread}
       />

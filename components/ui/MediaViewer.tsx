@@ -10,11 +10,11 @@ export function MediaViewer({
 }) {
   return (
     <div
-      className={`w-full h-[22rem] relative flex itemds-center ${className}`}
+      className={`w-full h-[22rem] relative flex ${className} rounded-md`}
       {...props}
     >
       {imageURLs.map((imageSrc, index) => (
-        <div key={index} className="object-contain rounded-lg">
+        <div key={index} className="object-cover rounded-lg">
           <Image
             src={imageSrc}
             fill

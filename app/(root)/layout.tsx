@@ -12,8 +12,6 @@ export const metadata = {
   title: "Threads",
 };
 
-const inter = Inter({ subsets: ["latin"] });
-
 export default async function AuthLayout({
   children,
 }: {
@@ -30,11 +28,9 @@ export default async function AuthLayout({
 
   return (
     <ClerkProvider>
-      <div
-        className={`xl:px-[8rem] 2xl:px-[13rem] bg-dark-1 ${inter.className}`}
-      >
+      <div className={`sm:px-[2rem] md:px-[2rem] xl:px-[6rem] 2xl:px-[13rem] bg-dark-1`}>
         <AppHeader />
-        <main className="flex">
+        <main className="flex items-start justify-center">
           <LeftSidebar currentUser={user} />
           <section className="main-container">
             <div className="w-full">{children}</div>

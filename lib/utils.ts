@@ -57,3 +57,15 @@ export const camelToSnakeCase = (str: string) => {
   var result = str.replace(/([A-Z])/g, " $1");
   return result.split(" ").join("_").toLowerCase().substring(1);
 };
+
+export const showLikesCount = (likesCount: number) => {
+  if (likesCount <= 0) {
+    return "";
+  }
+
+  if (likesCount === 1) {
+    return `${likesCount} like`;
+  }
+
+  return `${likesCount} likes`;
+};

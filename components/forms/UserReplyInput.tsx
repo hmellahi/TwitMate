@@ -53,7 +53,7 @@ export default function UserReplyInput({
               src={userImage}
               fill
               alt="avatar"
-              className="rounded-full object-contain"
+              className="rounded-full object-cover"
             />
           </div>
         </div>

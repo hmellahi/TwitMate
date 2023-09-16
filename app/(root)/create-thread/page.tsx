@@ -2,7 +2,6 @@
 import PostThread from "@/components/forms/PostThread";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
-import { User } from "@clerk/nextjs/server";
 import React from "react";
 
 export default async function page() {
@@ -14,7 +13,7 @@ export default async function page() {
   return (
     <div>
       <h1 className="head-text">Create Thread</h1>
-      <PostThread userId={userInfo.id} postBtnClass="w-full" />
+      <PostThread userId={userInfo.id} postBtnClass="w-full" redirectUrl="/" />
     </div>
   );
 }
