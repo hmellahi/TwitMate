@@ -14,6 +14,7 @@ interface UpdateUser {
 }
 import Clerk from "@clerk/clerk-sdk-node/esm/instance";
 
+// TODO REMOVE
 const clerk = new Clerk({ secretKey: process.env.CLERK_SECRET_KEY });
 console.log({ clerk });
 
@@ -80,9 +81,11 @@ export async function fetchUser(userId: string) {
 export async function fetchUsers({
   userId,
   searchKeyword = "",
+  limit
 }: {
   userId: string;
   searchKeyword?: string;
+  limit:number
 }) {
   try {
     let users = await prisma.user.findMany({
@@ -106,6 +109,7 @@ export async function fetchUsers({
       orderBy: {
         createdAt: "desc",
       },
+      take: limit
     });
     return users;
   } catch (error: any) {

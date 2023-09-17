@@ -1,6 +1,10 @@
 import { Community, User } from "@prisma/client";
 import { prisma } from "../prisma";
-import { UserNotMemberError } from "../errors/community.errors";
+import {
+  CommunityNotFoundError,
+  UserAlreadyMemberError,
+  UserNotMemberError,
+} from "../errors/community.errors";
 import { revalidatePath } from "next/cache";
 
 interface addCommunity {
@@ -18,20 +22,6 @@ interface updateCommunity {
   image: string | null;
   slug: string;
   bio: string | null;
-}
-
-class CommunityNotFoundError extends Error {
-  constructor() {
-    super("Community not found");
-    this.name = "CommunityNotFoundError";
-  }
-}
-
-class UserAlreadyMemberError extends Error {
-  constructor() {
-    super("User is already a member of the community");
-    this.name = "UserAlreadyMemberError";
-  }
 }
 
 async function addMemberToCommunity({
@@ -67,7 +57,7 @@ async function addMemberToCommunity({
       include: { members: true },
     });
 
-    revalidatePath('/communities')
+    revalidatePath("/communities");
     return updatedCommunity;
   } catch (error: any) {
     if (
@@ -85,7 +75,7 @@ async function createCommunity(newCommunity: addCommunity) {
     await prisma.community.create({
       data: newCommunity,
     });
-    revalidatePath('/communities')
+    revalidatePath("/communities");
   } catch (error) {
     throw new Error(`Failed to create the community: ${error.message}`);
   }
@@ -95,9 +85,9 @@ async function fetchCommunity({ communityId }: { communityId: string }) {
   try {
     const community = await prisma.community.findFirst({
       where: { id: communityId },
-      include:{
-        members:true
-      }
+      include: {
+        members: true,
+      },
     });
     return community;
   } catch (error) {
@@ -110,7 +100,7 @@ async function deleteCommunity(communityId: string) {
     await prisma.community.delete({
       where: { id: communityId },
     });
-    revalidatePath('/communities')
+    revalidatePath("/communities");
   } catch (error) {
     throw new Error(`Failed to delete the community: ${error.message}`);
   }
@@ -149,7 +139,7 @@ async function removeUserFromCommunity({
       data: { members: { disconnect: { id: userId } } },
       include: { members: true },
     });
-    revalidatePath('/communities')
+    revalidatePath("/communities");
 
     return updatedCommunity;
   } catch (error) {
@@ -171,7 +161,7 @@ async function updateCommunityInfo(
       include: { members: true },
     });
 
-    revalidatePath('/communities')
+    revalidatePath("/communities");
 
     return updatedCommunity;
   } catch (error) {
@@ -182,9 +172,11 @@ async function updateCommunityInfo(
 async function fetchCommunities({
   userId,
   searchKeyword = "",
+  limit = 20,
 }: {
   userId: string;
   searchKeyword?: string;
+  limit?: number;
 }) {
   try {
     let communities = await prisma.community.findMany({
@@ -203,6 +195,7 @@ async function fetchCommunities({
       orderBy: {
         createdAt: "desc",
       },
+      take: limit,
     });
     return communities;
   } catch (error: any) {

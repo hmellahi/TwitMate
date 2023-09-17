@@ -7,7 +7,7 @@ import { User } from "@prisma/client";
 export default async function SuggestedUsers() {
   const user = await currentUser();
   if (!user) return null;
-  const users = await fetchUsers({ userId: user.id, searchKeyword: "" });
+  const users = await fetchUsers({ userId: user.id, searchKeyword: "", limit: 4 });
   return (
     <div>
       <h3 className="text-heading3-medium text-light-1">Similair Minds</h3>

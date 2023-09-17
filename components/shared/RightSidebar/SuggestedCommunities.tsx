@@ -12,6 +12,7 @@ export default async function SuggestedCommunities() {
   const communities = await fetchCommunities({
     userId: user.id,
     searchKeyword: "",
+    limit:5
   });
 
   return (
