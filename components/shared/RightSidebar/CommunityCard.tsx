@@ -15,19 +15,17 @@ export default function CommunityCard({
   return (
     <div className="flex justify-between text-white items-center gap-x-12">
       <div className="flex gap-2 items-center">
-        {community.image ? (
-          <Link href={`/community/${community.id}`}>
-            <Image
-              width="49"
-              height="40"
-              alt="avatar"
-              src={community.image}
-              className="cursor-pointer object-contadin rounded-full"
-            />
-          </Link>
-        ) : (
-          <></>
-        )}
+        <Link
+          href={`/community/${community.id}`}
+          className="w-12 h-12 relative"
+        >
+          <Image
+            fill
+            alt="avatar"
+            src={community.image}
+            className="cursor-pointer object-cover rounded-full"
+          />
+        </Link>
         <div>
           <p className={isSmall ? "text-small-medium" : ""}>{community.name}</p>
           <p className="text-gray-300 text-small-medium">

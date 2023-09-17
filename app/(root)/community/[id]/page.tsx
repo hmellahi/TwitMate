@@ -45,7 +45,7 @@ export default async function profile({ params }: { params: { id: string } }) {
               fill
               alt="avatar"
               src={community.image}
-              className="cursor-pointer object-contadin rounded-full"
+              className="cursor-pointer object-cover rounded-full"
             />
           </div>
           <div>

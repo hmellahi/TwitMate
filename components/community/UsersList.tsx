@@ -30,6 +30,7 @@ export function UsersList({
             alt={`Avatar ${index + 1}`}
             className="w-full h-full object-cover block"
             fill
+            loading="lazy"
           />
         </Link>
       ))}

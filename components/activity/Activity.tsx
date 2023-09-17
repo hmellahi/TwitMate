@@ -26,7 +26,7 @@ export default function Activity({
             fill
             alt="avatar"
             src={author.image}
-            className="cursor-pointer object-contadin rounded-full"
+            className="cursor-pointer object-cover rounded-full"
           />
         </div>
         <div>

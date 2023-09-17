@@ -1,3 +1,4 @@
+import PostThread from "@/components/forms/PostThread";
 import ThreadCard from "@/components/forms/ThreadCard";
 import UserReplyInput from "@/components/forms/UserReplyInput";
 import { ThreadsList } from "@/components/shared/ThreadsList";
@@ -5,7 +6,7 @@ import { fetchThread } from "@/lib/actions/thread.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { ThreadWithDetails } from "@/types/Thread";
 import { currentUser } from "@clerk/nextjs";
-import { Thread } from "@prisma/client";
+import { redirect } from "next/navigation";
 import React from "react";
 
 export default async function page({ params }: { params: { id: string } }) {
@@ -21,20 +22,26 @@ export default async function page({ params }: { params: { id: string } }) {
   });
 
   if (!thread) {
-    return null;
+    redirect("/");
   }
 
   return (
     <div>
       <ThreadCard thread={thread} user={userInfo} path="/thread" />
-      <UserReplyInput user={userInfo} parentThreadId={thread.id} />
+      <PostThread
+        className="border-y-[.01px] border-[#2A2C2E] pb-4 pt-2"
+        userId={userInfo.id}
+        parentThreadId={thread.id}
+        btnTitle="Reply"
+        postBtnClass="!px-3"
+        userImage={userInfo.image}
+      />
       <div className="mt-4">
         <ThreadsList
           user={userInfo}
           threads={thread.childrens}
           path="/thread"
           isComment={true}
-          className=""
         ></ThreadsList>
       </div>
     </div>

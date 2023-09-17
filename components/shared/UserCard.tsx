@@ -23,7 +23,7 @@ export default function UserCard({
             fill
             alt="avatar"
             src={user.image}
-            className="cursor-pointer object-contadin rounded-full"
+            className="cursor-pointer object-cover rounded-full"
           />
         </Link>
         <div>

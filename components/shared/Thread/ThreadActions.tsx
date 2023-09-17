@@ -1,13 +1,6 @@
-import { Delete, ThreeDots } from "@/components/svgs";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Delete } from "@/components/svgs";
 import { deleteThread } from "@/lib/actions/thread.actions";
-import {
-  DropdownMenuContent,
-  DropdownMenuLabel,
-} from "@radix-ui/react-dropdown-menu";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export default function ThreadActions({
@@ -19,11 +12,15 @@ export default function ThreadActions({
   authorId: string;
   threadId: string;
 }) {
+  const router = useRouter();
+
   const removeThread = (e) => {
     e.preventDefault();
     e.stopPropagation();
     deleteThread({ path, authorId, threadId });
+    router.push("/");
   };
+
   return (
     // <DropdownMenu>
     //   <DropdownMenuTrigger>

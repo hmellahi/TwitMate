@@ -4,6 +4,7 @@ import { Prisma, Thread } from "@prisma/client";
 import { prisma } from "../prisma";
 import { revalidatePath } from "next/cache";
 import { CreateThread } from "@/types/Thread";
+import { promise } from "zod";
 
 export async function createThread({
   userId,
@@ -11,7 +12,7 @@ export async function createThread({
   text,
   parentId,
   pathToRevalidate,
-  images,
+  images = [],
 }: CreateThread) {
   try {
     // Create a new thread
@@ -253,7 +254,20 @@ export async function deleteThread({
   path: string;
 }) {
   try {
-    console.log({ threadId, authorId, path });
+    let deleteThreadLikesPromise = prisma.threadLikes.deleteMany({
+      where: {
+        threadId,
+      },
+    });
+    let deleteThreadImagesPromise = prisma.threadImages.deleteMany({
+      where: {
+        threadId,
+        userId: authorId,
+      },
+    });
+
+    await Promise.all([deleteThreadLikesPromise, deleteThreadImagesPromise]);
+
     await prisma.thread.delete({
       where: {
         id: threadId,

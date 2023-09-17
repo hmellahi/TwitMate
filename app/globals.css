@@ -152,7 +152,7 @@
 }
 
 .account-form_input {
-  @apply border border-dark-4 text-white bg-light-gray placeholder:text-[#474349] !important;
+  @apply border border-dark-4 text-white bg-light-gray placeholder:text-[#A0A0A0] !important;
 }
 
 /* Comment Form */

@@ -19,5 +19,5 @@ export interface CreateThread {
   parentId?: string;
   userId: string;
   pathToRevalidate: string;
-  images: string[];
+  images?: string[];
 }

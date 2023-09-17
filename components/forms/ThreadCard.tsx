@@ -99,7 +99,8 @@ export default function ThreadCard({
                 src={author.image || ""}
                 alt="avatar"
                 fill
-                className="cursor-pointer rounded-full"
+                className="cursor-pointer rounded-full object-cover"
+                loading="lazy"
               ></Image>
             </Link>
             <div className="thread-card_bar" />
@@ -179,7 +180,9 @@ export default function ThreadCard({
             {hasReplies && (
               <>
                 <p>{thread?.childrens?.length} replies</p>
-                <div className="rounded-full w-1 h-1 bg-[#A0A0A0]"></div>
+                {hasLikes && (
+                  <div className="rounded-full w-1 h-1 bg-[#A0A0A0]"></div>
+                )}
               </>
             )}
             {showLikesCount(likesCount)}

@@ -18,13 +18,15 @@ export default function CommunityCard({
       className={`border-[1px] border-white text-white bg-dark-3 pt-7 pb-3 px-4 rounded-md ${className}`}
     >
       <div className="flex gap-4 items-center ">
-        <Link href={`/community/${community.id}`}>
+        <Link
+          href={`/community/${community.id}`}
+          className="w-14 h-14 relative"
+        >
           <Image
-            width="49"
-            height="40"
+            fill
             alt="avatar"
             src={community.image || ""}
-            className="cursor-pointer object-contadin rounded-full"
+            className="cursor-pointer object-cover rounded-full"
           />
         </Link>
         <div>
