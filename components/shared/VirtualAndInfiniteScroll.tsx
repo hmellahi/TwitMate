@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import {
   AutoSizer,
   InfiniteLoader,
@@ -10,65 +9,89 @@ import {
 } from "react-virtualized";
 // import "./styles.css";
 
-/*
-  Row Component
-  loader component
-  Fetch Action
-  Total Count
-*/
+// const REPOSITORIES_PER_PAGE = 100;
+// const BASE_GITHUB_API_URL = "https://api.github.com";
+// const GITHUB_API_SEARCH_QUERY = `/search/repositories?q=language:javascript&sort=stars&per_page=${REPOSITORIES_PER_PAGE}`;
 
-const REPOSITORIES_PER_PAGE = 100;
-const BASE_GITHUB_API_URL = "https://api.github.com";
-const GITHUB_API_SEARCH_QUERY = `/search/repositories?q=language:javascript&sort=stars&per_page=${REPOSITORIES_PER_PAGE}`;
+// const handleRedirectToRepository = (repositoryUrl) => {
+//   window.open(repositoryUrl, "_blank");
+// };
 
-const handleRedirectToRepository = (repositoryUrl) => {
-  window.open(repositoryUrl, "_blank");
-};
+// const fetchRepositories = async (page) => {
+//   try {
+//     const { data } = await axios.get(
+//       `${BASE_GITHUB_API_URL}${GITHUB_API_SEARCH_QUERY}&page=${page}`
+//     );
 
-const fetchRepositories = async (page) => {
-  try {
-    const { data } = await axios.get(
-      `${BASE_GITHUB_API_URL}${GITHUB_API_SEARCH_QUERY}&page=${page}`
-    );
-
-    return data.items;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Error while fetching repositories from the GitHub API!");
-  }
-};
+//     return data.items;
+//   } catch (error) {
+//     console.log(error);
+//     throw new Error("Error while fetching repositories from the GitHub API!");
+//   }
+// };
 
 // Generate a random string of 200 characters
-function generateRandomString() {
-  let result = "";
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+// function generateRandomString() {
+//   let result = "";
+//   const characters =
+//     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-  let l = Math.floor(Math.random() * 1000);
-  for (let i = 0; i < l; i++) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
-    if (i % 4 == 0) {
-      result += " ";
-    }
-  }
-  result += "END";
+//   let l = Math.floor(Math.random() * 1000);
+//   for (let i = 0; i < l; i++) {
+//     result += characters.charAt(Math.floor(Math.random() * characters.length));
+//     if (i % 4 == 0) {
+//       result += " ";
+//     }
+//   }
+//   result += "END";
 
-  return result;
-}
+//   return result;
+// }
 
-const Row = ({ style, repository }) => (
-  <div
-    className="bg-white bg-red-200 p-4"
-    style={style}
-    onClick={() => handleRedirectToRepository(repository.html_url)}
-  >
-    <p>{repository.full_name}</p>
-  </div>
-);
+// const Row = ({ style, repository }) => (
+//   <div className="bg-white bg-red-200 p-4" style={style}>
+//     <p>{repository.full_name}</p>
+//   </div>
+// );
 
-export default function VirtualAndInfiniteScroll() {
+const rowRenderer = ({
+  cache,
+  list,
+  renderRow,
+  rowData: {
+    key, // Unique key within array of rows
+    index, // Index of row within collection
+    style, // Style object to be applied to row (to position it)
+    parent,
+  },
+}) => {
+  const RowComponent = renderRow({ item: list[index], style });
+  return (
+    <CellMeasurer
+      key={key}
+      cache={cache.current}
+      parent={parent}
+      rowIndex={index}
+      columnIndex={0}
+    >
+      <RowComponent />
+    </CellMeasurer>
+  );
+};
+
+export default function VirtualAndInfiniteScroll({
+  renderRow,
+  loaderComponent,
+  totalCount,
+  fetchHandler,
+}: {
+  renderRow: () => ReactElement<React.FC>;
+  loaderComponent: ReactElement<React.FC>;
+  totalCount: number;
+  fetchHandler: (page: number) => Promise<unknown>;
+}) {
   const [pageCount, setPageCount] = useState(1);
-  const [repositories, setRepositories] = useState([]);
+  const [list, setList] = useState([]);
   const [isNextPageLoading, setIsNextPageLoading] = useState(false);
   const cache = useRef(
     new CellMeasurerCache({
@@ -79,57 +102,29 @@ export default function VirtualAndInfiniteScroll() {
 
   useEffect(() => {
     (async () => {
-      let repositories = await fetchRepositories(1);
-
-      repositories = repositories.map((repo) => {
-        repo.full_name = generateRandomString();
-        return repo;
-      });
-
-      setRepositories(repositories);
+      let list = await fetchHandler(1);
+      console.log({list})
+      setList(list);
       setPageCount((pageCount) => pageCount + 1);
     })();
   }, []);
 
-  const rowRenderer = ({
-    key, // Unique key within array of rows
-    index, // Index of row within collection
-    style, // Style object to be applied to row (to position it)
-    parent,
-  }) => {
-    return (
-      <CellMeasurer
-        key={key}
-        cache={cache.current}
-        parent={parent}
-        rowIndex={index}
-        columnIndex={0}
-      >
-        <Row style={style} repository={repositories[index]} />
-      </CellMeasurer>
-    );
-  };
-
   function isRowLoaded({ index }) {
-    return !!repositories[index];
+    return !!list[index];
   }
 
   const handleNewPageLoad = async () => {
     setIsNextPageLoading(true);
-    const repositories = await fetchRepositories(pageCount);
-
+    const nextPageList = await fetchHandler(pageCount); // TODO change this to use the fetch method prop
     setPageCount((pageCount) => pageCount + 1);
-    setRepositories((currentRepositories) => [
-      ...currentRepositories,
-      ...repositories,
-    ]);
+    setList((currentList) => [...currentList, ...nextPageList]);
     setIsNextPageLoading(false);
     return;
   };
 
   const loadMoreRows = isNextPageLoading ? () => {} : handleNewPageLoad;
 
-  if (!repositories.length) return <span>Loading initial repositories</span>; // TODO loader component
+  if (!list.length) return loaderComponent; // TODO loader component
 
   return (
     <div className="container text-black">
@@ -141,7 +136,7 @@ export default function VirtualAndInfiniteScroll() {
                 <InfiniteLoader
                   isRowLoaded={isRowLoaded}
                   loadMoreRows={loadMoreRows}
-                  rowCount={200}
+                  rowCount={totalCount}
                 >
                   {({ onRowsRendered, registerChild }) => (
                     <List
@@ -152,9 +147,11 @@ export default function VirtualAndInfiniteScroll() {
                       height={height}
                       isScrolling={isScrolling}
                       onScroll={onChildScroll}
-                      rowCount={repositories.length}
+                      rowCount={list.length}
                       rowHeight={cache.current.rowHeight}
-                      rowRenderer={rowRenderer}
+                      rowRenderer={(rowData) =>
+                        rowRenderer({ cache, list, renderRow, rowData })
+                      }
                       scrollTop={scrollTop}
                       width={width}
                     />
@@ -164,7 +161,7 @@ export default function VirtualAndInfiniteScroll() {
             </WindowScroller>
           )}
         </AutoSizer>
-        {isNextPageLoading && <span>loading more repositories..</span>}
+        {isNextPageLoading && loaderComponent}
         {/* TODO ADD LOADER HERE */}
       </div>
     </div>

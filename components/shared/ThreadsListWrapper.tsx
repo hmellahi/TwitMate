@@ -22,13 +22,11 @@ export default function ThreadsListWrapper({
 
   const [isThreadsLoading, setIsThreadsLoading] = useState(true);
 
-  async function fetchData() {
-    await fetchThreads({
+  const fetchHandler = async (page: number) =>
+    fetchThreads({
       userId: user.id,
-      path: "/",
+      page,
     });
-    setIsThreadsLoading(false);
-  }
 
   useEffect(() => {
     useUserStore.setState({ currentUser: user });
@@ -47,7 +45,7 @@ export default function ThreadsListWrapper({
       </div>
       <VirtualizedThreadsList
         user={user}
-        threads={threads}
+        fetchHandler={fetchHandler}
         path="/"
         onDelete={deleteThread}
       />

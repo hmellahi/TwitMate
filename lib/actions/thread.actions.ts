@@ -107,9 +107,8 @@ export async function fetchThread({
 
 export async function fetchThreads({
   userId,
-  offset = 0,
+  page = 0,
   limit = 10,
-  path,
   communityId,
 }: FetchThreadsParams) {
   const query: Prisma.ThreadFindManyArgs = {
@@ -120,7 +119,7 @@ export async function fetchThreads({
     const [threads, count] = await prisma.$transaction([
       prisma.thread.findMany({
         where: query.where,
-        skip: offset,
+        skip: page * limit,
         take: limit,
         orderBy: {
           createdAt: "desc",
@@ -142,7 +141,7 @@ export async function fetchThreads({
       }),
       prisma.thread.count({ where: query.where }),
     ]);
-    const isLastPage = offset + limit >= count;
+    const isLastPage = page + limit >= count;
     const endTime = performance.now();
     const elapsedTime = endTime - startTime;
     console.log(`fetchThreads took ${elapsedTime} milliseconds.`);

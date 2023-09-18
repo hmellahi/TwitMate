@@ -24,8 +24,7 @@ export interface CreateThreadParams {
 
 export interface FetchThreadsParams {
   userId: string;
-  offset?: number;
+  page?: number;
   limit?: number;
-  path?: string;
   communityId?: null | string;
 }

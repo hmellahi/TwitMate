@@ -100,6 +100,7 @@ export default function ThreadCard({
     <div
       className={`${bg} ${className} text-white py-7 px-0 sm:px-2 cursor-pointer`}
       onClick={() => router.push(`/thread/${thread.id}`)}
+      {...props}
     >
       <div className="flex justify-between items-start">
         <div className={`flex gap-3 relative w-full`}>
@@ -161,11 +162,7 @@ export default function ThreadCard({
                 />
               </div>
               <div className="icon-hover">
-                <Link
-                  href={`/thread/${thread.id}`}
-                  className={className}
-                  {...props}
-                >
+                <Link href={`/thread/${thread.id}`} className={className}>
                   <Reply width="25" height="25" />
                 </Link>
               </div>

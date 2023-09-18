@@ -8,8 +8,8 @@ import useUserStore from "./userStore";
 type feedStore = {
   threads: Thread[];
   totalCount: number;
-  deleteThread: () => void;
-  createThread: () => void;
+  deleteThread: () => Promise<void>;
+  createThread: () => Promise<void>;
   fetchThreads: (params: FetchThreadsParams) => void;
   setThreads: (newThreads: Thread[]) => void;
 };

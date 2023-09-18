@@ -6,7 +6,7 @@ export default function LoadingThreadCards({
   className,
 }: {
   count: number;
-  className: string;
+  className?: string;
 }) {
   let list = new Array(count).fill(0);
 

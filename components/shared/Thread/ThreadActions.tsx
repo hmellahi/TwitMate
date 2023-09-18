@@ -14,8 +14,6 @@ export default function ThreadActions({
   threadId: string;
   onDelete?: Function;
 }) {
-  const router = useRouter();
-
   const removeThread = (e) => {
     e.preventDefault();
     e.stopPropagation();
