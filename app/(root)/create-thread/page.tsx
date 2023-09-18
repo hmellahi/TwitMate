@@ -1,8 +1,9 @@
-"use server";
 import PostThread from "@/components/forms/PostThread";
 import { fetchUser } from "@/lib/actions/user.actions";
+import useFeedStore from "@/state/feedsStore";
 import { currentUser } from "@clerk/nextjs";
 import React from "react";
+import { useStore } from "zustand";
 
 export default async function page() {
   const user = await currentUser();

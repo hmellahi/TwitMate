@@ -1,6 +1,5 @@
 import PostThread from "@/components/forms/PostThread";
 import ThreadCard from "@/components/forms/ThreadCard";
-import UserReplyInput from "@/components/forms/UserReplyInput";
 import { ThreadsList } from "@/components/shared/ThreadsList";
 import { fetchThread } from "@/lib/actions/thread.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
@@ -20,7 +19,7 @@ export default async function page({ params }: { params: { id: string } }) {
   const thread: ThreadWithDetails | null = await fetchThread({
     threadId,
   });
-
+  console.log({ thread });
   if (!thread) {
     redirect("/");
   }

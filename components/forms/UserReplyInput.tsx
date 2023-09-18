@@ -30,11 +30,11 @@ export default function UserReplyInput({
   const pathname = usePathname();
 
   async function onSubmit(thread: z.infer<typeof CreateThreadValidation>) {
-    await createThread({
+    let threads = await createThread({
       ...thread,
       userId: user.id,
       parentId: parentThreadId,
-      pathToRevalidate: pathname,
+      path: pathname,
     });
     form.setValue("text", "");
   }

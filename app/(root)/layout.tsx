@@ -7,6 +7,8 @@ import RightSidebar from "@/components/shared/RightSidebar/RightSidebar";
 import BottomBar from "@/components/shared/BottomBar";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
+import useFeedStore from "@/state/feedsStore";
+import useUserStore from "@/state/userStore";
 
 export const metadata = {
   title: "Threads",
@@ -28,7 +30,9 @@ export default async function AuthLayout({
 
   return (
     <ClerkProvider>
-      <div className={`sm:px-[2rem] md:px-[2rem] xl:px-[6rem] 2xl:px-[13rem] bg-dark-1`}>
+      <div
+        className={`sm:px-[2rem] md:px-[2rem] xl:px-[6rem] 2xl:px-[13rem] bg-dark-1`}
+      >
         <AppHeader />
         <main className="flex items-start justify-center">
           <LeftSidebar currentUser={user} />

@@ -23,6 +23,7 @@ import { useUploadThing } from "@/lib/uploadThing";
 import { updateUser } from "@/lib/actions/user.actions";
 import { usePathname, useRouter } from "next/navigation";
 import { Label } from "../ui/label";
+import { useUser } from "@clerk/nextjs";
 
 export default function AccountProfile({
   user,
@@ -35,6 +36,7 @@ export default function AccountProfile({
   const { startUpload } = useUploadThing("media");
   const router = useRouter();
   const pathname = usePathname();
+  let { user: currentUser } = useUser();
 
   const form = useForm({
     resolver: zodResolver(UserValidation),
@@ -60,6 +62,7 @@ export default function AccountProfile({
       }
     }
 
+    // currentUser?.setProfileImage({ file: values.profile_photo });
     // update user profile
     await updateUser(
       {
@@ -70,7 +73,7 @@ export default function AccountProfile({
       "/"
     );
 
-    if (pathname === "/profile/edit") {
+    if (pathname === "/settings") {
       router.back();
     } else {
       // First Time

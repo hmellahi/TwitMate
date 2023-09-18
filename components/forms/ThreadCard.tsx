@@ -13,6 +13,7 @@ import { MediaViewer } from "../ui/MediaViewer";
 import { User } from "@prisma/client";
 import { showLikesCount } from "@/lib/utils";
 import { debounce } from "@/lib/debounce";
+import { useRouter } from "next/navigation";
 
 export default function ThreadCard({
   thread,
@@ -20,6 +21,7 @@ export default function ThreadCard({
   isComment = false,
   path,
   className = "",
+  onDelete,
   ...props
 }: {
   thread: ThreadWithDetails;
@@ -27,14 +29,16 @@ export default function ThreadCard({
   isComment?: boolean;
   path: string;
   className: string;
+  onDelete?: Function;
 }) {
+  const router = useRouter();
   const { text, author } = thread;
-  const userLikeId = thread?.likes?.find((like) => like.userId === user.id)?.id;
+  const userLikeId = thread?.likes?.find((like) => like.userId === user.id)?.id; // TODO change
   const isLikedByCurrentUser = userLikeId != undefined;
   const threadRepliers: User[] = [];
   const uniqueAuthors: { [id: string]: string } = {};
 
-  thread.childrens.forEach((subThread: ThreadWithDetails) => {
+  thread.childrens?.forEach((subThread: ThreadWithDetails) => {
     if (subThread?.author?.id) {
       const authorId = subThread.author.id;
       if (!uniqueAuthors[authorId]) {
@@ -80,9 +84,12 @@ export default function ThreadCard({
     memoizedDebouncedSaveUserReaction(isUserLikedThread);
   }
 
-  const hasReplies = thread?.childrens?.length > 0;
-  let likesCount = +isUserLikedThread + thread?.likes.length - 1;
-  if (isUserLikedThread && likesCount == 0) likesCount = 1;
+  const hasReplies = thread?._count?.childrens > 0;
+  let threadLikes = thread?._count?.likes || 0;
+  let likesCount = +isUserLikedThread + threadLikes - 1;
+  if (isUserLikedThread && likesCount == 0) {
+    likesCount = 1;
+  }
   const hasLikes = likesCount > 0;
 
   const LikeIcon = isUserLikedThread ? HeartFilled : Heart;
@@ -90,7 +97,10 @@ export default function ThreadCard({
   const threadImages = thread?.images?.map((image) => image.imageUrl);
 
   return (
-    <div className={`${bg} ${className} text-white py-7 px-0 sm:px-2 `}>
+    <div
+      className={`${bg} ${className} text-white py-7 px-0 sm:px-2 cursor-pointer`}
+      onClick={() => router.push(`/thread/${thread.id}`)}
+    >
       <div className="flex justify-between items-start">
         <div className={`flex gap-3 relative w-full bg-dred-300`}>
           <div className="flex flex-col items-center">
@@ -126,6 +136,7 @@ export default function ThreadCard({
                       threadId={thread.id}
                       authorId={author.id}
                       path={path}
+                      onDelete={onDelete}
                     />
                   )}
                 </div>

@@ -15,7 +15,6 @@ import {
 import { Button } from "@/components/ui/button";
 import * as z from "zod";
 import { usePathname, useRouter } from "next/navigation";
-import { createThread } from "@/lib/actions/thread.actions";
 import { CreateThreadValidation } from "@/lib/validations/thread";
 import { useOrganization } from "@clerk/nextjs";
 import MediaUploader from "../shared/Thread/MediaUploader";
@@ -33,6 +32,7 @@ export default function PostThread({
   parentThreadId,
   userImage,
   className = "",
+  createThreadHandler,
 }: {
   userId: string;
   userImage: string;
@@ -41,6 +41,7 @@ export default function PostThread({
   btnTitle?: string;
   parentThreadId?: string;
   className?: string;
+  createThreadHandler: Function;
 }) {
   const router = useRouter();
 
@@ -82,14 +83,21 @@ export default function PostThread({
           (uploadedImage: UploadFileResponse) => uploadedImage.url
         );
       }
-      await createThread({
+      const startTime = performance.now();
+
+      await createThreadHandler({
         userId,
         ...values,
-        pathToRevalidate: "/",
+        path: "/",
         communityId: organization?.id,
         images: uploadedImagesUrls,
         parentId: parentThreadId,
       });
+
+      const endTime = performance.now();
+      const elapsedTime = endTime - startTime;
+
+      console.log(`Time taken: ${elapsedTime} milliseconds`);
 
       if (redirectUrl) {
         router.push("/");
@@ -104,7 +112,10 @@ export default function PostThread({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={`w-full ${className}`}
+      >
         <div className={`flex justify-cdenter gap-3 items-end`}>
           <div className="relative h-10 w-10">
             <Image

@@ -23,6 +23,9 @@ export default function MediaViewerWrapper({
   }, [images]);
 
   return (
-    <MediaViewer className={className} imageURLs={imageURLs}></MediaViewer>
+    <MediaViewer
+      className={className}
+      imageURLs={imageURLs}
+    ></MediaViewer>
   );
 }
