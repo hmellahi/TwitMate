@@ -102,7 +102,7 @@ export default function ThreadCard({
       onClick={() => router.push(`/thread/${thread.id}`)}
     >
       <div className="flex justify-between items-start">
-        <div className={`flex gap-3 relative w-full bg-dred-300`}>
+        <div className={`flex gap-3 relative w-full`}>
           <div className="flex flex-col items-center">
             <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
               <Image
@@ -113,7 +113,7 @@ export default function ThreadCard({
                 loading="lazy"
               ></Image>
             </Link>
-            <div className="thread-card_bar" />
+            {hasReplies && <div className="thread-card_bar" />}
           </div>
           <div className="w-full">
             <div className="w-full">

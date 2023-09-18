@@ -37,6 +37,10 @@
     @apply relative mt-2 w-0.5 grow rounded-full bg-neutral-800;
   }
 
+  .line-break {
+    @apply border-b-[.01px] border-[#2A2C2E]
+  }
+
   /* User card */
   .user-card {
     @apply flex flex-col justify-between gap-4 max-xs:rounded-xl max-xs:bg-dark-3 max-xs:p-4 xs:flex-row xs:items-center;
@@ -202,3 +206,38 @@
     }
   }
 }
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.heading {
+  width: 80%;
+}
+
+.repositoriesWrapper {
+  width: 80%;
+}
+
+.listItem {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+
+.listItem:hover {
+  cursor: pointer;
+  background-color: gainsboro;
+}
+
+.repositoryName {
+  padding: 0 1rem;
+}
+

@@ -35,7 +35,7 @@ export function ThreadsList({
                 user={user}
                 path={path}
                 isComment={isComment}
-                className="border-b-[.01px] border-[#2A2C2E]"
+                className="line-break"
                 onDelete={onDelete}
               />
             );

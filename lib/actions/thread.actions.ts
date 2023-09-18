@@ -115,6 +115,7 @@ export async function fetchThreads({
   const query: Prisma.ThreadFindManyArgs = {
     where: { communityId },
   };
+  const startTime = performance.now();
   try {
     const [threads, count] = await prisma.$transaction([
       prisma.thread.findMany({
@@ -142,6 +143,9 @@ export async function fetchThreads({
       prisma.thread.count({ where: query.where }),
     ]);
     const isLastPage = offset + limit >= count;
+    const endTime = performance.now();
+    const elapsedTime = endTime - startTime;
+    console.log(`fetchThreads took ${elapsedTime} milliseconds.`);
     return { threads, count, isLastPage };
   } catch (error: any) {
     console.log(error);

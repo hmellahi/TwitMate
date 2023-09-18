@@ -7,6 +7,7 @@ import { useStore } from "zustand";
 import useFeedStore from "@/state/feedsStore";
 import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
 import * as threadActions from "@/lib/actions/thread.actions";
+import useUserStore from "@/state/userStore";
 
 export default async function Home() {
   const user = await currentUser();
@@ -14,13 +15,12 @@ export default async function Home() {
   const userInfo = await fetchUser(user.id);
   if (!userInfo) return null;
 
-  // if (typeof window === "undefined") {
-  //   // threads = fetchThreads();
-  //   threads = await threadActions.fetchThreads({
-  //     userId: user.id,
-  //     path: "/",
-  //   });
-  // }
+  let { threads } = await threadActions.fetchThreads({
+    userId: user.id,
+    path: "/",
+  });
 
-  return <ThreadsListWrapper user={userInfo}></ThreadsListWrapper>;
+  return (
+    <ThreadsListWrapper user={userInfo} initialThreads={threads}></ThreadsListWrapper>
+  );
 }

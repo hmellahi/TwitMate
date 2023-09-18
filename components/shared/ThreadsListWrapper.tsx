@@ -1,27 +1,39 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ThreadsList } from "./ThreadsList";
 import { useStore } from "zustand";
 import useFeedStore from "@/state/feedsStore";
-import { User } from "@prisma/client";
-import * as threadActions from "@/lib/actions/thread.actions";
+import { Thread, User } from "@prisma/client";
 import PostThread from "../forms/PostThread";
 import useUserStore from "@/state/userStore";
+import LoadingThreadCards from "./Thread/LoadingThreadCards";
+import InfiniteScroll from "./VirtualAndInfiniteScroll";
+import VirtualizedThreadsList from "./Thread/VirtualizedThreadsList";
 
-export default function ThreadsListWrapper({ user }: { user: User }) {
-  let { threads, fetchThreads, deleteThread, createThread } =
+export default function ThreadsListWrapper({
+  user,
+  initialThreads,
+}: {
+  user: User;
+  initialThreads: Thread[];
+}) {
+  let { threads, fetchThreads, deleteThread, createThread, setThreads } =
     useStore(useFeedStore);
+
+  const [isThreadsLoading, setIsThreadsLoading] = useState(true);
 
   async function fetchData() {
     await fetchThreads({
       userId: user.id,
       path: "/",
     });
+    setIsThreadsLoading(false);
   }
 
   useEffect(() => {
     useUserStore.setState({ currentUser: user });
-    fetchData();
+    setThreads(initialThreads);
+    setIsThreadsLoading(false);
   }, []);
 
   return (
@@ -33,12 +45,12 @@ export default function ThreadsListWrapper({ user }: { user: User }) {
           createThreadHandler={createThread}
         />
       </div>
-      <ThreadsList
+      <VirtualizedThreadsList
         user={user}
         threads={threads}
         path="/"
         onDelete={deleteThread}
-      ></ThreadsList>
+      />
     </>
   );
 }

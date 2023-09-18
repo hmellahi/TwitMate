@@ -57,6 +57,7 @@ const createThread = async (params: CreateThreadParams) => {
 
   const createdThread = await threadActions.createThread(params);
   createdThread.author = currentUser;
+  console.log({ currentUser });
 
   setThreads([createdThread, ...threads]);
 };
