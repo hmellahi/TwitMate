@@ -15,12 +15,15 @@ export default async function Home() {
   const userInfo = await fetchUser(user.id);
   if (!userInfo) return null;
 
-  let { threads } = await threadActions.fetchThreads({
+  let initialThreadsData = await threadActions.fetchThreads({
     userId: user.id,
     path: "/",
   });
 
   return (
-    <ThreadsListWrapper user={userInfo} initialThreads={threads}></ThreadsListWrapper>
+    <ThreadsListWrapper
+      user={userInfo}
+      initialThreadsData={initialThreadsData}
+    ></ThreadsListWrapper>
   );
 }

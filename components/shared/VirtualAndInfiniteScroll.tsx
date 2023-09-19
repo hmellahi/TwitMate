@@ -7,52 +7,6 @@ import {
   CellMeasurerCache,
   CellMeasurer,
 } from "react-virtualized";
-// import "./styles.css";
-
-// const REPOSITORIES_PER_PAGE = 100;
-// const BASE_GITHUB_API_URL = "https://api.github.com";
-// const GITHUB_API_SEARCH_QUERY = `/search/repositories?q=language:javascript&sort=stars&per_page=${REPOSITORIES_PER_PAGE}`;
-
-// const handleRedirectToRepository = (repositoryUrl) => {
-//   window.open(repositoryUrl, "_blank");
-// };
-
-// const fetchRepositories = async (page) => {
-//   try {
-//     const { data } = await axios.get(
-//       `${BASE_GITHUB_API_URL}${GITHUB_API_SEARCH_QUERY}&page=${page}`
-//     );
-
-//     return data.items;
-//   } catch (error) {
-//     console.log(error);
-//     throw new Error("Error while fetching repositories from the GitHub API!");
-//   }
-// };
-
-// Generate a random string of 200 characters
-// function generateRandomString() {
-//   let result = "";
-//   const characters =
-//     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-//   let l = Math.floor(Math.random() * 1000);
-//   for (let i = 0; i < l; i++) {
-//     result += characters.charAt(Math.floor(Math.random() * characters.length));
-//     if (i % 4 == 0) {
-//       result += " ";
-//     }
-//   }
-//   result += "END";
-
-//   return result;
-// }
-
-// const Row = ({ style, repository }) => (
-//   <div className="bg-white bg-red-200 p-4" style={style}>
-//     <p>{repository.full_name}</p>
-//   </div>
-// );
 
 const rowRenderer = ({
   cache,
@@ -74,7 +28,7 @@ const rowRenderer = ({
       rowIndex={index}
       columnIndex={0}
     >
-      <RowComponent />
+      {RowComponent}
     </CellMeasurer>
   );
 };
@@ -84,14 +38,18 @@ export default function VirtualAndInfiniteScroll({
   loaderComponent,
   totalCount,
   fetchHandler,
+  initialList,
+  className,
 }: {
-  renderRow: () => ReactElement<React.FC>;
+  renderRow: ({ item, style }) => ReactElement<React.FC>;
   loaderComponent: ReactElement<React.FC>;
   totalCount: number;
   fetchHandler: (page: number) => Promise<unknown>;
+  initialList: Array<unknown>;
+  className?: string;
 }) {
   const [pageCount, setPageCount] = useState(1);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(initialList);
   const [isNextPageLoading, setIsNextPageLoading] = useState(false);
   const cache = useRef(
     new CellMeasurerCache({
@@ -100,22 +58,13 @@ export default function VirtualAndInfiniteScroll({
     })
   );
 
-  useEffect(() => {
-    (async () => {
-      let list = await fetchHandler(1);
-      console.log({list})
-      setList(list);
-      setPageCount((pageCount) => pageCount + 1);
-    })();
-  }, []);
-
   function isRowLoaded({ index }) {
     return !!list[index];
   }
 
   const handleNewPageLoad = async () => {
     setIsNextPageLoading(true);
-    const nextPageList = await fetchHandler(pageCount); // TODO change this to use the fetch method prop
+    const nextPageList = await fetchHandler(pageCount);
     setPageCount((pageCount) => pageCount + 1);
     setList((currentList) => [...currentList, ...nextPageList]);
     setIsNextPageLoading(false);
@@ -124,46 +73,45 @@ export default function VirtualAndInfiniteScroll({
 
   const loadMoreRows = isNextPageLoading ? () => {} : handleNewPageLoad;
 
-  if (!list.length) return loaderComponent; // TODO loader component
+  const filterdList = list.filter((item) => item.isDeleted !== true);
+
+  if (!filterdList.length) return loaderComponent;
 
   return (
-    <div className="container text-black">
-      <div className="repositoriesWrapper">
-        <AutoSizer disableHeight={true}>
-          {({ width }) => (
-            <WindowScroller>
-              {({ height, isScrolling, onChildScroll, scrollTop }) => (
-                <InfiniteLoader
-                  isRowLoaded={isRowLoaded}
-                  loadMoreRows={loadMoreRows}
-                  rowCount={totalCount}
-                >
-                  {({ onRowsRendered, registerChild }) => (
-                    <List
-                      deferredMeasurementCache={cache.current}
-                      autoHeight
-                      onRowsRendered={onRowsRendered}
-                      ref={registerChild}
-                      height={height}
-                      isScrolling={isScrolling}
-                      onScroll={onChildScroll}
-                      rowCount={list.length}
-                      rowHeight={cache.current.rowHeight}
-                      rowRenderer={(rowData) =>
-                        rowRenderer({ cache, list, renderRow, rowData })
-                      }
-                      scrollTop={scrollTop}
-                      width={width}
-                    />
-                  )}
-                </InfiniteLoader>
-              )}
-            </WindowScroller>
-          )}
-        </AutoSizer>
-        {isNextPageLoading && loaderComponent}
-        {/* TODO ADD LOADER HERE */}
-      </div>
+    <div className={`${className}`}>
+      <AutoSizer disableHeight={true}>
+        {({ width }) => (
+          <WindowScroller>
+            {({ height, isScrolling, onChildScroll, scrollTop }) => (
+              <InfiniteLoader
+                isRowLoaded={isRowLoaded}
+                loadMoreRows={loadMoreRows}
+                rowCount={totalCount}
+              >
+                {({ onRowsRendered, registerChild }) => (
+                  <List
+                    deferredMeasurementCache={cache.current}
+                    autoHeight
+                    onRowsRendered={onRowsRendered}
+                    ref={registerChild}
+                    height={height}
+                    isScrolling={isScrolling}
+                    onScroll={onChildScroll}
+                    rowCount={filterdList.length}
+                    rowHeight={cache.current.rowHeight}
+                    rowRenderer={(rowData) =>
+                      rowRenderer({ cache, list, renderRow, rowData })
+                    }
+                    scrollTop={scrollTop}
+                    width={width}
+                  />
+                )}
+              </InfiniteLoader>
+            )}
+          </WindowScroller>
+        )}
+      </AutoSizer>
+      {isNextPageLoading && loaderComponent}
     </div>
   );
 }

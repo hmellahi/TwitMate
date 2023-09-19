@@ -11,30 +11,35 @@ export default function VirtualizedThreadsList({
   fetchHandler,
   path,
   onDelete,
+  initialThreadsData,
 }: {
   user: User;
   path: string;
   fetchHandler: (page: number) => Promise<unknown>;
   onDelete: () => Promise<void>;
+  initialThreadsData: unknown;
 }) {
-  const renderThread = ({ item, style }) => {
-    return (
-      <ThreadCard
-        thread={item}
-        user={user}
-        path={path}
-        onDelete={onDelete}
-        style={style}
-      />
-    );
-  };
+  const renderThread = ({ item, style }) => (
+    <ThreadCard
+      thread={item}
+      user={user}
+      path={path}
+      onDelete={onDelete}
+      style={style}
+      className="line-break"
+    />
+  );
+
+  const { threads, totalCount } = initialThreadsData;
 
   return (
     <VirtualAndInfiniteScroll
+      initialList={threads}
       renderRow={renderThread}
-      TotalCount={3}
+      totalCount={totalCount}
       fetchHandler={fetchHandler}
       loaderComponent={<LoadingThreadCards count={3} />}
+      className="text-white flex flex-col"
     />
   );
 }

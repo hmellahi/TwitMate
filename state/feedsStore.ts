@@ -40,15 +40,12 @@ const deleteThread = ({
 const fetchThreads = async (params: FetchThreadsParams) => {
   const { setThreads } = useFeedStore.getState();
   setThreads([]);
-  const startTime = performance.now();
 
-  let { threads, count, isLastPage } = await threadActions.fetchThreads(params);
-
-  const endTime = performance.now();
-  const elapsedTime = endTime - startTime;
-  console.log(`fetchThreads took ${elapsedTime} milliseconds.`);
+  let { threads, totalCount } = await threadActions.fetchThreads(params);
 
   setThreads(threads);
+
+  return { threads, totalCount };
 };
 
 const createThread = async (params: CreateThreadParams) => {
