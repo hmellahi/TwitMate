@@ -1,4 +1,4 @@
-import Activity from "@/components/activity/Activity";
+import Activity from "@/app/(root)/profile/[id]/_components/activity/Activity";
 import { getUserActivity } from "@/lib/actions/activity.actions";
 import { currentUser } from "@clerk/nextjs";
 import React from "react";

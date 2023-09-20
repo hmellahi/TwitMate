@@ -111,7 +111,7 @@ export default function VirtualAndInfiniteScroll({
     setIsNextPageLoading(false);
   };
 
-  if (!list.length) return loaderComponent;
+  if (true || !list?.length) return loaderComponent;
 
   return (
     <div className={`h-full mt-4 ${className}`}>

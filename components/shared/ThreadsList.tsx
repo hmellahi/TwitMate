@@ -32,7 +32,7 @@ export function ThreadsList({
               <ThreadCard
                 key={index}
                 thread={thread}
-                user={user}
+                userId={user.id}
                 path={path}
                 isComment={isComment}
                 className="line-break"

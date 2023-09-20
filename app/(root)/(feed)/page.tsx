@@ -1,6 +1,6 @@
 import { fetchThreads } from "@/lib/actions/thread.actions";
 import { currentUser, useOrganizationList, useUser } from "@clerk/nextjs";
-import { ThreadsList } from "../../../components/shared/ThreadsList";
+import { ThreadsList } from "../../../components/shared/";
 import PostThread from "@/components/forms/PostThread";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { useStore } from "zustand";

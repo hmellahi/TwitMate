@@ -9,40 +9,40 @@ import useUserStore from "@/state/userStore";
 import VirtualizedThreadsList from "./Thread/VirtualizedThreadsList";
 
 export default function ThreadsListWrapper({
-  user,
+  userId,
   initialThreadsData,
   onFetchThreads,
   onDeleteThread,
   threads,
 }: {
-  user: User;
+  userId: string;
   initialThreadsData: unknown;
 }) {
   const fetchHandler = async (page: number) => {
     console.log({ page });
-    let threadsData = await onFetchThreads(
-      {
-        userId: user.id,
-        page,
-      },
-      false
-    );
+    let threadsData = await onFetchThreads({
+      userId,
+      page,
+    });
     if (!threadsData) return;
     let { threads } = threadsData;
     return threads;
   };
 
-  const { totalCount, threads: initialThreads } = initialThreadsData;
+  const { totalCount, threads: initialThreads } = initialThreadsData ?? {
+    threads: [],
+  };
+
   console.log("threads list wrapper", { threads, totalCount });
 
   if (!threads) {
-    threads = initialThreads;
+    threads = initialThreads || [];
   }
 
   return (
     <>
       <VirtualizedThreadsList
-        userId={user.id}
+        userId={userId}
         path="/"
         threads={threads}
         totalCount={totalCount}

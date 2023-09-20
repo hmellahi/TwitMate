@@ -47,6 +47,16 @@ export async function createThread({
   }
 }
 
+const getUserLike = (userId: string) => ({
+  where: {
+    userId,
+  },
+  select: {
+    id: true,
+  },
+  take: 1,
+});
+
 const threadPreviewData = (userId: string) => ({
   id: true,
   text: true,
@@ -69,15 +79,7 @@ const threadPreviewData = (userId: string) => ({
       imageUrl: true,
     },
   },
-  likes: {
-    where: {
-      userId,
-    },
-    select: {
-      id: true,
-    },
-    take: 1,
-  },
+  likes: getUserLike(userId),
 });
 
 export async function fetchThread({
@@ -154,8 +156,8 @@ export async function fetchThreads({
 
 export async function fetchUserThreads({
   userId,
-  page = 0,
-  limit = 10,
+  page = 1,
+  limit = 60,
 }: {
   userId: string;
   page?: number;
@@ -165,7 +167,7 @@ export async function fetchUserThreads({
     where: { authorId: userId },
   };
   try {
-    let [threads, count] = await prisma.$transaction([
+    let [threads, totalCount] = await prisma.$transaction([
       prisma.thread.findMany({
         where: query.where,
         skip: (page - 1) * limit,
@@ -175,7 +177,8 @@ export async function fetchUserThreads({
         },
         include: {
           author: true,
-          likes: true,
+          likes: getUserLike(userId),
+          images: true,
           childrens: {
             select: {
               author: true,
@@ -186,8 +189,7 @@ export async function fetchUserThreads({
       prisma.thread.count({ where: query.where }),
     ]);
 
-    const isLastPage = offset + limit >= count;
-    return { threads, count, isLastPage };
+    return { threads, totalCount };
   } catch (error: any) {
     console.log(error);
     throw error;

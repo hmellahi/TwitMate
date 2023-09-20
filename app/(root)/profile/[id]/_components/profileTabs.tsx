@@ -1,20 +1,18 @@
-"use server";
-
-import ReplyTab from "@/components/activity/ReplyTab";
-import ThreadCard from "@/components/forms/ThreadCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { profileTabs } from "@/constants";
 import { ThreadWithDetails } from "@/types/Thread";
-import { Thread, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import React from "react";
-import SvgIcon from "../ui/svgIcon";
-import { ThreadsList } from "../shared/ThreadsList";
+import SvgIcon from "@/components/ui/svgIcon";
+import { ThreadsList } from "@/components/shared/ThreadsList";
+import ThreadsTab from "./tabs/threadsTab";
+import RepliesTab from "./tabs/repliesTab/repliesTab";
 
 export default async function ProfileTabs({
-  threads,
+  // threads,
   user,
 }: {
-  threads: ThreadWithDetails[];
+  // threads: ThreadWithDetails[];
   user: User;
 }) {
   return (
@@ -32,7 +30,7 @@ export default async function ProfileTabs({
             <p className="max-sm:hidden ml-1">{tab.label}</p>
             {tab.value == "threads" && (
               <div className="ml-2 bg-gray-600 px-3 py-1 box-shadow-count-badge rounded-md">
-                {threads?.length}
+                {/* {threads?.length} */}
               </div>
             )}
           </TabsTrigger>
@@ -40,12 +38,11 @@ export default async function ProfileTabs({
       </TabsList>
       <div className="mt-10">
         <TabsContent value="threads">
-          <ThreadsList threads={threads} path="/profile" user={user} />
+          <ThreadsTab user={user} />
         </TabsContent>
         <TabsContent value="replies">
-          <ReplyTab user={user} />
+          <RepliesTab user={user} />
         </TabsContent>
-        <TabsContent value="tagged"></TabsContent>
       </div>
     </Tabs>
   );

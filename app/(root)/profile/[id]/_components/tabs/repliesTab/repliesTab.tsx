@@ -1,11 +1,9 @@
 import React from "react";
 import Reply from "./Reply";
-import { currentUser } from "@clerk/nextjs";
-import { fetchUser } from "@/lib/actions/user.actions";
 import { getUserReplies } from "@/lib/actions/thread.actions";
 import { User } from "@prisma/client";
 
-export default async function ReplyTab({ user }: { user: User }) {
+export default async function RepliesTab({ user }: { user: User }) {
   const userReplies = await getUserReplies({
     userId: user.id,
     path: `/profile/${user.id}`,

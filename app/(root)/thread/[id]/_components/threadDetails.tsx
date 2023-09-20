@@ -1,39 +1,33 @@
-"use client";
 import PostThread from "@/components/forms/PostThread";
-import { useStore } from "zustand";
-import useFeedStore from "@/state/feedsStore";
 import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
-import useUserStore from "@/state/userStore";
+import useFeedStore from "@/state/feedsStore";
+import { ThreadWithDetails } from "@/types/Thread";
 import { User } from "@prisma/client";
-import { useEffect } from "react";
+import React from "react";
+import { useStore } from "zustand";
 
-export default function Feed({
+export default function ThreadDetails({
   user,
-  initialThreadsData,
+  thread,
 }: {
   user: User;
-  initialThreadsData: unknown;
+  thread: ThreadWithDetails;
 }) {
   let { fetchThreads, deleteThread, setThreads, threads, createThread } =
     useStore(useFeedStore);
 
-  let { setCurrentUser } = useStore(useUserStore);
-
-  useEffect(() => {
-    setCurrentUser(() => user);
-    setThreads(initialThreadsData.threads);
-  }, []);
-
   return (
     <>
       <PostThread
-        userId={user?.id}
+        className="border-y-[.01px] border-[#2A2C2E] pb-4 pt-2"
+        userId={user.id}
+        parentThreadId={thread.id}
+        btnTitle="Reply"
+        postBtnClass="!px-3"
         userImage={user.image}
-        createThreadHandler={createThread}
-        className="mb-4"
       />
       <ThreadsListWrapper
-        userId={user.id}
+        user={user}
         initialThreadsData={initialThreadsData}
         onDeleteThread={deleteThread}
         onFetchThreads={fetchThreads}

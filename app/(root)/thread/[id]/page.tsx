@@ -1,9 +1,9 @@
 import PostThread from "@/components/forms/PostThread";
 import ThreadCard from "@/components/forms/ThreadCard";
 import { ThreadsList } from "@/components/shared/ThreadsList";
+import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
 import { fetchThread } from "@/lib/actions/thread.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
-import { ThreadWithDetails } from "@/types/Thread";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -13,13 +13,16 @@ export default async function page({ params }: { params: { id: string } }) {
   if (!threadId) return;
   const user = await currentUser();
   if (!user) return null;
-  const userInfo = await fetchUser(user.id);
-  if (!userInfo) return null;
 
-  const thread: ThreadWithDetails | null = await fetchThread({
-    threadId,
-  });
-  if (!thread) {
+  const [userInfo, thread] = await Promise.all([
+    fetchUser(user.id),
+    fetchThread({
+      threadId,
+      authorId: user.id,
+    }),
+  ]);
+
+  if (!thread || !userInfo) {
     redirect("/");
   }
 
@@ -42,6 +45,13 @@ export default async function page({ params }: { params: { id: string } }) {
           isComment={true}
         ></ThreadsList>
       </div>
+      {/* <ThreadsListWrapper
+        user={user}
+        initialThreadsData={initialThreadsData}
+        onDeleteThread={deleteThread}
+        onFetchThreads={fetchThreads}
+        threads={threads}
+      ></ThreadsListWrapper> */}
     </div>
   );
 }

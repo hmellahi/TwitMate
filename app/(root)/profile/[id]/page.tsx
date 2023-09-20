@@ -1,6 +1,6 @@
 "use server";
 
-import ProfileTabs from "@/components/profile/profileTabs";
+import ProfileTabs from "@/app/(root)/profile/[id]/_components/profileTabs";
 import { Edit } from "@/components/svgs";
 import { Button } from "@/components/ui/button";
 import { fetchUserThreads } from "@/lib/actions/thread.actions";
@@ -15,7 +15,7 @@ export default async function profile({ params }: { params: { id: string } }) {
   if (!userId) return null;
   const user = await fetchUser(userId);
   if (!user) return null;
-  let { threads } = await fetchUserThreads({ userId: user.id });
+  // let { threads } = await fetchUserThreads({ userId: user.id });
   let loggedInUser = await currentUser();
 
   return (
@@ -52,7 +52,7 @@ export default async function profile({ params }: { params: { id: string } }) {
           </div>
           <h3 className="text-body-medium mb-2">{user.bio}</h3>
         </div>
-        <ProfileTabs threads={threads} user={user} />
+        <ProfileTabs user={user} />
       </div>
     </div>
   );
