@@ -8,7 +8,6 @@ import { Search } from "../svgs";
 
 export function SidebarLink({ sidebarLink }: { sidebarLink: sidebarLink }) {
   const pathname = usePathname();
-  const router = useRouter();
 
   const isActive =
     pathname === sidebarLink.route ||
@@ -29,7 +28,7 @@ export function SidebarLink({ sidebarLink }: { sidebarLink: sidebarLink }) {
           height="20"
         ></Image>
       )}
-      <p className="max-lg:hidden">{sidebarLink.label}</p>
+      <p className="max-lg:hidden text-base-regular">{sidebarLink.label}</p>
     </Link>
   );
 }

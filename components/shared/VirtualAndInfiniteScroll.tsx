@@ -8,6 +8,12 @@ import {
   CellMeasurer,
 } from "react-virtualized";
 
+const Row = ({ ref, style, repository }) => (
+  <div ref={ref} className=" py-52" style={style}>
+    Hello
+  </div>
+);
+
 const rowRenderer = ({
   cache,
   list,
@@ -19,7 +25,7 @@ const rowRenderer = ({
     parent,
   },
 }) => {
-  const RowComponent = renderRow({ item: list[index], style });
+  // const RowComponent = renderRow({ item: list[index], style });
   return (
     <CellMeasurer
       key={key}
@@ -28,7 +34,38 @@ const rowRenderer = ({
       rowIndex={index}
       columnIndex={0}
     >
-      {RowComponent}
+      {/* <Row ref={registerChild} style={style} repository={list[index]} /> */}
+
+      {/* {RowComponent} */}
+      {({ measure, registerChild }) =>
+        renderRow({ item: list[index], style, measure, registerChild })
+      }
+      {/* {({ measure, registerChild }) => (
+        // 'style' attribute required to position cell (within parent List)
+        {({registerChild}) => (
+          <div
+            style={{
+              ...style,
+              height: 35,
+              whiteSpace: 'nowrap'
+            }}
+          >
+            wtf
+          </div>
+        )}
+      )} */}
+      {/* {({registerChild}) => (
+        <div
+          style={{
+            ...style,
+            height: 35,
+            whiteSpace: 'nowrap'
+          }}
+          className=" bg-red-100 !text-black"
+        >
+          wtf
+        </div>
+      )} */}
     </CellMeasurer>
   );
 };
@@ -48,44 +85,75 @@ export default function VirtualAndInfiniteScroll({
   initialList: Array<unknown>;
   className?: string;
 }) {
+  // console.log("virtual and infinite scroll");
   const [pageCount, setPageCount] = useState(1);
-  const [list, setList] = useState(initialList);
+  const [list, setList] = useState([]);
+  console.log({ initialList, list, totalCount });
+
   const [isNextPageLoading, setIsNextPageLoading] = useState(false);
   const cache = useRef(
     new CellMeasurerCache({
+      defaultHeight: 1000,
       fixedWidth: true,
-      defaultHeight: 400,
+      // fixedHeight: true,
     })
   );
+
+  useEffect(() => {
+    setIsNextPageLoading(true);
+    setList(() => initialList);
+    console.log({ list, initialList });
+    setPageCount((pageCount) => pageCount + 1);
+    // revalidateCache()
+    setIsNextPageLoading(false);
+    // console.log("wttf");
+    // initialList.forEach((item, index) => {
+    //   console.log({item});
+    //   if (!item.isDeleted) return;
+    //   console.log('found');
+    // });
+    cache.current.clearAll();
+  }, [initialList.length]);
+  // console.log({ isNextPageLoading });
+
+  // function revalidateCache() {
+  //   // Create a new cache instance with desired settings
+  //   const newCache = new CellMeasurerCache({
+  //     fixedWidth: true,
+  //     defaultHeight: 400,
+  //   });
+
+  //   // Update the cache reference with the new cache instance
+  //   cache.current = newCache;
+  // }
 
   function isRowLoaded({ index }) {
     return !!list[index];
   }
 
   const handleNewPageLoad = async () => {
+    console.log("mooore");
+    if (isNextPageLoading) {
+      return;
+    }
     setIsNextPageLoading(true);
     const nextPageList = await fetchHandler(pageCount);
     setPageCount((pageCount) => pageCount + 1);
     setList((currentList) => [...currentList, ...nextPageList]);
     setIsNextPageLoading(false);
-    return;
   };
 
-  const loadMoreRows = isNextPageLoading ? () => {} : handleNewPageLoad;
-
-  const filterdList = list.filter((item) => item.isDeleted !== true);
-
-  if (!filterdList.length) return loaderComponent;
+  if (!list.length) return loaderComponent;
 
   return (
-    <div className={`${className}`}>
+    <div className={`h-full mt-4 ${className}`}>
       <AutoSizer disableHeight={true}>
         {({ width }) => (
           <WindowScroller>
             {({ height, isScrolling, onChildScroll, scrollTop }) => (
               <InfiniteLoader
                 isRowLoaded={isRowLoaded}
-                loadMoreRows={loadMoreRows}
+                loadMoreRows={handleNewPageLoad}
                 rowCount={totalCount}
               >
                 {({ onRowsRendered, registerChild }) => (
@@ -97,7 +165,7 @@ export default function VirtualAndInfiniteScroll({
                     height={height}
                     isScrolling={isScrolling}
                     onScroll={onChildScroll}
-                    rowCount={filterdList.length}
+                    rowCount={list.length}
                     rowHeight={cache.current.rowHeight}
                     rowRenderer={(rowData) =>
                       rowRenderer({ cache, list, renderRow, rowData })
@@ -111,6 +179,29 @@ export default function VirtualAndInfiniteScroll({
           </WindowScroller>
         )}
       </AutoSizer>
+      {/* <InfiniteLoader
+        isRowLoaded={isRowLoaded}
+        loadMoreRows={handleNewPageLoad}
+        rowCount={totalCount}
+      >
+        {({ onRowsRendered, registerChild }) => (
+          <AutoSizer className="w-full h-full">
+            {({ height, width }) => (
+              <List
+                ref={registerChild}
+                onRowsRendered={onRowsRendered}
+                width={width}
+                height={height}
+                rowCount={list.length}
+                rowHeight={150}
+                rowRenderer={(rowData) =>
+                  rowRenderer({ cache, list, renderRow, rowData })
+                }
+              />
+            )}
+          </AutoSizer>
+        )}
+      </InfiniteLoader> */}
       {isNextPageLoading && loaderComponent}
     </div>
   );

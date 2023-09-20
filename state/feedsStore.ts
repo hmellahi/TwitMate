@@ -10,7 +10,7 @@ type feedStore = {
   totalCount: number;
   deleteThread: () => Promise<void>;
   createThread: () => Promise<void>;
-  fetchThreads: (params: FetchThreadsParams) => void;
+  fetchThreads: (params: FetchThreadsParams, clearOldList: boolean) => void;
   setThreads: (newThreads: Thread[]) => void;
 };
 
@@ -23,27 +23,40 @@ const deleteThread = ({
   authorId: string;
   threadId: string;
 }) => {
-  const { setThreads, threads } = useFeedStore.getState();
+  let { setThreads, threads } = useFeedStore.getState();
   const thread = threads.find((thread) => thread.id === threadId);
   const threadIndex = threads.indexOf(thread);
-  console.log({ thread, threadIndex });
   if (!thread) return;
 
-  thread.isDeleted = true;
-  threads[threadIndex] = thread;
+  // threads.splice(threadIndex, 1);
+  // thread.isDeleted = true
+  threads = [...threads.slice(0,threadIndex) , ...threads.slice(threadIndex+1,threads.length)]
+
   setThreads(threads);
 
-  threadActions.removeThread({ path, authorId, threadId });
+  // threadActions.removeThread({ path, authorId, threadId }); TODO 
   if (path.includes("thread")) useRouter().push("/");
 };
 
-const fetchThreads = async (params: FetchThreadsParams) => {
-  const { setThreads } = useFeedStore.getState();
-  setThreads([]);
+const fetchThreads = async (
+  params: FetchThreadsParams,
+  clearOldList: boolean = true
+) => {
+  const { setThreads, threads } = useFeedStore.getState();
 
-  let { threads, totalCount } = await threadActions.fetchThreads(params);
+  if (clearOldList) {
+    setThreads([]);
+  }
 
-  setThreads(threads);
+  let { threads: newThreads, totalCount } = await threadActions.fetchThreads(
+    params
+  );
+
+  if (!clearOldList) {
+    newThreads = [...threads, ...newThreads];
+  }
+
+  setThreads(newThreads);
 
   return { threads, totalCount };
 };
@@ -60,7 +73,7 @@ const createThread = async (params: CreateThreadParams) => {
 };
 
 const useFeedStore = create<feedStore>((set) => ({
-  threads: [],
+  threads: null,
   totalCount: 0,
   deleteThread,
   fetchThreads,

@@ -7,30 +7,32 @@ import LoadingThreadCards from "./LoadingThreadCards";
 import ThreadCard from "@/components/forms/ThreadCard";
 
 export default function VirtualizedThreadsList({
-  user,
+  userId,
   fetchHandler,
   path,
   onDelete,
-  initialThreadsData,
+  threads,
+  totalCount,
 }: {
-  user: User;
+  userId: string;
   path: string;
   fetchHandler: (page: number) => Promise<unknown>;
   onDelete: () => Promise<void>;
-  initialThreadsData: unknown;
+  totalCount: number;
 }) {
-  const renderThread = ({ item, style }) => (
+  const renderThread = ({ item, style, registerChild, measure }) => (
     <ThreadCard
       thread={item}
-      user={user}
+      userId={userId}
       path={path}
       onDelete={onDelete}
-      style={style}
       className="line-break"
+      style={style}
+      ref={registerChild}
+      measure={measure}
     />
   );
-
-  const { threads, totalCount } = initialThreadsData;
+  console.log("Rerendered : virtual threads list wrapper");
 
   return (
     <VirtualAndInfiniteScroll
@@ -39,7 +41,7 @@ export default function VirtualizedThreadsList({
       totalCount={totalCount}
       fetchHandler={fetchHandler}
       loaderComponent={<LoadingThreadCards count={3} />}
-      className="text-white flex flex-col"
+      className="text-white flex flex-col gap-4d"
     />
   );
 }

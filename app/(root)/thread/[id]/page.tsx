@@ -19,7 +19,6 @@ export default async function page({ params }: { params: { id: string } }) {
   const thread: ThreadWithDetails | null = await fetchThread({
     threadId,
   });
-  console.log({ thread });
   if (!thread) {
     redirect("/");
   }

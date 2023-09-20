@@ -109,7 +109,13 @@ export async function fetchUsers({
       orderBy: {
         createdAt: "desc",
       },
-      take: limit
+      take: limit,
+      select:{
+        id:true,
+        image:true,
+        username:true,
+        name:true
+      }
     });
     return users;
   } catch (error: any) {

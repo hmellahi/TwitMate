@@ -29,6 +29,8 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+
+  @@index(fields: [username, image, createdAt, onboarded, bio, name, updatedAt])
 }
 
 model Thread {
@@ -50,6 +52,8 @@ model Thread {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+
+  @@index(fields: [text, createdAt, parentId, communityId, authorId])
 }
 
 model Community {
@@ -64,6 +68,9 @@ model Community {
   members   User[]   @relation("MemberOf")
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+
+  @@index(fields: [image, name, slug, bio, createdBy, createdAt])
+
 }
 
 model ThreadLikes {
@@ -74,6 +81,8 @@ model ThreadLikes {
   threadId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index(fields: [createdAt, userId, threadId])
 }
 
 model ThreadImages {
@@ -85,4 +94,6 @@ model ThreadImages {
   threadId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index(fields: [imageUrl, createdAt, userId, threadId])
 }

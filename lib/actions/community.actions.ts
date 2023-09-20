@@ -187,7 +187,13 @@ async function fetchCommunities({
           mode: "insensitive",
         },
       },
-      include: {
+      select: {
+        id:true,
+        image:true,
+        name:true,
+        bio:true,
+        createdAt:true,
+        createdBy:true,
         members: {
           take: 4,
         },

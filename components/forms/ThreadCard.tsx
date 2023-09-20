@@ -3,7 +3,7 @@
 import { likeThread, unLikeThread } from "@/lib/actions/thread.actions";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import { Heart, Reply, HeartFilled, Repost, Share } from "../svgs";
 import { ThreadWithDetails } from "@/types/Thread";
 import { timeAgo } from "@/lib/time-converter";
@@ -15,26 +15,33 @@ import { showLikesCount } from "@/lib/utils";
 import { debounce } from "@/lib/debounce";
 import { useRouter } from "next/navigation";
 
-export default function ThreadCard({
-  thread,
-  user,
-  isComment = false,
-  path,
-  className = "",
-  onDelete,
-  ...props
-}: {
-  thread: ThreadWithDetails;
-  user: any;
-  isComment?: boolean;
-  path: string;
-  className: string;
-  onDelete?: Function;
-}) {
+function ThreadCard(
+  {
+    thread,
+    userId,
+    isComment = false,
+    path,
+    className = "",
+    onDelete,
+    measure,
+    style,
+  }: {
+    thread: ThreadWithDetails;
+    userId: string;
+    isComment?: boolean;
+    path: string;
+    className: string;
+    onDelete?: Function;
+  },
+  ref
+) {
+  if (thread.isDeleted) {
+    return null;
+  }
+
   const router = useRouter();
   const { text, author } = thread;
-  const userLikeId = thread?.likes?.find((like) => like.userId === user.id)?.id; // TODO change
-  const isLikedByCurrentUser = userLikeId != undefined;
+  const isLikedByCurrentUser = thread?.likes?.length > 0;
   const threadRepliers: User[] = [];
   const uniqueAuthors: { [id: string]: string } = {};
 
@@ -58,7 +65,7 @@ export default function ThreadCard({
         await unLikeThread({ likeId: userLikeId, path });
       } else {
         await likeThread({
-          userId: user.id,
+          userId: userId,
           threadId: thread.id,
           path,
         });
@@ -100,13 +107,15 @@ export default function ThreadCard({
     <div
       className={`${bg} ${className} text-white py-7 px-0 sm:px-2 cursor-pointer`}
       onClick={() => router.push(`/thread/${thread.id}`)}
-      {...props}
+      ref={ref}
+      style={style}
     >
       <div className="flex justify-between items-start">
         <div className={`flex gap-3 relative w-full`}>
           <div className="flex flex-col items-center">
             <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
               <Image
+                onLoad={measure}
                 src={author.image || ""}
                 alt="avatar"
                 fill
@@ -132,7 +141,7 @@ export default function ThreadCard({
                   className={`text-gray-2 text-small-regular mr-0 sm:mr-4 flex gap-2 items-center -mt-[.3rem] `}
                 >
                   {timeAgo(thread.createdAt)}
-                  {author.id === user.id && (
+                  {author.id === userId && (
                     <ThreadActions
                       threadId={thread.id}
                       authorId={author.id}
@@ -150,6 +159,7 @@ export default function ThreadCard({
               <MediaViewer
                 className="mt-4"
                 imageURLs={threadImages}
+                onLoad={measure}
               ></MediaViewer>
             )}
             <div className={`flex gap-2 mt-2 text-white items-center`}>
@@ -162,7 +172,11 @@ export default function ThreadCard({
                 />
               </div>
               <div className="icon-hover">
-                <Link href={`/thread/${thread.id}`} className={className}>
+                <Link
+                  href={`/thread/${thread.id}`}
+                  className={className}
+                  aria-label="Comment"
+                >
                   <Reply width="25" height="25" />
                 </Link>
               </div>
@@ -200,3 +214,5 @@ export default function ThreadCard({
     </div>
   );
 }
+
+export default forwardRef(ThreadCard);

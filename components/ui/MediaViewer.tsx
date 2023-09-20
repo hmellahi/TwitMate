@@ -3,6 +3,7 @@ import Image from "next/image";
 export function MediaViewer({
   imageURLs,
   className,
+  onLoad,
   ...props
 }: {
   imageURLs: Array<string>;
@@ -24,6 +25,7 @@ export function MediaViewer({
             className="relative w-full rounded-md object-cover"
             alt={`Avatar ${index + 1}`}
             loading="lazy"
+            onLoad={onLoad}
           />
         </div>
       ))}
