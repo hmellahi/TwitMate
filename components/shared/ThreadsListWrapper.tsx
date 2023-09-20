@@ -11,16 +11,16 @@ import VirtualizedThreadsList from "./Thread/VirtualizedThreadsList";
 export default function ThreadsListWrapper({
   user,
   initialThreadsData,
+  onFetchThreads,
+  onDeleteThread,
+  threads,
 }: {
   user: User;
   initialThreadsData: unknown;
 }) {
-  let { fetchThreads, deleteThread, setThreads, threads } =
-    useStore(useFeedStore);
-
   const fetchHandler = async (page: number) => {
     console.log({ page });
-    let threadsData = await fetchThreads(
+    let threadsData = await onFetchThreads(
       {
         userId: user.id,
         page,
@@ -35,10 +35,6 @@ export default function ThreadsListWrapper({
   const { totalCount, threads: initialThreads } = initialThreadsData;
   console.log("threads list wrapper", { threads, totalCount });
 
-  useEffect(() => {
-    setThreads(initialThreads);
-  }, []);
-
   if (!threads) {
     threads = initialThreads;
   }
@@ -50,8 +46,8 @@ export default function ThreadsListWrapper({
         path="/"
         threads={threads}
         totalCount={totalCount}
-        fetchHandler={fetchHandler}
-        onDelete={deleteThread}
+        onFetchThreads={fetchHandler}
+        onDeleteThread={onDeleteThread}
       />
     </>
   );

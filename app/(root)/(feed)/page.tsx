@@ -1,5 +1,5 @@
 import { fetchThreads } from "@/lib/actions/thread.actions";
-import { currentUser, useOrganizationList } from "@clerk/nextjs";
+import { currentUser, useOrganizationList, useUser } from "@clerk/nextjs";
 import { ThreadsList } from "../../../components/shared/ThreadsList";
 import PostThread from "@/components/forms/PostThread";
 import { fetchUser } from "@/lib/actions/user.actions";
@@ -8,6 +8,7 @@ import useFeedStore from "@/state/feedsStore";
 import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
 import * as threadActions from "@/lib/actions/thread.actions";
 import useUserStore from "@/state/userStore";
+import Feed from "./_components/feed";
 
 export default async function Home() {
   const user = await currentUser();
@@ -23,20 +24,5 @@ export default async function Home() {
 
   if (!userInfo) return null;
 
-  let { createThread } = useFeedStore.getState();
-
-  return (
-    <>
-      <PostThread
-        userId={userInfo?.id}
-        userImage={userInfo.image}
-        createThreadHandler={createThread}
-        className="mb-4"
-      />
-      <ThreadsListWrapper
-        user={userInfo}
-        initialThreadsData={initialThreadsData}
-      ></ThreadsListWrapper>
-    </>
-  );
+  return <Feed user={userInfo} initialThreadsData={initialThreadsData} />;
 }

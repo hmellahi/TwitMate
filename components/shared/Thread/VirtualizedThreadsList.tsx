@@ -8,9 +8,9 @@ import ThreadCard from "@/components/forms/ThreadCard";
 
 export default function VirtualizedThreadsList({
   userId,
-  fetchHandler,
   path,
-  onDelete,
+  onFetchThreads,
+  onDeleteThread,
   threads,
   totalCount,
 }: {
@@ -25,7 +25,7 @@ export default function VirtualizedThreadsList({
       thread={item}
       userId={userId}
       path={path}
-      onDelete={onDelete}
+      onDelete={onDeleteThread}
       className="line-break"
       style={style}
       ref={registerChild}
@@ -36,10 +36,10 @@ export default function VirtualizedThreadsList({
 
   return (
     <VirtualAndInfiniteScroll
-      initialList={threads}
+      list={threads}
       renderRow={renderThread}
       totalCount={totalCount}
-      fetchHandler={fetchHandler}
+      fetchHandler={onFetchThreads}
       loaderComponent={<LoadingThreadCards count={3} />}
       className="text-white flex flex-col gap-4d"
     />

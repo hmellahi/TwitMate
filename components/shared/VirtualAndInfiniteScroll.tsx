@@ -75,57 +75,26 @@ export default function VirtualAndInfiniteScroll({
   loaderComponent,
   totalCount,
   fetchHandler,
-  initialList,
+  list,
   className,
 }: {
   renderRow: ({ item, style }) => ReactElement<React.FC>;
   loaderComponent: ReactElement<React.FC>;
   totalCount: number;
   fetchHandler: (page: number) => Promise<unknown>;
-  initialList: Array<unknown>;
+  list: Array<unknown>;
   className?: string;
 }) {
-  // console.log("virtual and infinite scroll");
-  const [pageCount, setPageCount] = useState(1);
-  const [list, setList] = useState([]);
-  console.log({ initialList, list, totalCount });
+  const [pageCount, setPageCount] = useState(2);
+  console.log({ list, totalCount });
 
   const [isNextPageLoading, setIsNextPageLoading] = useState(false);
   const cache = useRef(
     new CellMeasurerCache({
       defaultHeight: 1000,
       fixedWidth: true,
-      // fixedHeight: true,
     })
   );
-
-  useEffect(() => {
-    setIsNextPageLoading(true);
-    setList(() => initialList);
-    console.log({ list, initialList });
-    setPageCount((pageCount) => pageCount + 1);
-    // revalidateCache()
-    setIsNextPageLoading(false);
-    // console.log("wttf");
-    // initialList.forEach((item, index) => {
-    //   console.log({item});
-    //   if (!item.isDeleted) return;
-    //   console.log('found');
-    // });
-    cache.current.clearAll();
-  }, [initialList.length]);
-  // console.log({ isNextPageLoading });
-
-  // function revalidateCache() {
-  //   // Create a new cache instance with desired settings
-  //   const newCache = new CellMeasurerCache({
-  //     fixedWidth: true,
-  //     defaultHeight: 400,
-  //   });
-
-  //   // Update the cache reference with the new cache instance
-  //   cache.current = newCache;
-  // }
 
   function isRowLoaded({ index }) {
     return !!list[index];
@@ -137,9 +106,8 @@ export default function VirtualAndInfiniteScroll({
       return;
     }
     setIsNextPageLoading(true);
-    const nextPageList = await fetchHandler(pageCount);
+    await fetchHandler(pageCount);
     setPageCount((pageCount) => pageCount + 1);
-    setList((currentList) => [...currentList, ...nextPageList]);
     setIsNextPageLoading(false);
   };
 
