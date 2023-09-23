@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { prisma } from "../prisma";
+import { prisma } from "../../lib/prisma";
 import { currentUser } from "@clerk/nextjs";
 // import { currentUser } from "@clerk/nextjs/server";
 
@@ -15,19 +15,19 @@ interface UpdateUser {
 import Clerk from "@clerk/clerk-sdk-node/esm/instance";
 
 // TODO REMOVE
-const clerk = new Clerk({ secretKey: process.env.CLERK_SECRET_KEY });
-console.log({ clerk });
+// const clerk = new Clerk({ secretKey: process.env.CLERK_SECRET_KEY });
+// console.log({ clerk });
 
-const updateUserMapper = (user: UpdateUser) => {
-  const { username, name, image } = user;
-  return {
-    firstName: name,
-    username,
-    imageUrl: image,
-  };
-};
+// const updateUserMapper = (user: UpdateUser) => {
+//   const { username, name, image } = user;
+//   return {
+//     firstName: name,
+//     username,
+//     imageUrl: image,
+//   };
+// };
 
-const updateUserInClerk = async (updateUser: UpdateUser) => {
+// const updateUserInClerk = async (updateUser: UpdateUser) => {
   // let loggedUser = await currentUser();
   // if (!loggedUser) return null;
   // const userId = loggedUser.id;
@@ -36,7 +36,7 @@ const updateUserInClerk = async (updateUser: UpdateUser) => {
   // await clerk.users.updateUser(userId, updateUserData);
   // setProfileImage
   //https://api.clerk.com/v1/users/{user_id}/profile_image
-};
+// };
 
 export async function updateUser(newUserData: UpdateUser, path: string) {
   const { username, name, bio, image, id } = newUserData;
@@ -81,11 +81,11 @@ export async function fetchUser(userId: string) {
 export async function fetchUsers({
   userId,
   searchKeyword = "",
-  limit
+  limit,
 }: {
   userId: string;
   searchKeyword?: string;
-  limit:number
+  limit: number;
 }) {
   try {
     let users = await prisma.user.findMany({
@@ -110,12 +110,12 @@ export async function fetchUsers({
         createdAt: "desc",
       },
       take: limit,
-      select:{
-        id:true,
-        image:true,
-        username:true,
-        name:true
-      }
+      select: {
+        id: true,
+        image: true,
+        username: true,
+        name: true,
+      },
     });
     return users;
   } catch (error: any) {

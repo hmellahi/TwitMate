@@ -16,7 +16,7 @@ import {
   deleteCommunity,
   removeUserFromCommunity,
   updateCommunityInfo,
-} from "@/src/lib/actions/community.actions";
+} from "@/server-actions/community/community.actions";
 
 // Resource: https://clerk.com/docs/integration/webhooks#supported-events
 // Above document lists the supported events

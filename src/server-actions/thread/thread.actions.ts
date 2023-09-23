@@ -1,9 +1,9 @@
 "use server";
 
 import { Prisma } from "@prisma/client";
-import { prisma } from "../prisma";
+import { prisma } from "../../lib/prisma";
 import { revalidatePath } from "next/cache";
-import { CreateThreadParams, FetchThreadsParams } from "@/src/types/Thread";
+import { CreateThreadParams, FetchThreadsParams } from "@/types/Thread";
 
 export async function createThread({
   userId,
@@ -84,23 +84,57 @@ const threadPreviewData = (userId: string) => ({
 
 export async function fetchThread({
   threadId,
-  authorId,
+  userId,
 }: {
   threadId: string;
-  authorId: string;
+  userId: string;
 }) {
   try {
     return prisma.thread.findFirst({
       where: { id: threadId },
       select: {
-        ...threadPreviewData(authorId),
-        childrens: {
-          select: {
-            ...threadPreviewData(authorId),
-          },
-        },
+        ...threadPreviewData(userId),
+        // childrens: {
+        //   select: {
+        //     ...threadPreviewData(authorId),
+        //   },
+        // },
       },
     });
+  } catch (error: any) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function fetchThreadReplies({
+  threadId,
+  userId,
+  limit = 10,
+  page = 1
+}: {
+  threadId: string;
+  userId: string;
+  limit:number;
+  page:number;
+}) {
+  const query: Prisma.ThreadFindManyArgs = {
+    where: { parentId: threadId },
+  };
+
+  try {
+    const [threads, totalCount] = await prisma.$transaction([
+      prisma.thread.findMany({
+        where: query.where,
+        select: {
+          ...threadPreviewData(userId),
+        },
+        take:limit,
+        skip: (page - 1) * limit
+      }),
+      prisma.thread.count({ where: query.where }),
+    ]);
+    return { threads, totalCount };
   } catch (error: any) {
     console.log(error);
     throw error;
@@ -157,7 +191,7 @@ export async function fetchThreads({
 export async function fetchUserThreads({
   userId,
   page = 1,
-  limit = 60,
+  limit = 10,
 }: {
   userId: string;
   page?: number;

@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { ThreadsList } from "./ThreadsList";
 import { useStore } from "zustand";
-import useFeedStore from "@/src/state/feedsStore";
+import useFeedStore from "@/src/app/(root)/(feed)/_store/feedsStore";
 import { Thread, User } from "@prisma/client";
 import PostThread from "../forms/PostThread";
-import useUserStore from "@/src/state/userStore";
+import useUserStore from "@/src/store/userStore";
 import VirtualizedThreadsList from "./Thread/VirtualizedThreadsList";
 
 export default function ThreadsListWrapper({
@@ -14,6 +14,8 @@ export default function ThreadsListWrapper({
   onFetchThreads,
   onDeleteThread,
   threads,
+  isThreadsLoading,
+  totalCount,
 }: {
   userId: string;
   initialThreadsData: unknown;
@@ -29,26 +31,19 @@ export default function ThreadsListWrapper({
     return threads;
   };
 
-  const { totalCount, threads: initialThreads } = initialThreadsData ?? {
-    threads: [],
-  };
-
-  console.log("threads list wrapper", { threads, totalCount });
-
   if (!threads) {
-    threads = initialThreads || [];
+    threads = initialThreadsData?.threads || [];
   }
 
   return (
-    <>
-      <VirtualizedThreadsList
-        userId={userId}
-        path="/"
-        threads={threads}
-        totalCount={totalCount}
-        onFetchThreads={fetchHandler}
-        onDeleteThread={onDeleteThread}
-      />
-    </>
+    <VirtualizedThreadsList
+      userId={userId}
+      path="/"
+      threads={threads}
+      totalCount={totalCount}
+      onFetchThreads={fetchHandler}
+      onDeleteThread={onDeleteThread}
+      isThreadsLoading={isThreadsLoading}
+    />
   );
 }

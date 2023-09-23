@@ -1,4 +1,4 @@
-import { camelToSnakeCase } from "@/src/lib/utils";
+import { camelToSnakeCase } from "@/lib/utils";
 import { Community } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";

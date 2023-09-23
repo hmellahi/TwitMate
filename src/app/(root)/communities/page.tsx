@@ -1,9 +1,9 @@
 import React from "react";
 import { currentUser, useOrganization } from "@clerk/nextjs";
-import { fetchCommunities } from "@/src/lib/actions/community.actions";
+import { fetchCommunities } from "@/server-actions/community/community.actions";
 import { Community } from "@prisma/client";
-import CommunityCard from "@/src/components/community/CommunityCard";
-import { SearchInput } from "@/src/components/ui/searchInput";
+import CommunityCard from "@/components/community/CommunityCard";
+import { SearchInput } from "@/components/ui/searchInput";
 
 export default async function page({
   searchParams: { query },

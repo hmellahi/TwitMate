@@ -1,37 +1,58 @@
-import PostThread from "@/src/components/forms/PostThread";
-import ThreadsListWrapper from "@/src/components/shared/ThreadsListWrapper";
-import useFeedStore from "@/src/state/feedsStore";
-import { ThreadWithDetails } from "@/src/types/Thread";
+"use client";
+import PostThread from "@/components/forms/PostThread";
+import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
+import useFeedStore from "@/app/(root)/(feed)/_store/feedsStore";
+import { ThreadWithDetails } from "@/types/Thread";
 import { User } from "@prisma/client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useStore } from "zustand";
+import useThreadDetailsStore from "../_store/threadDetailsStore";
+import useUserStore from "@/store/userStore";
 
 export default function ThreadDetails({
   user,
-  thread,
+  threadId,
 }: {
-  user: User;
-  thread: ThreadWithDetails;
+  userId: string;
+  threadId: string;
+  userImage: string;
 }) {
-  let { fetchThreads, deleteThread, setThreads, threads, createThread } =
-    useStore(useFeedStore);
+  let {
+    fetchReplies,
+    deleteThread,
+    threads,
+    createThread,
+    totalCount,
+    isRepliesLoading,
+  } = useStore(useThreadDetailsStore);
+  let { setCurrentUser } = useStore(useUserStore);
+  const { id: userId, image: userImage } = user;
+
+  useEffect(() => {
+    console.log({user})
+    setCurrentUser(user);
+    fetchReplies({ userId, threadId }, true);
+  }, []);
 
   return (
     <>
       <PostThread
         className="border-y-[.01px] border-[#2A2C2E] pb-4 pt-2"
-        userId={user.id}
-        parentThreadId={thread.id}
+        userId={userId}
+        parentThreadId={threadId}
         btnTitle="Reply"
         postBtnClass="!px-3"
-        userImage={user.image}
+        userImage={userImage}
+        createThreadHandler={createThread}
       />
       <ThreadsListWrapper
-        user={user}
-        initialThreadsData={initialThreadsData}
+        userId={userId}
+        initialThreadsData={null}
         onDeleteThread={deleteThread}
-        onFetchThreads={fetchThreads}
+        onFetchThreads={fetchReplies}
         threads={threads}
+        isThreadsLoading={isRepliesLoading}
+        totalCount={totalCount}
       ></ThreadsListWrapper>
     </>
   );

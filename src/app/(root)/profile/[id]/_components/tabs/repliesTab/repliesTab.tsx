@@ -1,12 +1,21 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Reply from "./Reply";
-import { getUserReplies } from "@/src/lib/actions/thread.actions";
+import { getUserReplies } from "@/server-actions/thread/thread.actions";
 import { User } from "@prisma/client";
 
-export default async function RepliesTab({ user }: { user: User }) {
-  const userReplies = await getUserReplies({
-    userId: user.id,
-    path: `/profile/${user.id}`,
+export default function RepliesTab({ user }: { user: User }) {
+  let [userReplies, setUserReplies] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      setUserReplies(
+        await getUserReplies({
+          userId: user.id,
+          path: `/profile/${user.id}`,
+        })
+      );
+    })();
   });
   if (!userReplies) return null;
   return (

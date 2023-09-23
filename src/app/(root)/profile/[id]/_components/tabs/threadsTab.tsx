@@ -1,11 +1,10 @@
 "use client";
 import { useStore } from "zustand";
-import useFeedStore from "@/src/state/feedsStore";
-import ThreadsListWrapper from "@/src/components/shared/ThreadsListWrapper";
-import useUserStore from "@/src/state/userStore";
+import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
+import useUserStore from "@/store/userStore";
 import { User } from "@prisma/client";
-import { useEffect } from "react";
-import useProfileStore from "@/src/state/profileStore";
+import { useEffect, useState } from "react";
+import useProfileStore from "@/app/(root)/profile/[id]/_store/profileStore";
 
 export default function ThreadsTab({
   user,
@@ -14,27 +13,31 @@ export default function ThreadsTab({
   user: User;
   // initialThreadsData: unknown;
 }) {
-  let { fetchUserThreads, deleteThread, threads } = useStore(useProfileStore);
+  let {
+    fetchUserThreads,
+    deleteThread,
+    threads,
+    totalCount,
+    isThreadsLoading,
+  } = useStore(useProfileStore);
 
-  const initialThreadsData = null;
+  // const [initialThreadsData, setInitia] = useState({});
   let { setCurrentUser } = useStore(useUserStore);
 
   useEffect(() => {
     setCurrentUser(() => user);
     fetchUserThreads({ userId: user.id });
-
-    // setThreads(initialThreadsData.threads);
   }, []);
 
   return (
-    <>
-      <ThreadsListWrapper
-        userId={user.id}
-        initialThreadsData={initialThreadsData}
-        onDeleteThread={deleteThread}
-        onFetchThreads={fetchUserThreads}
-        threads={threads}
-      ></ThreadsListWrapper>
-    </>
+    <ThreadsListWrapper
+      userId={user.id}
+      initialThreadsData={null}
+      onDeleteThread={deleteThread}
+      onFetchThreads={fetchUserThreads}
+      threads={threads}
+      isThreadsLoading={isThreadsLoading}
+      totalCount={totalCount}
+    ></ThreadsListWrapper>
   );
 }

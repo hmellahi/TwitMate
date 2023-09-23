@@ -1,5 +1,5 @@
-import { Create } from "@/src/components/svgs";
-import { MediaViewer } from "@/src/components/ui/MediaViewer";
+import { Create } from "@/components/svgs";
+import { MediaViewer } from "@/components/ui/MediaViewer";
 import { Label } from "@radix-ui/react-label";
 import React, { useEffect, useState } from "react";
 import MediaViewerWrapper from "./MediaViewerWrapper";

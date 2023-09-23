@@ -1,5 +1,5 @@
 import { revalidatePath } from "next/cache";
-import { prisma } from "../prisma";
+import { prisma } from "../../lib/prisma";
 import { Thread, ThreadLikes } from "@prisma/client";
 
 export async function getUserActivity({

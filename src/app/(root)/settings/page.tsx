@@ -1,5 +1,5 @@
-import AccountProfile from "@/src/components/forms/AccountProfile";
-import { fetchUser } from "@/src/lib/actions/user.actions";
+import AccountProfile from "@/components/forms/AccountProfile";
+import { fetchUser } from "@/server-actions/user/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import React from "react";
 

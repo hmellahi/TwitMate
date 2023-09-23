@@ -1,3 +1,5 @@
+const { blackA, green, mauve, slate, violet } = require('@radix-ui/colors');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -188,7 +190,7 @@ module.exports = {
         "light-2": "#EFEFEF",
         "light-3": "#7878A3",
         "light-4": "#5C5C7B",
-        "gray-1": "#697C89",
+        "gray-1": "#A0A0A0",
         "gray-2": "#A0A0A0",
         "gray-3": "#1A1A1A",
         "gray-4":"#B8B8B8",
@@ -196,6 +198,11 @@ module.exports = {
         'gray-6':"#777777",
         'light-gray':'#1E1E1E',
         glassmorphism: "rgba(16, 16, 18, 0.60)",
+        ...blackA,
+        ...green,
+        ...mauve,
+        ...slate,
+        ...violet,
       },
       boxShadow: {
         "count-badge": "0px 0px 6px 2px rgba(219, 188, 159, 0.30)",
@@ -213,10 +220,25 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        hide: {
+          from: { opacity: 1 },
+          to: { opacity: 0 },
+        },
+        slideIn: {
+          from: { transform: 'translateX(calc(100% + var(--viewport-padding)))' },
+          to: { transform: 'translateX(0)' },
+        },
+        swipeOut: {
+          from: { transform: 'translateX(var(--radix-toast-swipe-end-x))' },
+          to: { transform: 'translateX(calc(100% + var(--viewport-padding)))' },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        hide: 'hide 100ms ease-in',
+        slideIn: 'slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1)',
+        swipeOut: 'swipeOut 100ms ease-out',
       },
     },
   },

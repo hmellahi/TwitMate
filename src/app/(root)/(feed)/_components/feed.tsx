@@ -1,9 +1,10 @@
 "use client";
-import PostThread from "@/src/components/forms/PostThread";
+
+import PostThread from "@/components/forms/PostThread";
 import { useStore } from "zustand";
-import useFeedStore from "@/src/state/feedsStore";
-import ThreadsListWrapper from "@/src/components/shared/ThreadsListWrapper";
-import useUserStore from "@/src/state/userStore";
+import useFeedStore from "@/app/(root)/(feed)/_store/feedsStore";
+import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
+import useUserStore from "@/store/userStore";
 import { User } from "@prisma/client";
 import { useEffect } from "react";
 
@@ -14,14 +15,20 @@ export default function Feed({
   user: User;
   initialThreadsData: unknown;
 }) {
-  let { fetchThreads, deleteThread, setThreads, threads, createThread } =
-    useStore(useFeedStore);
+  let {
+    fetchThreads,
+    deleteThread,
+    threads,
+    createThread,
+    isThreadsLoading,
+    totalCount,
+  } = useStore(useFeedStore);
 
   let { setCurrentUser } = useStore(useUserStore);
 
   useEffect(() => {
-    setCurrentUser(() => user);
-    setThreads(initialThreadsData.threads);
+    setCurrentUser(user);
+    fetchThreads({ userId: user.id });
   }, []);
 
   return (
@@ -38,6 +45,8 @@ export default function Feed({
         onDeleteThread={deleteThread}
         onFetchThreads={fetchThreads}
         threads={threads}
+        isThreadsLoading={isThreadsLoading}
+        totalCount={totalCount}
       ></ThreadsListWrapper>
     </>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import UserCard from "../UserCard";
 import { currentUser } from "@clerk/nextjs";
-import { fetchUsers } from "@/src/lib/actions/user.actions";
+import { fetchUsers } from "@/server-actions/user/user.actions";
 import { User } from "@prisma/client";
 
 export default async function SuggestedUsers() {

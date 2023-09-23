@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Textarea } from "@/src/components/ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Form,
   FormControl,
@@ -11,16 +11,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/src/components/ui/form";
-import { Button } from "@/src/components/ui/button";
+} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 import * as z from "zod";
 import { usePathname, useRouter } from "next/navigation";
-import { CreateThreadValidation } from "@/src/lib/validations/thread";
+import { CreateThreadValidation } from "@/lib/validations/thread";
 import { useOrganization } from "@clerk/nextjs";
 import MediaUploader from "../shared/Thread/MediaUploader";
 import { UploadFileResponse } from "uploadthing/client";
-import { useUploadThing } from "@/src/lib/uploadThing";
-import useAutosizeTextArea from "@/src/lib/hooks/useAutosizeTextArea";
+import { useUploadThing } from "@/lib/uploadThing";
+import useAutosizeTextArea from "@/lib/hooks/useAutosizeTextArea";
 import Image from "next/image";
 import MediaViewerWrapper from "../shared/Thread/MediaViewerWrapper";
 

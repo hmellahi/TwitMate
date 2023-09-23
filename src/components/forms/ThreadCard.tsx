@@ -1,18 +1,21 @@
 "use client";
 
-import { likeThread, unLikeThread } from "@/src/lib/actions/thread.actions";
+import {
+  likeThread,
+  unLikeThread,
+} from "@/server-actions/thread/thread.actions";
 import Image from "next/image";
 import Link from "next/link";
 import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import { Heart, Reply, HeartFilled, Repost, Share } from "../svgs";
-import { ThreadWithDetails } from "@/src/types/Thread";
-import { timeAgo } from "@/src/lib/time-converter";
+import { ThreadWithDetails } from "@/types/Thread";
+import { timeAgo } from "@/lib/time-converter";
 import { UsersList } from "../community/UsersList";
 import ThreadActions from "../shared/Thread/ThreadActions";
 import { MediaViewer } from "../ui/MediaViewer";
 import { User } from "@prisma/client";
-import { showLikesCount } from "@/src/lib/utils";
-import { debounce } from "@/src/lib/debounce";
+import { showLikesCount } from "@/lib/utils";
+import { debounce } from "@/lib/debounce";
 import { useRouter } from "next/navigation";
 
 function ThreadCard(
@@ -87,11 +90,10 @@ function ThreadCard(
 
     setisUserLikedThread(!isUserLikedThread);
 
-    // memoizedDebouncedSaveUserReaction(); // Call the memoized debounced function
     memoizedDebouncedSaveUserReaction(isUserLikedThread);
   }
 
-  const hasReplies = thread?._count?.childrens > 0;
+  const hasReplies = thread?.childrens?.length > 0;
   let threadLikes = thread?._count?.likes || 0;
   let likesCount = +isUserLikedThread + threadLikes - 1;
   if (isUserLikedThread && likesCount == 0) {

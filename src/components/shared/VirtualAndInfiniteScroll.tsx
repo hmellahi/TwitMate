@@ -77,6 +77,7 @@ export default function VirtualAndInfiniteScroll({
   fetchHandler,
   list,
   className,
+  isNextPageLoading,
 }: {
   renderRow: ({ item, style }) => ReactElement<React.FC>;
   loaderComponent: ReactElement<React.FC>;
@@ -88,7 +89,6 @@ export default function VirtualAndInfiniteScroll({
   const [pageCount, setPageCount] = useState(2);
   console.log({ list, totalCount });
 
-  const [isNextPageLoading, setIsNextPageLoading] = useState(false);
   const cache = useRef(
     new CellMeasurerCache({
       defaultHeight: 1000,
@@ -101,17 +101,13 @@ export default function VirtualAndInfiniteScroll({
   }
 
   const handleNewPageLoad = async () => {
-    console.log("mooore");
+    console.log({isNextPageLoading})
     if (isNextPageLoading) {
       return;
     }
-    setIsNextPageLoading(true);
     await fetchHandler(pageCount);
     setPageCount((pageCount) => pageCount + 1);
-    setIsNextPageLoading(false);
   };
-
-  if (!list?.length) return loaderComponent;
 
   return (
     <div className={`h-full mt-4 ${className}`}>
@@ -147,29 +143,6 @@ export default function VirtualAndInfiniteScroll({
           </WindowScroller>
         )}
       </AutoSizer>
-      {/* <InfiniteLoader
-        isRowLoaded={isRowLoaded}
-        loadMoreRows={handleNewPageLoad}
-        rowCount={totalCount}
-      >
-        {({ onRowsRendered, registerChild }) => (
-          <AutoSizer className="w-full h-full">
-            {({ height, width }) => (
-              <List
-                ref={registerChild}
-                onRowsRendered={onRowsRendered}
-                width={width}
-                height={height}
-                rowCount={list.length}
-                rowHeight={150}
-                rowRenderer={(rowData) =>
-                  rowRenderer({ cache, list, renderRow, rowData })
-                }
-              />
-            )}
-          </AutoSizer>
-        )}
-      </InfiniteLoader> */}
       {isNextPageLoading && loaderComponent}
     </div>
   );

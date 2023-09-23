@@ -1,10 +1,10 @@
 import { Thread, User } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
-import { Button } from "../../../../../../components/ui/button";
+import { Button } from "../../../../components/ui/button";
 import Link from "next/link";
-import { formatDateString } from "@/src/lib/utils";
-import { timeAgo } from "@/src/lib/time-converter";
+import { formatDateString } from "@/lib/utils";
+import { timeAgo } from "@/lib/time-converter";
 
 export default function Activity({
   activity,

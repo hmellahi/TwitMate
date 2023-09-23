@@ -1,9 +1,10 @@
-import * as threadActions from "@/src/lib/actions/thread.actions";
-import { CreateThreadParams, FetchThreadsParams } from "@/src/types/Thread";
+import * as threadActions from "@/server-actions/thread/thread.actions";
+import { CreateThreadParams, FetchThreadsParams } from "@/types/Thread";
 import { Thread } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { create, useStore } from "zustand";
-import useUserStore from "./userStore";
+import useUserStore from "../../../../store/userStore";
+import { PostDeletedToast } from "@/lib/toasts/showPostDeletedToast";
 
 type feedStore = {
   threads: Thread[];
@@ -28,8 +29,6 @@ const deleteThread = ({
   const threadIndex = threads.indexOf(thread);
   if (!thread) return;
 
-  // threads.splice(threadIndex, 1);
-  // thread.isDeleted = true
   threads = [
     ...threads.slice(0, threadIndex),
     ...threads.slice(threadIndex + 1, threads.length),
@@ -37,29 +36,33 @@ const deleteThread = ({
 
   setThreads(threads);
 
-  // threadActions.removeThread({ path, authorId, threadId }); TODO
+  threadActions.removeThread({ path, authorId, threadId });
   if (path.includes("thread")) useRouter().push("/");
 };
 
 const fetchThreads = async (
   params: FetchThreadsParams,
-  clearOldList: boolean = true
+  clearOldList: boolean = false
 ) => {
-  const { setThreads, threads } = useFeedStore.getState();
+  const { threads, setIsThreadsLoading } = useFeedStore.getState();
 
   if (clearOldList) {
     setThreads([]);
   }
 
+  setIsThreadsLoading(true);
+
   let { threads: newThreads, totalCount } = await threadActions.fetchThreads(
     params
   );
 
-  if (!clearOldList) {
+  setIsThreadsLoading(false);
+
+  if (!clearOldList && threads) {
     newThreads = [...threads, ...newThreads];
   }
 
-  setThreads(newThreads);
+  useFeedStore.setState({ totalCount, threads: newThreads });
 
   return { threads, totalCount };
 };
@@ -78,10 +81,13 @@ const createThread = async (params: CreateThreadParams) => {
 const useFeedStore = create<feedStore>((set) => ({
   threads: null,
   totalCount: 0,
+  isThreadsLoading: true,
   deleteThread,
   fetchThreads,
   createThread,
   setThreads: (newThreads: Thread[]) => set(() => ({ threads: newThreads })),
+  setIsThreadsLoading: (value: boolean) =>
+    set(() => ({ isThreadsLoading: value })),
 }));
 
 export default useFeedStore;

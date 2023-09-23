@@ -1,5 +1,5 @@
 "use client";
-import ThreadCard from "@/src/components/forms/ThreadCard";
+import ThreadCard from "@/components/forms/ThreadCard";
 import { Thread, User } from "@prisma/client";
 
 export function ThreadsList({

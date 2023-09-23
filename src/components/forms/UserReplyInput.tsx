@@ -7,10 +7,10 @@ import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { z } from "zod";
-import { CreateThreadValidation } from "@/src/lib/validations/thread";
+import { CreateThreadValidation } from "@/lib/validations/thread";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
-import { createThread } from "@/src/lib/actions/thread.actions";
+import { createThread } from "@/server-actions/thread/thread.actions";
 import { usePathname } from "next/navigation";
 
 export default function UserReplyInput({

@@ -1,6 +1,6 @@
-import PostThread from "@/src/components/forms/PostThread";
-import { fetchUser } from "@/src/lib/actions/user.actions";
-import useFeedStore from "@/src/state/feedsStore";
+import PostThread from "@/components/forms/PostThread";
+import { fetchUser } from "@/server-actions/user/user.actions";
+import useFeedStore from "@/app/(root)/(feed)/_store/feedsStore";
 import { currentUser } from "@clerk/nextjs";
 import React from "react";
 import { useStore } from "zustand";

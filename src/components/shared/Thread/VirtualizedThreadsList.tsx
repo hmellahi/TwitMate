@@ -1,10 +1,9 @@
 "use client";
 import React from "react";
-import { User } from "@prisma/client";
 import VirtualizedThreadsList from "./Thread/VirtualizedThreadsList";
 import VirtualAndInfiniteScroll from "../VirtualAndInfiniteScroll";
 import LoadingThreadCards from "./LoadingThreadCards";
-import ThreadCard from "@/src/components/forms/ThreadCard";
+import ThreadCard from "@/components/forms/ThreadCard";
 
 export default function VirtualizedThreadsList({
   userId,
@@ -13,6 +12,7 @@ export default function VirtualizedThreadsList({
   onDeleteThread,
   threads,
   totalCount,
+  isThreadsLoading,
 }: {
   userId: string;
   path: string;
@@ -32,7 +32,11 @@ export default function VirtualizedThreadsList({
       measure={measure}
     />
   );
-  console.log("Rerendered : virtual threads list wrapper");
+  console.log(
+    "Rerendered : virtual threads list wrapper",
+    isThreadsLoading,
+    threads
+  );
 
   return (
     <VirtualAndInfiniteScroll
@@ -42,6 +46,7 @@ export default function VirtualizedThreadsList({
       fetchHandler={onFetchThreads}
       loaderComponent={<LoadingThreadCards count={3} />}
       className="text-white flex flex-col gap-4d"
+      isNextPageLoading={isThreadsLoading}
     />
   );
 }

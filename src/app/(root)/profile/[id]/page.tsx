@@ -1,10 +1,10 @@
 "use server";
 
-import ProfileTabs from "@/src/app/(root)/profile/[id]/_components/profileTabs";
-import { Edit } from "@/src/components/svgs";
-import { Button } from "@/src/components/ui/button";
-import { fetchUserThreads } from "@/src/lib/actions/thread.actions";
-import { fetchUser } from "@/src/lib/actions/user.actions";
+import ProfileTabs from "@/app/(root)/profile/[id]/_components/profileTabs";
+import { Edit } from "@/components/svgs";
+import { Button } from "@/components/ui/button";
+import { fetchUserThreads } from "@/server-actions/thread/thread.actions";
+import { fetchUser } from "@/server-actions/user/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";

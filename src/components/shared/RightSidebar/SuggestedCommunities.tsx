@@ -1,10 +1,10 @@
 import React from "react";
 import UserCard from "../UserCard";
 import { currentUser } from "@clerk/nextjs";
-import { fetchUsers } from "@/src/lib/actions/user.actions";
+import { fetchUsers } from "@/server-actions/user/user.actions";
 import { Community, User } from "@prisma/client";
 import CommunityCard from "./CommunityCard";
-import { fetchCommunities } from "@/src/lib/actions/community.actions";
+import { fetchCommunities } from "@/server-actions/community/community.actions";
 
 export default async function SuggestedCommunities() {
   const user = await currentUser();

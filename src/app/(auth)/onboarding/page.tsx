@@ -1,6 +1,6 @@
-import AccountProfile from "@/src/components/forms/AccountProfile";
-import { fetchUser } from "@/src/lib/actions/user.actions";
-import { UserData } from "@/src/types/User";
+import AccountProfile from "@/components/forms/AccountProfile";
+import { fetchUser } from "@/server-actions/user/user.actions";
+import { UserData } from "@/types/User";
 import { currentUser } from "@clerk/nextjs";
 import { User } from "@clerk/nextjs/server";
 

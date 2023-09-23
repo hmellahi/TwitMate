@@ -1,6 +1,6 @@
 "use client";
 
-import { sidebarLink } from "@/src/types/SidebarLink";
+import { sidebarLink } from "@/types/SidebarLink";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

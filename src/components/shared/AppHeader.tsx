@@ -11,8 +11,8 @@ import Link from "next/link";
 
 export default function AppHeader() {
   return (
-    <div className="topbar text-white flex flex-between">
-      <Link href='/' className="flex items-center gap-4">
+    <div className="topbar text-white flex flex-between bg-red-20d0 px-[10rem]">
+      <Link href="/" className="flex items-center gap-4">
         <Image src="/assets/logo.svg" alt="logo" width="30" height="30" />
         Threads
       </Link>

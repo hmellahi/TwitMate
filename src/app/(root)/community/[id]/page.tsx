@@ -1,26 +1,21 @@
 // 'use client'
 
-import ThreadCard from "@/src/components/forms/ThreadCard";
-import { ThreadsList } from "@/src/components/shared/ThreadsList";
-import UserCard from "@/src/components/shared/UserCard";
-import SvgIcon from "@/src/components/ui/svgIcon";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/src/components/ui/tabs";
-import { communityTabs, profileTabs } from "@/src/constants";
+import ThreadCard from "@/components/forms/ThreadCard";
+import { ThreadsList } from "@/components/shared/ThreadsList";
+import UserCard from "@/components/shared/UserCard";
+import SvgIcon from "@/components/ui/svgIcon";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { communityTabs, profileTabs } from "@/constants";
 import {
   fetchCommunities,
   fetchCommunity,
-} from "@/src/lib/actions/community.actions";
+} from "@/server-actions/community/community.actions";
 import {
   fetchThreads,
   fetchUserThreads,
-} from "@/src/lib/actions/thread.actions";
-import { fetchUser } from "@/src/lib/actions/user.actions";
-import { camelToSnakeCase } from "@/src/lib/utils";
+} from "@/server-actions/thread/thread.actions";
+import { fetchUser } from "@/server-actions/user/user.actions";
+import { camelToSnakeCase } from "@/lib/utils";
 import { currentUser } from "@clerk/nextjs";
 import { Thread, User } from "@prisma/client";
 import Image from "next/image";

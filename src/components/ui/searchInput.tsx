@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Input } from "./input";
 import { useEffect, useState } from "react";
-import { fetchUsers } from "@/src/lib/actions/user.actions";
+import { fetchUsers } from "@/server-actions/user/user.actions";
 import { useRouter } from "next/navigation";
 import { Search } from "../svgs";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Skeleton } from "@/src/components/ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function LoadingThreadCard({ className = "" }: { className?: string }) {
   return (
@@ -19,8 +19,8 @@ export function LoadingThreadCard({ className = "" }: { className?: string }) {
           <div className="flex gap-2">
             {Array(4)
               .fill(0)
-              .map((_) => (
-                <Skeleton className="h-5 w-5 mt-3 rounded-full" />
+              .map((_, index) => (
+                <Skeleton key={index} className="h-5 w-5 mt-3 rounded-full" />
               ))}
           </div>
         </div>

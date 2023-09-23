@@ -1,4 +1,4 @@
-import { MediaViewer } from "@/src/components/ui/MediaViewer";
+import { MediaViewer } from "@/components/ui/MediaViewer";
 import React, { useEffect, useState } from "react";
 
 export default function MediaViewerWrapper({

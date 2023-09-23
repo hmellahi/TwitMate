@@ -1,6 +1,6 @@
-import UserCard from "@/src/components/shared/UserCard";
-import { SearchInput } from "@/src/components/ui/searchInput";
-import { fetchUsers } from "@/src/lib/actions/user.actions";
+import UserCard from "@/components/shared/UserCard";
+import { SearchInput } from "@/components/ui/searchInput";
+import { fetchUsers } from "@/server-actions/user/user.actions";
 import { currentUser } from "@clerk/nextjs/server";
 import { User } from "@prisma/client";
 import React from "react";

@@ -3,8 +3,8 @@
 import React, { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UserValidation } from "@/src/lib/validations/user";
-import { Textarea } from "@/src/components/ui/textarea";
+import { UserValidation } from "@/lib/validations/user";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Form,
   FormControl,
@@ -12,15 +12,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/src/components/ui/form";
-import { Input } from "@/src/components/ui/input";
-import { Button } from "@/src/components/ui/button";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import * as z from "zod";
 import Image from "next/image";
-import { UserData } from "@/src/types/User";
-import { isBase64Image } from "@/src/lib/utils";
-import { useUploadThing } from "@/src/lib/uploadThing";
-import { updateUser } from "@/src/lib/actions/user.actions";
+import { UserData } from "@/types/User";
+import { isBase64Image } from "@/lib/utils";
+import { useUploadThing } from "@/lib/uploadThing";
+import { updateUser } from "@/server-actions/user/user.actions";
 import { usePathname, useRouter } from "next/navigation";
 import { Label } from "../ui/label";
 import { useUser } from "@clerk/nextjs";

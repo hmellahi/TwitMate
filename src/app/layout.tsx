@@ -1,8 +1,9 @@
+import { Toaster } from "@/components/ui/Toast/toaster";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Poppins, Roboto } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"], weight:"400"});
+const inter = Inter({ subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +20,10 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+        <Toaster/>
+      </body>
     </html>
   );
 }

@@ -1,14 +1,14 @@
 import { ClerkProvider, currentUser } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 import "../globals.css";
-import AppHeader from "@/src/components/shared/AppHeader";
-import LeftSidebar from "@/src/components/shared/LeftSidebar";
-import RightSidebar from "@/src/components/shared/RightSidebar/RightSidebar";
-import BottomBar from "@/src/components/shared/BottomBar";
-import { fetchUser } from "@/src/lib/actions/user.actions";
+import AppHeader from "@/components/shared/AppHeader";
+import LeftSidebar from "@/components/shared/LeftSidebar";
+import RightSidebar from "@/components/shared/RightSidebar/RightSidebar";
+import BottomBar from "@/components/shared/BottomBar";
+import { fetchUser } from "@/server-actions/user/user.actions";
 import { redirect } from "next/navigation";
-import useFeedStore from "@/src/state/feedsStore";
-import useUserStore from "@/src/state/userStore";
+import useFeedStore from "@/app/(root)/(feed)/_store/feedsStore";
+import useUserStore from "@/store/userStore";
 
 export const metadata = {
   title: "Threads",
@@ -34,7 +34,7 @@ export default async function AuthLayout({
         className={`sm:px-[2rem] md:px-[2rem] xl:px-[6rem] 2xl:px-[13rem] bg-dark-1`}
       >
         <AppHeader />
-        <main className="flex items-start justify-center">
+        <main className="flex items-start justify-center bg-redd-400">
           <LeftSidebar currentUser={user} />
           <section className="main-container">
             <div className="w-full">{children}</div>

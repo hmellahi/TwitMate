@@ -1,6 +1,6 @@
 "use client";
 
-import { sidebarLinks } from "@/src/constants";
+import { sidebarLinks } from "@/constants";
 import { MobileSidebarLink } from "./MobileSidebarLink";
 
 export default function BottomBar() {

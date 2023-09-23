@@ -1,13 +1,13 @@
-import { fetchThreads } from "@/src/lib/actions/thread.actions";
+import { fetchThreads } from "@/server-actions/thread/thread.actions";
 import { currentUser, useOrganizationList, useUser } from "@clerk/nextjs";
 import { ThreadsList } from "../../../components/shared/";
-import PostThread from "@/src/components/forms/PostThread";
-import { fetchUser } from "@/src/lib/actions/user.actions";
+import PostThread from "@/components/forms/PostThread";
+import { fetchUser } from "@/server-actions/user/user.actions";
 import { useStore } from "zustand";
-import useFeedStore from "@/src/state/feedsStore";
-import ThreadsListWrapper from "@/src/components/shared/ThreadsListWrapper";
-import * as threadActions from "@/src/lib/actions/thread.actions";
-import useUserStore from "@/src/state/userStore";
+import useFeedStore from "@/app/(root)/(feed)/_store/feedsStore";
+import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
+import * as threadActions from "@/server-actions/thread/thread.actions";
+import useUserStore from "@/store/userStore";
 import Feed from "./_components/feed";
 
 export default async function Home() {
@@ -16,10 +16,11 @@ export default async function Home() {
 
   const [userInfo, initialThreadsData] = await Promise.all([
     fetchUser(user.id),
-    threadActions.fetchThreads({
-      userId: user.id,
-      path: "/",
-    }),
+    null,
+    // threadActions.fetchThreads({
+    //   userId: user.id,
+    //   path: "/",
+    // }),
   ]);
 
   if (!userInfo) return null;

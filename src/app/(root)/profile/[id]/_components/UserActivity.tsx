@@ -1,4 +1,4 @@
-import { getUserReplies } from "@/src/lib/actions/thread.actions";
+import { getUserReplies } from "@/server-actions/thread/thread.actions";
 import React from "react";
 
 export default function UserActivity() {

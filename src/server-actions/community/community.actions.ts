@@ -1,10 +1,10 @@
 import { Community, User } from "@prisma/client";
-import { prisma } from "../prisma";
+import { prisma } from "../../lib/prisma";
 import {
   CommunityNotFoundError,
   UserAlreadyMemberError,
   UserNotMemberError,
-} from "../errors/community.errors";
+} from "../../lib/errors/community.errors";
 import { revalidatePath } from "next/cache";
 
 interface addCommunity {
@@ -188,12 +188,12 @@ async function fetchCommunities({
         },
       },
       select: {
-        id:true,
-        image:true,
-        name:true,
-        bio:true,
-        createdAt:true,
-        createdBy:true,
+        id: true,
+        image: true,
+        name: true,
+        bio: true,
+        createdAt: true,
+        createdBy: true,
         members: {
           take: 4,
         },
