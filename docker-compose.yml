@@ -11,19 +11,19 @@ services:
       - '7779:5432'
     # volumes:
     #   - pgdata:/var/lib/postgresql/data
-  app:
-    ports:
-      - 3000:3000
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-    links:
-      - postgres
-    depends_on:
-      - postgres
-    volumes:
-      - ./:/usr/src/app
-      - /usr/src/app/node_modules
+  # app:
+  #   ports:
+  #     - 3000:3000
+  #   build:
+  #     context: ./
+  #     dockerfile: ./Dockerfile
+  #   links:
+  #     - postgres
+  #   depends_on:
+  #     - postgres
+  #   volumes:
+  #     - ./:/usr/src/app
+  #     - /usr/src/app/node_modules
 
 # volumes:
 #   pgdata:
