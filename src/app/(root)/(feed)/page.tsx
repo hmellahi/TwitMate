@@ -16,11 +16,10 @@ export default async function Home() {
 
   const [userInfo, initialThreadsData] = await Promise.all([
     fetchUser(user.id),
-    null,
-    // threadActions.fetchThreads({
-    //   userId: user.id,
-    //   path: "/",
-    // }),
+    threadActions.fetchThreads({
+      userId: user.id,
+      path: "/",
+    })
   ]);
 
   if (!userInfo) return null;

@@ -28,7 +28,7 @@ export default function Feed({
 
   useEffect(() => {
     setCurrentUser(user);
-    fetchThreads({ userId: user.id }, true);
+    // fetchThreads({ userId: user.id }, true);
   }, []);
 
   return (
