@@ -31,9 +31,6 @@ const nextConfig = {
         hostname: "placehold.co",
       },
     ],
-    typescript: {
-      ignoreBuildErrors: true,
-    },
   },
   webpack: (config) => {
     config.module.rules.push({
