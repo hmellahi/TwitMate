@@ -94,8 +94,6 @@ export default function PostThread({
         parentId: parentThreadId,
       });
 
-      form.setValue("text", "");
-      setThreadImages([]);
       if (redirectUrl) {
         router.push("/");
       }
@@ -109,6 +107,8 @@ export default function PostThread({
     } catch (e) {
       console.log(e);
     } finally {
+      form.setValue("text", "");
+      setThreadImages([]);
       setIsCreatingPost(false);
     }
   }
