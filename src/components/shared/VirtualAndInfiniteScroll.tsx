@@ -81,7 +81,7 @@ export default function VirtualAndInfiniteScroll({
   }
 
   const handleNewPageLoad = async () => {
-    let pageCount = Math.floor(list.length / 10) + 1;
+    let pageCount = Math.floor(list.length / 7) + 1;
     console.log({ isNextPageLoading });
     console.log({ pageCount });
     if (isNextPageLoading) {

@@ -24,8 +24,8 @@ export function MediaViewer({
             fill
             className="relative w-full rounded-md object-cover"
             alt={`Avatar ${index + 1}`}
-            loading="lazy"
             onLoad={onLoad}
+            loading="eager"
           />
         </div>
       ))}

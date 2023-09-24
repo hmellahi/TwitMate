@@ -64,14 +64,14 @@ const fetchUserThreads = async (
 };
 
 const createThread = async (params: CreateThreadParams) => {
-  const { setThreads, threads } = useProfileStore.getState();
+  const { setThreads, threads, totalCount } = useProfileStore.getState();
   const { currentUser } = useUserStore.getState();
 
   const createdThread = await threadActions.createThread(params);
   createdThread.author = currentUser;
-  console.log({ currentUser });
 
   setThreads([createdThread, ...threads]);
+  useProfileStore.setState({ totalCount: totalCount + 1 });
 };
 
 const useProfileStore = create<profileStore>((set) => ({
