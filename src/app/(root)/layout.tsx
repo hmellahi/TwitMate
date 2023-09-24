@@ -31,15 +31,15 @@ export default async function AuthLayout({
   return (
     <ClerkProvider>
       <div
-        className={`sm:px-[2rem] md:px-[2rem] xl:px-[6rem] 2xl:px-[13rem] bg-dark-1`}
+        className={`sm:px-[2rem] md:px-[2rem] xl:px-[6rem] 2xl:px-[13rem] h-screen`}
       >
         <AppHeader />
-        <main className="flex items-start justify-center bg-redd-400">
+        <main className="flex items-start justify-center overflow-hiddden">
           <LeftSidebar currentUser={user} />
-          <section className="main-container">
-            <div className="w-full">{children}</div>
+          <section className="main-container sm:pyd-0">
+            <div className="w-full py-20 sm:py-16">{children}</div>
           </section>
-          <RightSidebar />
+          <RightSidebar/>
         </main>
         <BottomBar />
       </div>

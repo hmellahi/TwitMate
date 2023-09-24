@@ -5,7 +5,7 @@
 @layer components {
   /* main */
   .main-container {
-    @apply flex min-h-screen flex-1 flex-col items-center bg-dark-1 pb-10 pt-28 max-md:pb-32 px-6 sm:px-10 sm:max-w-2xl;
+    @apply flex min-h-screen flex-1 flex-col items-center bg-dark-1 pb-10 max-md:pb-32 px-6 sm:px-10 sm:max-w-2xl;
   }
 
   /* Head Text */
@@ -79,7 +79,7 @@
   }
 
   .leftsidebar {
-    @apply sticky left-0 top-0 z-20 flex h-screen w-fit flex-col justify-between overflow-auto border-r border-r-dark-4 bg-dark-1 pb-5 pt-28 max-md:hidden;
+    @apply sticky left-0 top-0 z-20 flex w-fit flex-col justify-between overflow-auto border-r border-r-dark-4 bg-dark-1 pb-5 max-md:hidden;
   }
 
   .leftsidebar_link {
@@ -91,7 +91,7 @@
   }
 
   .rightsidebar {
-    @apply sticky right-0 top-0 z-20 flex h-screen w-fit flex-col justify-between gap-12 overflow-auto border-l border-l-dark-4 bg-dark-1 px-7 pb-6 pt-28 max-xl:hidden;
+    @apply sticky right-0 top-0 z-20 flex h-screen w-fit flex-col justify-between gap-12 overflow-auto border-l border-l-dark-4 bg-dark-1 px-7 pb-6 max-xl:hidden;
   }
 
   .icon-hover {
@@ -178,7 +178,7 @@
     --dark-3: white;
     --dark-4: white; 
     */
-    --primary-color: #877eff;
+    --primary-color: #6459fb;
     --white-color: white;
     --dark-1: #101010;
     --dark-2: #121417;

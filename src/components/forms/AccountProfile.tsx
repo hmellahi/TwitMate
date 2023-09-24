@@ -24,6 +24,7 @@ import { updateUser } from "@/server-actions/user/user.actions";
 import { usePathname, useRouter } from "next/navigation";
 import { Label } from "../ui/label";
 import { useUser } from "@clerk/nextjs";
+import uploadImages from "@/lib/uploadImages";
 
 export default function AccountProfile({
   user,
@@ -36,7 +37,6 @@ export default function AccountProfile({
   const { startUpload } = useUploadThing("media");
   const router = useRouter();
   const pathname = usePathname();
-  let { user: currentUser } = useUser();
 
   const form = useForm({
     resolver: zodResolver(UserValidation),
@@ -48,22 +48,20 @@ export default function AccountProfile({
     },
   });
 
-  // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof UserValidation>) {
     const blob = values.profile_photo;
 
     const hasImageChanged = isBase64Image(blob);
 
     if (hasImageChanged && profilePhoto) {
-      const imgRes = await startUpload([profilePhoto]);
+      let uploadedImagesUrls = await uploadImages([profilePhoto]);
 
-      if (imgRes) {
-        values.profile_photo = imgRes[0].url;
+      if (uploadedImagesUrls?.length) {
+        values.profile_photo = uploadedImagesUrls[0];
       }
     }
 
     // currentUser?.setProfileImage({ file: values.profile_photo });
-    // update user profile
     await updateUser(
       {
         id: user.id,
@@ -131,7 +129,7 @@ export default function AccountProfile({
               </FormLabel>
               <FormControl className="text-gray-200 text-base-semibold flex-1">
                 <>
-                  <Label htmlFor="picture">Upload Profile Img</Label>
+                  <Label htmlFor="picture">Upload Profile Image</Label>
                   <Input
                     id="picture"
                     type="file"

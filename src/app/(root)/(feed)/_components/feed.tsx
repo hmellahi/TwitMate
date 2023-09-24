@@ -22,12 +22,19 @@ export default function Feed({
     createThread,
     isThreadsLoading,
     totalCount,
+    setThreads,
   } = useStore(useFeedStore);
 
   let { setCurrentUser } = useStore(useUserStore);
 
   useEffect(() => {
     setCurrentUser(user);
+    if (!initialThreadsData) {
+      return;
+    }
+    const { threads, totalCount } = initialThreadsData;
+    setThreads(threads);
+    useFeedStore.setState({ totalCount, isThreadsLoading: false });
     // fetchThreads({ userId: user.id }, true);
   }, []);
 

@@ -24,9 +24,9 @@ export default async function page({
         route="search"
         placeholder="Type username or name"
       ></SearchInput>
-      <div className="flex flex-col gap-6 mt-3 ">
+      <div className="flex flex-col gap-6 mt-3">
         {users?.map((user: User) => (
-          <UserCard user={user} />
+          <UserCard user={user} className="line-break"/>
         ))}
       </div>
     </div>

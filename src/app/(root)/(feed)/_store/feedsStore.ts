@@ -56,7 +56,6 @@ const fetchThreads = async (
     params
   );
 
-
   if (!clearOldList && threads) {
     newThreads = [...threads, ...newThreads];
   }
@@ -79,6 +78,7 @@ const createThread = async (params: CreateThreadParams) => {
   }
 
   setThreads([createdThread, ...threads]);
+  useProfileStore.setState({ totalCount: totalCount + 1 });
 };
 
 const useFeedStore = create<feedStore>((set) => ({

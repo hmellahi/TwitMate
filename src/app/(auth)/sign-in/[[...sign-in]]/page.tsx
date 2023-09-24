@@ -1,5 +1,15 @@
 import { SignIn } from "@clerk/nextjs";
- 
+
 export default function Page() {
-  return <SignIn />;
+  return (
+    <SignIn
+      appearance={{
+        elements: {
+          card: "!w-[100%] sm:w-full p-10",
+          socialButtonsBlockButtonText:
+            "text-subtle-semibold sm:text-small-regular",
+        },
+      }}
+    />
+  );
 }

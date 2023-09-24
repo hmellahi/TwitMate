@@ -44,19 +44,18 @@ const fetchReplies = async (
 
   setIsRepliesLoading(true);
 
-  console.log({ params });
   let { threads: newThreads, totalCount } =
     await threadActions.fetchThreadReplies(params);
-
-  setIsRepliesLoading(false);
-
-  console.log({ newThreads });
 
   if (!clearOldList && threads) {
     newThreads = [...threads, ...newThreads];
   }
 
-  useThreadDetailsStore.setState({ totalCount, threads: newThreads });
+  useThreadDetailsStore.setState({
+    totalCount,
+    threads: newThreads,
+    isRepliesLoading: false,
+  });
 
   return { threads, totalCount };
 };
@@ -64,10 +63,13 @@ const fetchReplies = async (
 const createThread = async (params: CreateThreadParams) => {
   const { setThreads, threads } = useThreadDetailsStore.getState();
   const { currentUser } = useUserStore.getState();
+  const { images } = params;
 
   const createdThread = await threadActions.createThread(params);
   createdThread.author = currentUser;
-  console.log({ currentUser });
+  if (images?.length) {
+    createdThread.images = [{ imageUrl: images[0] }];
+  }
 
   setThreads([createdThread, ...threads]);
 };

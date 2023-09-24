@@ -19,11 +19,11 @@ export default async function Home() {
   };
 
   return (
-    <div className="h-full w-12/12 sm:w-11/12 md:w-8/12 lg:w-6/12">
-      <main className="px-10 py-20 text-white ">
+    <div className="h-full w-full fdlex justify-cednter sm:max-w-2xl">
+      <main className="px-6 sm:px-10 py-20 text-white ">
         <div className="head-text">Onboarding</div>
         <p className="mt-4 mb-10">Complete your profile to use Threads</p>
-        <div className="bg-dark-2 p-10 mt-4 w-full">
+        <div className=" mt-4 w-full rounded-md ">
           <AccountProfile btnTitle="Submit" user={userData} />
         </div>
       </main>

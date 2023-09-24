@@ -24,15 +24,7 @@ const rowRenderer = ({
     style, // Style object to be applied to row (to position it)
     parent,
   },
-  height,
 }) => {
-  console.log({
-    key, // Unique key within array of rows
-    index, // Index of row within collection
-    style, // Style object to be applied to row (to position it)
-    parent,
-    height,
-  });
   // const RowComponent = renderRow({ item: list[index], style });
   return (
     <CellMeasurer
@@ -45,7 +37,6 @@ const rowRenderer = ({
       {({ measure, registerChild }) =>
         renderRow({ item: list[index], style, measure, registerChild })
       }
-      {renderRow({ item: list[index], style })}
     </CellMeasurer>
   );
 };
@@ -66,9 +57,6 @@ export default function VirtualAndInfiniteScroll({
   list: Array<unknown>;
   className?: string;
 }) {
-  // const [pageCount, setPageCount] = useState(2);
-  console.log({ list, totalCount });
-
   const cache = useRef(
     new CellMeasurerCache({
       defaultHeight: 100,
@@ -88,7 +76,6 @@ export default function VirtualAndInfiniteScroll({
       return;
     }
     await fetchHandler(pageCount);
-    // setPageCount((pageCount) => pageCount + 1);
   };
 
   let [listRef, setListRef] = useState(null);

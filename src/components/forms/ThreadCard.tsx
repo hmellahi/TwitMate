@@ -18,23 +18,26 @@ import { showLikesCount } from "@/lib/utils";
 import { debounce } from "@/lib/debounce";
 import { useRouter } from "next/navigation";
 
-function ThreadCard({
-  thread,
-  userId,
-  isComment = false,
-  path,
-  className = "",
-  onDelete,
-  measure = () => {},
-  style,
-}: {
-  thread: ThreadWithDetails;
-  userId: string;
-  isComment?: boolean;
-  path: string;
-  className: string;
-  onDelete?: Function;
-}) {
+function ThreadCard(
+  {
+    thread,
+    userId,
+    isComment = false,
+    path,
+    className = "",
+    onDelete,
+    measure = () => {},
+    style,
+  }: {
+    thread: ThreadWithDetails;
+    userId: string;
+    isComment?: boolean;
+    path: string;
+    className: string;
+    onDelete?: Function;
+  },
+  ref
+) {
   if (thread.isDeleted) {
     return null;
   }
@@ -62,7 +65,7 @@ function ThreadCard({
   const debouncedSaveUserReaction = debounce(
     async (isUserLikedThread: boolean) => {
       if (isUserLikedThread) {
-        await unLikeThread({ likeId: userLikeId, path });
+        await unLikeThread({ userId: userId, threadId: thread.id, path });
       } else {
         await likeThread({
           userId: userId,
@@ -161,23 +164,16 @@ function ThreadCard({
               ></MediaViewer>
             )}
             <div className={`flex gap-2 mt-2 text-white items-center`}>
-              <div className="icon-hover relative">
-                <LikeIcon
-                  width="25"
-                  height="25"
-                  className="cursor-pointer"
-                  onClick={reactToThread}
-                />
+              <div className="icon-hover relative" onClick={reactToThread}>
+                <LikeIcon width="25" height="25" className="cursor-pointer" />
               </div>
-              <div className="icon-hover">
-                <Link
-                  href={`/thread/${thread.id}`}
-                  className={className}
-                  aria-label="Comment"
-                >
-                  <Reply width="25" height="25" />
-                </Link>
-              </div>
+              <Link
+                href={`/thread/${thread.id}`}
+                className="icon-hover"
+                aria-label="Comment"
+              >
+                <Reply width="25" height="25" />
+              </Link>
               <div className="icon-hover">
                 <Repost width="25" height="25" />
               </div>
@@ -213,5 +209,4 @@ function ThreadCard({
   );
 }
 
-// export default forwardRef(ThreadCard);
-export default ThreadCard;
+export default forwardRef(ThreadCard);

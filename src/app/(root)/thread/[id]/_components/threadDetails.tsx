@@ -29,7 +29,6 @@ export default function ThreadDetails({
   const { id: userId, image: userImage } = user;
 
   useEffect(() => {
-    console.log({user})
     setCurrentUser(user);
     fetchReplies({ userId, threadId }, true);
   }, []);

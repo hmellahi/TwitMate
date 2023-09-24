@@ -8,12 +8,13 @@ import {
 import { dark } from "@clerk/themes";
 import Image from "next/image";
 import Link from "next/link";
+import LogoImg from "./logoImg";
 
 export default function AppHeader() {
   return (
-    <div className="topbar text-white flex flex-between bg-red-20d0 px-[10rem]">
+    <div className="topbar text-white flex flex-between md:hidden sm:pr-14">
       <Link href="/" className="flex items-center gap-4">
-        <Image src="/assets/logo.svg" alt="logo" width="30" height="30" />
+        <LogoImg />
         Threads
       </Link>
 

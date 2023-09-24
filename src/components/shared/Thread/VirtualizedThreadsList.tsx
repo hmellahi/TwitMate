@@ -29,8 +29,8 @@ export default function VirtualizedThreadsList({
       className="line-break"
       style={style}
       measure={measure}
+      ref={registerChild}
     />
-    // ref={registerChild}
   );
   console.log(
     "Rerendered : virtual threads list wrapper",

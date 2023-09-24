@@ -20,8 +20,6 @@ const deleteThread = ({
   const threadIndex = threads.indexOf(thread);
   if (!thread) return;
 
-  // threads.splice(threadIndex, 1);
-  // thread.isDeleted = true
   threads = [
     ...threads.slice(0, threadIndex),
     ...threads.slice(threadIndex + 1, threads.length),
@@ -46,19 +44,18 @@ const fetchUserThreads = async (
 
   setIsThreadsLoading(true);
 
-  console.log({ params });
   let { threads: newThreads, totalCount } =
     await threadActions.fetchUserThreads(params);
-
-  setIsThreadsLoading(false);
-
-  console.log({ newThreads });
 
   if (!clearOldList && threads) {
     newThreads = [...threads, ...newThreads];
   }
 
-  useProfileStore.setState({ totalCount, threads: newThreads });
+  useProfileStore.setState({
+    totalCount,
+    threads: newThreads,
+    isThreadsLoading: false,
+  });
 
   return { threads, totalCount };
 };
@@ -66,9 +63,13 @@ const fetchUserThreads = async (
 const createThread = async (params: CreateThreadParams) => {
   const { setThreads, threads, totalCount } = useProfileStore.getState();
   const { currentUser } = useUserStore.getState();
+  const { images } = params;
 
   const createdThread = await threadActions.createThread(params);
   createdThread.author = currentUser;
+  if (images?.length) {
+    createdThread.images = [{ imageUrl: images[0] }];
+  }
 
   setThreads([createdThread, ...threads]);
   useProfileStore.setState({ totalCount: totalCount + 1 });

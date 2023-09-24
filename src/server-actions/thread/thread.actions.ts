@@ -290,16 +290,18 @@ export async function likeThread({
 }
 
 export async function unLikeThread({
-  likeId,
+  threadId,
+  userId,
   path,
 }: {
-  likeId: string;
+  threadId: string;
   path: string;
 }) {
   try {
     await prisma.threadLikes.delete({
       where: {
-        id: likeId,
+        threadId,
+        userId
       },
     });
     revalidatePath(path);

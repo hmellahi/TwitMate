@@ -20,11 +20,7 @@ export function Button({
       }`}
       {...props}
     >
-      {disabled ? (
-        <Loader2 className="h-4 w-4 animate-spin" />
-      ) : (
-        <span>{children}</span>
-      )}
+      {disabled ? <Loader2 className="h-4 w-4 animate-spin" /> : children}
     </button>
   );
 }

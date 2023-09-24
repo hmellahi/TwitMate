@@ -15,7 +15,6 @@ export default async function profile({ params }: { params: { id: string } }) {
   if (!userId) return null;
   const user = await fetchUser(userId);
   if (!user) return null;
-  // let { threads } = await fetchUserThreads({ userId: user.id });
   let loggedInUser = await currentUser();
 
   return (
@@ -42,7 +41,7 @@ export default async function profile({ params }: { params: { id: string } }) {
             <div>
               {user.id == loggedInUser?.id && (
                 <Link href="/settings">
-                  <Button className="flex h-auto text-dark-1 items-center gap-2 sm:!p-3">
+                  <Button className="flex h-auto text-dark-1 items-center gap-2 sm:!p-3 w-auto">
                     <Edit width={20} height={20} />
                     <span className="hidden sm:inline">Edit Profile</span>
                   </Button>

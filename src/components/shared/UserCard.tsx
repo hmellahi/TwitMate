@@ -15,7 +15,7 @@ export default function UserCard({
 }) {
   return (
     <div
-      className={`flex justify-between text-white items-center ${className}`}
+      className={`flex justify-between text-white items-center ${className} pb-3`}
     >
       <div className="flex gap-4 items-center">
         <Link href={`/profile/${user.id} `} className="h-12 w-12 relative">

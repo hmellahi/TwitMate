@@ -13,16 +13,13 @@ export function MediaViewer({
     return;
   }
   return (
-    <div
-      className={`w-full h-[22rem] relative flex ${className} rounded-md`}
-      {...props}
-    >
+    <div className={`w-full h-[22rem] relative flex ${className}`} {...props}>
       {imageURLs.map((imageSrc, index) => (
-        <div key={index} className=" rounded-lg">
+        <div key={index} className="rounded-lg">
           <Image
             src={imageSrc}
             fill
-            className="relative w-full rounded-md object-cover"
+            className="relative w-full object-cover rounded-lg"
             alt={`Avatar ${index + 1}`}
             onLoad={onLoad}
             loading="eager"
