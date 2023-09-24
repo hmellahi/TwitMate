@@ -1,10 +1,6 @@
 import { Delete } from "@/components/svgs";
-import { PostDeletedToast } from "@/lib/toasts/showPostDeletedToast";
-import { deleteThread } from "@/server-actions/thread/thread.actions";
-import { useRouter } from "next/navigation";
 import React from "react";
 import { useToast } from "../../ui/Toast/use-toast";
-import { ToastAction } from "../../ui/Toast/toast";
 import { cn } from "@/lib/utils";
 
 export default function ThreadActions({
@@ -28,8 +24,7 @@ export default function ThreadActions({
       className: cn(
         "top-0 right-0 flex fixed md:max-w-[20rem] md:top-4 md:right-4 py-4"
       ),
-      title: "The thread is deleted",
-      // action: <ToastAction altText="Goto schedule to undo">Undo</ToastAction>,
+      title: "Your thread has been deleted!",
     });
   };
 

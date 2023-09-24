@@ -44,7 +44,7 @@ const fetchThreads = async (
   params: FetchThreadsParams,
   clearOldList: boolean = false
 ) => {
-  const { threads, setIsThreadsLoading } = useFeedStore.getState();
+  const { threads, setIsThreadsLoading, setThreads } = useFeedStore.getState();
 
   if (clearOldList) {
     setThreads([]);
@@ -56,13 +56,13 @@ const fetchThreads = async (
     params
   );
 
-  setIsThreadsLoading(false);
 
   if (!clearOldList && threads) {
     newThreads = [...threads, ...newThreads];
   }
 
   useFeedStore.setState({ totalCount, threads: newThreads });
+  setIsThreadsLoading(false);
 
   return { threads, totalCount };
 };
@@ -70,10 +70,13 @@ const fetchThreads = async (
 const createThread = async (params: CreateThreadParams) => {
   const { setThreads, threads } = useFeedStore.getState();
   const { currentUser } = useUserStore.getState();
+  const { images } = params;
 
   const createdThread = await threadActions.createThread(params);
   createdThread.author = currentUser;
-  console.log({ currentUser });
+  if (images?.length) {
+    createdThread.images = [{ imageUrl: images[0] }];
+  }
 
   setThreads([createdThread, ...threads]);
 };

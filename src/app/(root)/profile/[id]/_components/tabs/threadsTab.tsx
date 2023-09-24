@@ -26,7 +26,7 @@ export default function ThreadsTab({
 
   useEffect(() => {
     setCurrentUser(() => user);
-    fetchUserThreads({ userId: user.id });
+    fetchUserThreads({ userId: user.id }, true);
   }, []);
 
   return (

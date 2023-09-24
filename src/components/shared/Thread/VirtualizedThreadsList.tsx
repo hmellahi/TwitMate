@@ -28,9 +28,9 @@ export default function VirtualizedThreadsList({
       onDelete={onDeleteThread}
       className="line-break"
       style={style}
-      ref={registerChild}
       measure={measure}
     />
+    // ref={registerChild}
   );
   console.log(
     "Rerendered : virtual threads list wrapper",

@@ -4,7 +4,7 @@ import {
   CommunityNotFoundError,
   UserAlreadyMemberError,
   UserNotMemberError,
-} from "../../lib/errors/community.errors";
+} from "../../lib/errors/communityErrors";
 import { revalidatePath } from "next/cache";
 
 interface addCommunity {

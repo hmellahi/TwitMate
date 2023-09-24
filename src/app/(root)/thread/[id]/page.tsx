@@ -30,21 +30,6 @@ export default async function page({ params }: { params: { id: string } }) {
   return (
     <div>
       <ThreadCard thread={thread} user={userInfo} path="/thread" />
-      {/* <div className="mt-4">
-        <ThreadsList
-          user={userInfo}
-          threads={thread.childrens}
-          path="/thread"
-          isComment={true}
-        ></ThreadsList>
-      </div> */}
-      {/* <ThreadsListWrapper
-        user={user}
-        initialThreadsData={initialThreadsData}
-        onDeleteThread={deleteThread}
-        onFetchThreads={fetchThreads}
-        threadId={thread.id}
-      ></ThreadsListWrapper> */}
       <ThreadDetails threadId={thread.id} user={userInfo} />
     </div>
   );

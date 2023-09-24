@@ -20,9 +20,13 @@ import { useOrganization } from "@clerk/nextjs";
 import MediaUploader from "../shared/Thread/MediaUploader";
 import { UploadFileResponse } from "uploadthing/client";
 import { useUploadThing } from "@/lib/uploadThing";
-import useAutosizeTextArea from "@/lib/hooks/useAutosizeTextArea";
 import Image from "next/image";
 import MediaViewerWrapper from "../shared/Thread/MediaViewerWrapper";
+import { useToast } from "../ui/Toast/use-toast";
+import { cn } from "@/lib/utils";
+import Compressor from "compressorjs";
+import { compressImage } from "@/lib/compressImage";
+import uploadImages from "@/lib/uploadImages";
 
 export default function PostThread({
   userId,
@@ -44,10 +48,12 @@ export default function PostThread({
   createThreadHandler: Function;
 }) {
   const router = useRouter();
+  const { toast } = useToast();
 
   const { organization } = useOrganization();
   const [threadImages, setThreadImages] = useState<Array<File>>([]);
   const { startUpload } = useUploadThing("media");
+  const [isCreatingPost, setIsCreatingPost] = useState(false);
 
   const form = useForm({
     // resolver: (data) => {
@@ -75,15 +81,9 @@ export default function PostThread({
   });
 
   async function onSubmit(values: z.infer<typeof CreateThreadValidation>) {
+    setIsCreatingPost(true);
     try {
-      let uploadedImages = await startUpload(threadImages);
-      let uploadedImagesUrls: Array<string> = [];
-      if (uploadedImages) {
-        uploadedImagesUrls = uploadedImages.map(
-          (uploadedImage: UploadFileResponse) => uploadedImage.url
-        );
-      }
-      const startTime = performance.now();
+      let uploadedImagesUrls = await uploadImages(threadImages);
 
       await createThreadHandler({
         userId,
@@ -94,19 +94,22 @@ export default function PostThread({
         parentId: parentThreadId,
       });
 
-      const endTime = performance.now();
-      const elapsedTime = endTime - startTime;
-
-      console.log(`Time taken: ${elapsedTime} milliseconds`);
-
+      form.setValue("text", "");
+      setThreadImages([]);
       if (redirectUrl) {
         router.push("/");
       }
-      form.setValue("text", "");
-      setThreadImages([]);
-      console.log({ redirectUrl });
+
+      toast({
+        className: cn(
+          "top-0 right-0 flex fixed md:max-w-[20rem] md:top-4 md:right-4 py-4"
+        ),
+        title: "Thread created successfully!",
+      });
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsCreatingPost(false);
     }
   }
 
@@ -151,7 +154,11 @@ export default function PostThread({
           ></MediaViewerWrapper>
           <div className="flex justify-between items-center mt-6">
             <MediaUploader images={threadImages} setImages={setThreadImages} />
-            <Button type="submit" className={`${postBtnClass} !py-1`}>
+            <Button
+              type="submit"
+              className={`${postBtnClass} !py-1`}
+              disabled={isCreatingPost}
+            >
               {btnTitle}
             </Button>
           </div>

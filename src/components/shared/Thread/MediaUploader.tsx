@@ -1,8 +1,6 @@
 import { Create } from "@/components/svgs";
-import { MediaViewer } from "@/components/ui/MediaViewer";
 import { Label } from "@radix-ui/react-label";
 import React, { useEffect, useState } from "react";
-import MediaViewerWrapper from "./MediaViewerWrapper";
 
 interface HTMLInputEvent extends Event {
   target: HTMLInputElement & EventTarget;

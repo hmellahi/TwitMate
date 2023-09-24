@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "../../../../components/ui/button";
 import Link from "next/link";
 import { formatDateString } from "@/lib/utils";
-import { timeAgo } from "@/lib/time-converter";
+import { timeAgo } from "@/lib/timeConverter";
 
 export default function Activity({
   activity,

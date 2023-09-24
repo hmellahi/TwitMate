@@ -9,7 +9,7 @@ import Link from "next/link";
 import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import { Heart, Reply, HeartFilled, Repost, Share } from "../svgs";
 import { ThreadWithDetails } from "@/types/Thread";
-import { timeAgo } from "@/lib/time-converter";
+import { timeAgo } from "@/lib/timeConverter";
 import { UsersList } from "../community/UsersList";
 import ThreadActions from "../shared/Thread/ThreadActions";
 import { MediaViewer } from "../ui/MediaViewer";
@@ -18,26 +18,23 @@ import { showLikesCount } from "@/lib/utils";
 import { debounce } from "@/lib/debounce";
 import { useRouter } from "next/navigation";
 
-function ThreadCard(
-  {
-    thread,
-    userId,
-    isComment = false,
-    path,
-    className = "",
-    onDelete,
-    measure,
-    style,
-  }: {
-    thread: ThreadWithDetails;
-    userId: string;
-    isComment?: boolean;
-    path: string;
-    className: string;
-    onDelete?: Function;
-  },
-  ref
-) {
+function ThreadCard({
+  thread,
+  userId,
+  isComment = false,
+  path,
+  className = "",
+  onDelete,
+  measure = () => {},
+  style,
+}: {
+  thread: ThreadWithDetails;
+  userId: string;
+  isComment?: boolean;
+  path: string;
+  className: string;
+  onDelete?: Function;
+}) {
   if (thread.isDeleted) {
     return null;
   }
@@ -109,7 +106,6 @@ function ThreadCard(
     <div
       className={`${bg} ${className} text-white py-7 px-0 sm:px-2 cursor-pointer`}
       onClick={() => router.push(`/thread/${thread.id}`)}
-      ref={ref}
       style={style}
     >
       <div className="flex justify-between items-start">
@@ -205,7 +201,7 @@ function ThreadCard(
               <>
                 <p>{thread?.childrens?.length} replies</p>
                 {hasLikes && (
-                  <div className="rounded-full w-1 h-1 bg-[#A0A0A0]"></div>
+                  <div className="rounded-full w-1 h-1 bg-gray-1"></div>
                 )}
               </>
             )}
@@ -217,4 +213,5 @@ function ThreadCard(
   );
 }
 
-export default forwardRef(ThreadCard);
+// export default forwardRef(ThreadCard);
+export default ThreadCard;
