@@ -74,7 +74,6 @@ Once the application is built and launched, access it by visiting [http://localh
   - Current users can edit their own profiles.
 ### Community
 
-- **Community System Features:**
   - Users can create communities.
   - Invite members via email to join a community.
   - Users can update/remove their communities.
@@ -82,14 +81,14 @@ Once the application is built and launched, access it by visiting [http://localh
 
 ### Performance & Optimization
 
-- **Optimizing the Feed:**
+- **Feed:**
   - Implemented a Virtual List to optimize the rendering of feed posts.
   - Utilized Cloudnify for optimized image uploading and loading.
+- **General:**
   - Leveraged Server-Side Rendering (SSR) for efficient page rendering.
 
 ### Security Concerns
 
-- **Security Measures:**
   - Comprehensive form validation on the frontend.
   - Robust form validation in server actions.
 
