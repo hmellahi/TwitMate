@@ -88,6 +88,10 @@ export default function VirtualAndInfiniteScroll({
     cache.current.clearAll();
   }, [list]);
 
+  if (!isNextPageLoading && list.length) {
+    return <div></div>;
+  }
+
   return (
     <div className={`mt-4 ${className} h-full`}>
       <AutoSizer disableHeight={true}>
