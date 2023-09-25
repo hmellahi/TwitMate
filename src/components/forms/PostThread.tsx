@@ -9,7 +9,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
@@ -18,14 +17,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { CreateThreadValidation } from "@/lib/validations/thread";
 import { useOrganization } from "@clerk/nextjs";
 import MediaUploader from "../shared/Thread/MediaUploader";
-import { UploadFileResponse } from "uploadthing/client";
-import { useUploadThing } from "@/lib/uploadThing";
 import Image from "next/image";
 import MediaViewerWrapper from "../shared/Thread/MediaViewerWrapper";
 import { useToast } from "../ui/Toast/use-toast";
 import { cn } from "@/lib/utils";
-import Compressor from "compressorjs";
-import { compressImage } from "@/lib/compressImage";
 import uploadImages from "@/lib/uploadImages";
 
 export default function PostThread({
@@ -52,7 +47,6 @@ export default function PostThread({
 
   const { organization } = useOrganization();
   const [threadImages, setThreadImages] = useState<Array<File>>([]);
-  const { startUpload } = useUploadThing("media");
   const [isCreatingPost, setIsCreatingPost] = useState(false);
 
   const form = useForm({

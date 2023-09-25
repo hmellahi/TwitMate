@@ -25,7 +25,6 @@
     "@types/node": "20.5.6",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
-    "@uploadthing/react": "^5.3.0",
     "@vercel/postgres": "^0.4.1",
     "autoprefixer": "10.4.15",
     "browser-image-compression": "^2.0.2",
@@ -36,7 +35,6 @@
     "lucide-react": "^0.270.0",
     "luxon": "^3.4.3",
     "moment": "^2.29.4",
-    "mongose": "^0.0.2-security",
     "next": "13.4.19",
     "pako": "^2.1.0",
     "postcss": "8.4.28",
@@ -49,7 +47,6 @@
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.2.2",
-    "uploadthing": "^5.3.3",
     "zod": "^3.22.2",
     "zustand": "^4.4.1"
   },

@@ -19,7 +19,6 @@ import * as z from "zod";
 import Image from "next/image";
 import { UserData } from "@/types/User";
 import { isBase64Image } from "@/lib/utils";
-import { useUploadThing } from "@/lib/uploadThing";
 import { updateUser } from "@/server-actions/user/user.actions";
 import { usePathname, useRouter } from "next/navigation";
 import { Label } from "../ui/label";
@@ -34,7 +33,6 @@ export default function AccountProfile({
   btnTitle: string;
 }) {
   const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
-  const { startUpload } = useUploadThing("media");
   const router = useRouter();
   const pathname = usePathname();
 

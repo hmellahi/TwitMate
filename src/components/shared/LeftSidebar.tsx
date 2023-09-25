@@ -2,20 +2,34 @@
 
 import { sidebarLinks } from "@/constants";
 import { SidebarLink } from "./SidebarLink";
-import {
-  OrganizationProfile,
-  OrganizationSwitcher,
-  SignOutButton,
-  SignedIn,
-  UserButton,
-  UserProfile,
-} from "@clerk/nextjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { User } from "@clerk/nextjs/server";
 import LogoImg from "./logoImg";
 import Link from "next/link";
 import { dark } from "@clerk/themes";
+import dynamic from "next/dynamic";
+
+const OrganizationSwitcher = dynamic(
+  () => import("@clerk/nextjs").then((module) => module.OrganizationSwitcher),
+  {
+    ssr: false,
+  }
+);
+
+const SignOutButton = dynamic(
+  () => import("@clerk/nextjs").then((module) => module.SignOutButton),
+  {
+    ssr: false,
+  }
+);
+
+const SignedIn = dynamic(
+  () => import("@clerk/nextjs").then((module) => module.SignedIn),
+  {
+    ssr: false,
+  }
+);
 
 export default function LeftSidebar({ currentUser }: { currentUser: User }) {
   const router = useRouter();
@@ -45,7 +59,7 @@ export default function LeftSidebar({ currentUser }: { currentUser: User }) {
             elements: {
               rootBox: "py-2 px-8 w-[17rem] max-lg:w-[1rem]",
               organizationSwitcherTriggerIcon: "max-lg:hidden",
-              userPreviewTextContainer:'max-lg:hidden'
+              userPreviewTextContainer: "max-lg:hidden",
             },
           }}
         />
