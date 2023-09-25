@@ -88,7 +88,7 @@ export default function VirtualAndInfiniteScroll({
     cache.current.clearAll();
   }, [list]);
 
-  if (!isNextPageLoading && list.length) {
+  if (!isNextPageLoading && !list.length) {
     return <div></div>;
   }
 
@@ -107,6 +107,7 @@ export default function VirtualAndInfiniteScroll({
               >
                 {({ onRowsRendered, registerChild }) => (
                   <List
+                    style={{ overflowY: "auto" }}
                     deferredMeasurementCache={cache.current}
                     autoHeight
                     onRowsRendered={onRowsRendered}
