@@ -17,6 +17,7 @@ import { User } from "@prisma/client";
 import { showLikesCount } from "@/lib/utils";
 import { debounce } from "@/lib/debounce";
 import { useRouter } from "next/navigation";
+import useRedirect from "@/lib/hooks/useRedirect";
 
 function ThreadCard(
   {
@@ -43,6 +44,7 @@ function ThreadCard(
   }
 
   const router = useRouter();
+  const { redirectToProfile, redirectToThread } = useRedirect();
   const { text, author } = thread;
   const isLikedByCurrentUser = thread?.likes?.length > 0;
   const threadRepliers: User[] = [];
@@ -108,13 +110,16 @@ function ThreadCard(
   return (
     <div
       className={`${bg} ${className} text-white py-7 px-0 sm:px-2 cursor-pointer`}
-      onClick={() => router.push(`/thread/${thread.id}`)}
+      onClick={() => redirectToThread(thread.id)}
       style={style}
     >
       <div className="flex justify-between items-start">
         <div className={`flex gap-3 relative w-full`}>
           <div className="flex flex-col items-center">
-            <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
+            <div
+              onClick={(event) => redirectToProfile(event, author.id)}
+              className="relative h-11 w-11"
+            >
               <Image
                 onLoad={measure}
                 src={author.image || ""}
@@ -123,7 +128,7 @@ function ThreadCard(
                 className="cursor-pointer rounded-full object-cover"
                 loading="lazy"
               ></Image>
-            </Link>
+            </div>
             {hasReplies && <div className="thread-card_bar" />}
           </div>
           <div className="w-full">
