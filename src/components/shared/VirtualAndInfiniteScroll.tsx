@@ -1,18 +1,12 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import {
   AutoSizer,
+  CellMeasurer,
+  CellMeasurerCache,
   InfiniteLoader,
   List,
   WindowScroller,
-  CellMeasurerCache,
-  CellMeasurer,
 } from "react-virtualized";
-
-const Row = ({ ref, style, repository }) => (
-  <div ref={ref} className=" py-52" style={style}>
-    Hello
-  </div>
-);
 
 const rowRenderer = ({
   cache,

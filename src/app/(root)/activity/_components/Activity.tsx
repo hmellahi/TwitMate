@@ -1,10 +1,8 @@
-import { Thread, User } from "@prisma/client";
-import Image from "next/image";
-import React from "react";
-import { Button } from "../../../../components/ui/button";
-import Link from "next/link";
-import { formatDateString } from "@/lib/utils";
 import { timeAgo } from "@/lib/timeConverter";
+import { Thread } from "@prisma/client";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "../../../../components/ui/button";
 
 export default function Activity({
   activity,
@@ -34,7 +32,6 @@ export default function Activity({
             <p className={isSmall ? "text-small-medium" : ""}>{author.name} </p>
             <div className="rounded-full w-1 h-1 bg-[#A0A0A0] ml-2"></div>
             <span className="text-gray-4 ml-2">
-              {" "}
               {timeAgo(activity.createdAt)}
             </span>
           </div>
@@ -44,7 +41,6 @@ export default function Activity({
               href={`/thread/${activity.threadId}`}
               className="text-primary-500 text-bold"
             >
-              {" "}
               thread
             </Link>
           </p>

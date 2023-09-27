@@ -1,33 +1,32 @@
-// 'use client'
-
-import { ThreadsList } from "@/components/shared/ThreadsList";
-import UserCard from "@/components/shared/UserCard";
 import SvgIcon from "@/components/ui/svgIcon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { communityTabs } from "@/constants";
 import { camelToSnakeCase } from "@/lib/utils";
 import { fetchCommunity } from "@/server-actions/community/community.actions";
-import { fetchThreads } from "@/server-actions/thread/thread.actions";
 import { fetchUser } from "@/server-actions/user/user.actions";
 import { currentUser } from "@clerk/nextjs";
-import { User } from "@prisma/client";
 import Image from "next/image";
+import TotalThreadsCount from "./_components/TotalThreadsCount";
+import CommunityMembers from "./_components/communityMembersTab";
+import CommunityThreadsTab from "./_components/communityThreadsTab";
 
 export default async function profile({ params }: { params: { id: string } }) {
   const communityId = params.id;
   if (!communityId) return null;
-  const userFromClerk = await currentUser();
-  if (!userFromClerk) return null;
+
+  const [community, userFromClerk] = await Promise.all([
+    fetchCommunity({ communityId }),
+    currentUser(),
+  ]);
+
+  console.log({ userFromClerk });
+
+  if (!userFromClerk || !community) return null;
   const user = await fetchUser(userFromClerk.id);
   if (!user) {
     return;
   }
-  const { threads } = await fetchThreads({
-    userId: user.id,
-    communityId,
-  });
-  const community = await fetchCommunity({ communityId });
-  if (!community) return null;
+
   const { members } = community;
 
   return (
@@ -65,7 +64,7 @@ export default async function profile({ params }: { params: { id: string } }) {
                 <p className="max-sm:hidden">{tab.label}</p>
                 {tab.value == "threads" && (
                   <div className="ml-2 bg-gray-600 px-3 py-1 box-shadow-count-badge rounded-md">
-                    {threads?.length}
+                    <TotalThreadsCount />
                   </div>
                 )}
               </TabsTrigger>
@@ -73,24 +72,10 @@ export default async function profile({ params }: { params: { id: string } }) {
           </TabsList>
           <div className="mt-10">
             <TabsContent value="threads">
-              <ThreadsList threads={threads} path="/profile" user={user} />
+              <CommunityThreadsTab communityId={communityId} user={user} />
             </TabsContent>
             <TabsContent value="members">
-              {threads.length < 1 ? (
-                <div>no result</div>
-              ) : (
-                <div className="flex gap-4 flex-col">
-                  {members.map((member: User, index: number) => {
-                    return (
-                      <UserCard
-                        key={index}
-                        user={user}
-                        className="border-b-2 border-light-gray pb-3"
-                      />
-                    );
-                  })}
-                </div>
-              )}
+              <CommunityMembers members={members} />
             </TabsContent>
             <TabsContent value="requests"></TabsContent>
           </div>

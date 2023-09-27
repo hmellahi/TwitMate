@@ -33,8 +33,8 @@ export default async function AuthLayout({
         <AppHeader />
         <main className="flex items-start justify-center overflow-hiddden">
           <LeftSidebar currentUser={user} />
-          <section className="main-container sm:pyd-0">
-            <div className="w-full py-20 sm:py-16">{children}</div>
+          <section className="main-container">
+            <div className="w-full py-20 md:py-16">{children}</div>
           </section>
           <RightSidebar />
         </main>

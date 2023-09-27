@@ -1,19 +1,10 @@
 import * as threadActions from "@/server-actions/thread/thread.actions";
+import useUserStore from "@/store/userStore";
 import { CreateThreadParams, FetchThreadsParams } from "@/types/Thread";
 import { Thread } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { create } from "zustand";
-import useUserStore from "../../../../store/userStore";
-import useCommunityStore from "../../community/[id]/_store/communityStore";
-
-type feedStore = {
-  threads: Thread[];
-  totalCount: number;
-  deleteThread: () => Promise<void>;
-  createThread: () => Promise<void>;
-  fetchThreads: (params: FetchThreadsParams, clearOldList: boolean) => void;
-  setThreads: (newThreads: Thread[]) => void;
-};
+import { CommunityStore } from "../_types/communityStore";
 
 const deleteThread = ({
   path,
@@ -24,7 +15,7 @@ const deleteThread = ({
   authorId: string;
   threadId: string;
 }) => {
-  let { totalCount, threads } = useFeedStore.getState();
+  let { totalCount, threads } = useCommunityStore.getState();
   const thread = threads.find((thread) => thread.id === threadId);
   const threadIndex = threads.indexOf(thread);
   if (!thread) return;
@@ -44,7 +35,8 @@ const fetchThreads = async (
   params: FetchThreadsParams,
   clearOldList: boolean = false
 ) => {
-  const { threads, setIsThreadsLoading, setThreads } = useFeedStore.getState();
+  const { threads, setIsThreadsLoading, setThreads } =
+    useCommunityStore.getState();
 
   if (clearOldList) {
     setThreads([]);
@@ -60,14 +52,14 @@ const fetchThreads = async (
     newThreads = [...threads, ...newThreads];
   }
 
-  useFeedStore.setState({ totalCount, threads: newThreads });
+  useCommunityStore.setState({ totalCount, threads: newThreads });
   setIsThreadsLoading(false);
 
   return { threads, totalCount };
 };
 
 const createThread = async (params: CreateThreadParams) => {
-  const { setThreads, threads, totalCount } = useFeedStore.getState();
+  const { setThreads, threads, totalCount } = useCommunityStore.getState();
   const { currentUser } = useUserStore.getState();
   const { images } = params;
 
@@ -78,10 +70,10 @@ const createThread = async (params: CreateThreadParams) => {
   }
 
   setThreads([createdThread, ...threads]);
-  useFeedStore.setState({ totalCount: totalCount + 1 });
+  useCommunityStore.setState({ totalCount: totalCount + 1 });
 };
 
-const useFeedStore = create<feedStore>((set) => ({
+const useCommunityStore = create<CommunityStore>((set) => ({
   threads: null,
   totalCount: 0,
   isThreadsLoading: true,
@@ -93,4 +85,4 @@ const useFeedStore = create<feedStore>((set) => ({
     set(() => ({ isThreadsLoading: value })),
 }));
 
-export default useFeedStore;
+export default useCommunityStore;

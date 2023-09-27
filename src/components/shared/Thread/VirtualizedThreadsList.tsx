@@ -1,9 +1,7 @@
 "use client";
-import React from "react";
-import VirtualizedThreadsList from "./Thread/VirtualizedThreadsList";
+import ThreadCard from "@/components/forms/ThreadCard";
 import VirtualAndInfiniteScroll from "../VirtualAndInfiniteScroll";
 import LoadingThreadCards from "./LoadingThreadCards";
-import ThreadCard from "@/components/forms/ThreadCard";
 
 export default function VirtualizedThreadsList({
   userId,
