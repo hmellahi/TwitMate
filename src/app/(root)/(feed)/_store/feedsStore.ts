@@ -67,7 +67,7 @@ const fetchThreads = async (
 };
 
 const createThread = async (params: CreateThreadParams) => {
-  const { setThreads, threads } = useFeedStore.getState();
+  const { setThreads, threads, totalCount } = useFeedStore.getState();
   const { currentUser } = useUserStore.getState();
   const { images } = params;
 
@@ -78,7 +78,7 @@ const createThread = async (params: CreateThreadParams) => {
   }
 
   setThreads([createdThread, ...threads]);
-  useProfileStore.setState({ totalCount: totalCount + 1 });
+  useFeedStore.setState({ totalCount: totalCount + 1 });
 };
 
 const useFeedStore = create<feedStore>((set) => ({

@@ -3,19 +3,21 @@
 import ProfileTabs from "@/app/(root)/profile/[id]/_components/profileTabs";
 import { Edit } from "@/components/svgs";
 import { Button } from "@/components/ui/button";
-import { fetchUserThreads } from "@/server-actions/thread/thread.actions";
 import { fetchUser } from "@/server-actions/user/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 export default async function profile({ params }: { params: { id: string } }) {
   const userId = params.id;
   if (!userId) return null;
-  const user = await fetchUser(userId);
+
+  let [loggedInUser, user] = await Promise.all([
+    currentUser,
+    fetchUser(userId),
+  ]);
+
   if (!user) return null;
-  let loggedInUser = await currentUser();
 
   return (
     <div>

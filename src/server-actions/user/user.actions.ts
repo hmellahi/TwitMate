@@ -60,7 +60,7 @@ export async function updateUser(newUserData: UpdateUser, path: string) {
     });
 
     revalidatePath(path);
-    updateUserInClerk(updatedUser);
+    // updateUserInClerk(updatedUser);
     return updateUser;
   } catch (error: any) {
     console.log(error);

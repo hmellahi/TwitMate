@@ -45,7 +45,7 @@ export default function VirtualizedThreadsList({
       totalCount={totalCount}
       fetchHandler={onFetchThreads}
       loaderComponent={<LoadingThreadCards count={3} />}
-      className="text-white flex flex-col gap-4d"
+      className="text-white flex flex-col overflow-x-hidden"
       isNextPageLoading={isThreadsLoading}
     />
   );

@@ -1,9 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -11,17 +8,20 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import * as z from "zod";
-import { usePathname, useRouter } from "next/navigation";
+import { Textarea } from "@/components/ui/textarea";
+import uploadImages from "@/lib/uploadImages";
+import { cn } from "@/lib/utils";
 import { CreateThreadValidation } from "@/lib/validations/thread";
 import { useOrganization } from "@clerk/nextjs";
-import MediaUploader from "../shared/Thread/MediaUploader";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import MediaUploader from "../shared/Thread/MediaUploader";
 import MediaViewerWrapper from "../shared/Thread/MediaViewerWrapper";
 import { useToast } from "../ui/Toast/use-toast";
-import { cn } from "@/lib/utils";
-import uploadImages from "@/lib/uploadImages";
 
 export default function PostThread({
   userId,
@@ -88,10 +88,6 @@ export default function PostThread({
         parentId: parentThreadId,
       });
 
-      if (redirectUrl) {
-        router.push("/");
-      }
-
       toast({
         className: cn(
           "top-0 right-0 flex fixed md:max-w-[20rem] md:top-4 md:right-4 py-4"
@@ -99,11 +95,14 @@ export default function PostThread({
         title: "Thread created successfully!",
       });
     } catch (e) {
-      console.log(e);
+      console.log({e});
     } finally {
       form.setValue("text", "");
       setThreadImages([]);
       setIsCreatingPost(false);
+      if (redirectUrl) {
+        router.push("/");
+      }
     }
   }
 

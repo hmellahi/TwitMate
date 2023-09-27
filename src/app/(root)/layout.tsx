@@ -1,14 +1,11 @@
-import { ClerkProvider, currentUser } from "@clerk/nextjs";
-import { Inter } from "next/font/google";
-import "../globals.css";
 import AppHeader from "@/components/shared/AppHeader";
+import BottomBar from "@/components/shared/BottomBar";
 import LeftSidebar from "@/components/shared/LeftSidebar";
 import RightSidebar from "@/components/shared/RightSidebar/RightSidebar";
-import BottomBar from "@/components/shared/BottomBar";
 import { fetchUser } from "@/server-actions/user/user.actions";
+import { ClerkProvider, currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import useFeedStore from "@/app/(root)/(feed)/_store/feedsStore";
-import useUserStore from "@/store/userStore";
+import "../globals.css";
 
 export const metadata = {
   title: "Threads",
@@ -39,7 +36,7 @@ export default async function AuthLayout({
           <section className="main-container sm:pyd-0">
             <div className="w-full py-20 sm:py-16">{children}</div>
           </section>
-          <RightSidebar/>
+          <RightSidebar />
         </main>
         <BottomBar />
       </div>

@@ -1,33 +1,33 @@
 "use client";
 
 import { sidebarLinks } from "@/constants";
-import { SidebarLink } from "./SidebarLink";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { User } from "@clerk/nextjs/server";
-import LogoImg from "./logoImg";
-import Link from "next/link";
 import { dark } from "@clerk/themes";
 import dynamic from "next/dynamic";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { SidebarLink } from "./SidebarLink";
+import LogoImg from "./logoImg";
 
 const OrganizationSwitcher = dynamic(
   () => import("@clerk/nextjs").then((module) => module.OrganizationSwitcher),
   {
-    ssr: false,
+    ssr: true,
   }
 );
 
 const SignOutButton = dynamic(
   () => import("@clerk/nextjs").then((module) => module.SignOutButton),
   {
-    ssr: false,
+    ssr: true,
   }
 );
 
 const SignedIn = dynamic(
   () => import("@clerk/nextjs").then((module) => module.SignedIn),
   {
-    ssr: false,
+    ssr: true,
   }
 );
 
@@ -38,7 +38,7 @@ export default function LeftSidebar({ currentUser }: { currentUser: User }) {
   }
 
   return (
-    <div className="custom-scrollbar leftsidebar text-white h-[calc(100vh)] py-10">
+    <div className="custom-scrollbar leftsidebar text-white h-[calc(100vh)] py-10 lg:w-[17rem]">
       <div className="flex flex-col gap-4 px-5">
         <Link href="/" className="hidden sm:flex items-center gap-3 px-3 mb-4">
           <LogoImg />

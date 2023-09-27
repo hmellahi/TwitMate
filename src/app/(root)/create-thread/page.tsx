@@ -14,7 +14,7 @@ export default async function page() {
       <h1 className="head-text">Create Thread</h1>
       <PostThread
         userId={userInfo.id}
-        postBtnClass="w-full"
+        postBtnClass="!px-8"
         redirectUrl="/"
         userImage={userInfo.image}
       />

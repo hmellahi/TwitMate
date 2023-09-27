@@ -1,23 +1,22 @@
 "use client";
 
+import { debounce } from "@/lib/debounce";
+import useRedirect from "@/lib/hooks/useRedirect";
+import { timeAgo } from "@/lib/timeConverter";
+import { showLikesCount } from "@/lib/utils";
 import {
   likeThread,
   unLikeThread,
 } from "@/server-actions/thread/thread.actions";
+import { ThreadWithDetails } from "@/types/Thread";
+import { User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { forwardRef, useCallback, useEffect, useState } from "react";
-import { Heart, Reply, HeartFilled, Repost, Share } from "../svgs";
-import { ThreadWithDetails } from "@/types/Thread";
-import { timeAgo } from "@/lib/timeConverter";
+import { forwardRef, useCallback, useState } from "react";
 import { UsersList } from "../community/UsersList";
 import ThreadActions from "../shared/Thread/ThreadActions";
+import { Heart, HeartFilled, Reply, Repost, Share } from "../svgs";
 import { MediaViewer } from "../ui/MediaViewer";
-import { User } from "@prisma/client";
-import { showLikesCount } from "@/lib/utils";
-import { debounce } from "@/lib/debounce";
-import { useRouter } from "next/navigation";
-import useRedirect from "@/lib/hooks/useRedirect";
 
 function ThreadCard(
   {
@@ -27,7 +26,7 @@ function ThreadCard(
     path,
     className = "",
     onDelete,
-    measure = () => {},
+    measure,
     style,
   }: {
     thread: ThreadWithDetails;
@@ -43,7 +42,6 @@ function ThreadCard(
     return null;
   }
 
-  const router = useRouter();
   const { redirectToProfile, redirectToThread } = useRedirect();
   const { text, author } = thread;
   const isLikedByCurrentUser = thread?.likes?.length > 0;
@@ -77,7 +75,7 @@ function ThreadCard(
       }
     },
     200
-  ); // 1000ms debounce interval
+  );
 
   // Use useCallback to memoize the debounced function
   const memoizedDebouncedSaveUserReaction = useCallback(

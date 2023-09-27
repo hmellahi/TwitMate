@@ -1,15 +1,12 @@
 "use client";
+import SvgIcon from "@/components/ui/svgIcon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { profileTabs } from "@/constants";
-import { ThreadWithDetails } from "@/types/Thread";
 import { User } from "@prisma/client";
-import React from "react";
-import SvgIcon from "@/components/ui/svgIcon";
-import { ThreadsList } from "@/components/shared/ThreadsList";
-import ThreadsTab from "./tabs/threadsTab";
-import RepliesTab from "./tabs/repliesTab/repliesTab";
-import useProfileStore from "../_store/profileStore";
 import { useStore } from "zustand";
+import useProfileStore from "../_store/profileStore";
+import RepliesTab from "./tabs/repliesTab/repliesTab";
+import ThreadsTab from "./tabs/threadsTab";
 
 export default function ProfileTabs({
   // threads,

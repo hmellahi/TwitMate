@@ -1,26 +1,17 @@
 // 'use client'
 
-import ThreadCard from "@/components/forms/ThreadCard";
 import { ThreadsList } from "@/components/shared/ThreadsList";
 import UserCard from "@/components/shared/UserCard";
 import SvgIcon from "@/components/ui/svgIcon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { communityTabs, profileTabs } from "@/constants";
-import {
-  fetchCommunities,
-  fetchCommunity,
-} from "@/server-actions/community/community.actions";
-import {
-  fetchThreads,
-  fetchUserThreads,
-} from "@/server-actions/thread/thread.actions";
-import { fetchUser } from "@/server-actions/user/user.actions";
+import { communityTabs } from "@/constants";
 import { camelToSnakeCase } from "@/lib/utils";
+import { fetchCommunity } from "@/server-actions/community/community.actions";
+import { fetchThreads } from "@/server-actions/thread/thread.actions";
+import { fetchUser } from "@/server-actions/user/user.actions";
 import { currentUser } from "@clerk/nextjs";
-import { Thread, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import Image from "next/image";
-import Link from "next/link";
-import React from "react";
 
 export default async function profile({ params }: { params: { id: string } }) {
   const communityId = params.id;

@@ -1,6 +1,6 @@
-import { currentUser, useOrganizationList, useUser } from "@clerk/nextjs";
-import { fetchUser } from "@/server-actions/user/user.actions";
 import * as threadActions from "@/server-actions/thread/thread.actions";
+import { fetchUser } from "@/server-actions/user/user.actions";
+import { currentUser } from "@clerk/nextjs";
 import Feed from "./_components/feed";
 
 export default async function Home() {
@@ -12,7 +12,7 @@ export default async function Home() {
     threadActions.fetchThreads({
       userId: user.id,
       path: "/",
-    })
+    }),
   ]);
 
   if (!userInfo) return null;

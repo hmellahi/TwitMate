@@ -59,7 +59,7 @@ export default function VirtualAndInfiniteScroll({
 }) {
   const cache = useRef(
     new CellMeasurerCache({
-      defaultHeight: 100,
+      defaultHeight: 700,
       fixedWidth: true,
     })
   );

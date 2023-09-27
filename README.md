@@ -86,6 +86,11 @@ Once the application is built and launched, access it by visiting [http://localh
   - Utilized Cloudnify for optimized image uploading and loading.
 - **General:**
   - Leveraged Server-Side Rendering (SSR) for efficient page rendering.
+  - Used Lazy loading to reduce the bundle size
+- **Nginx:**
+  - Used brotli to compress assets
+  - Enabled http2
+
 
 ### Security Concerns
 

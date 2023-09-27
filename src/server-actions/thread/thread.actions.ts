@@ -1,9 +1,9 @@
 "use server";
 
-import { Prisma } from "@prisma/client";
-import { prisma } from "../../lib/prisma";
-import { revalidatePath } from "next/cache";
 import { CreateThreadParams, FetchThreadsParams } from "@/types/Thread";
+import { Prisma } from "@prisma/client";
+import { revalidatePath } from "next/cache";
+import { prisma } from "../../lib/prisma";
 
 export async function createThread({
   userId,
@@ -37,13 +37,14 @@ export async function createThread({
           });
         }
       }
-      revalidatePath(path);
     })();
 
     return newThread;
   } catch (error: any) {
     console.log(error);
     throw error;
+  } finally {
+    revalidatePath(path);
   }
 }
 
@@ -111,12 +112,12 @@ export async function fetchThreadReplies({
   threadId,
   userId,
   limit = 7,
-  page = 1
+  page = 1,
 }: {
   threadId: string;
   userId: string;
-  limit:number;
-  page:number;
+  limit: number;
+  page: number;
 }) {
   const query: Prisma.ThreadFindManyArgs = {
     where: { parentId: threadId },
@@ -129,8 +130,8 @@ export async function fetchThreadReplies({
         select: {
           ...threadPreviewData(userId),
         },
-        take:limit,
-        skip: (page - 1) * limit
+        take: limit,
+        skip: (page - 1) * limit,
       }),
       prisma.thread.count({ where: query.where }),
     ]);
@@ -301,7 +302,7 @@ export async function unLikeThread({
     await prisma.threadLikes.delete({
       where: {
         threadId,
-        userId
+        userId,
       },
     });
     revalidatePath(path);
@@ -363,10 +364,6 @@ export async function getUserReplies({
         },
       },
       include: {
-        // id: true,
-        // createdAt: true,
-        // parentId: true,
-        // text: true,
         author: true,
       },
     });

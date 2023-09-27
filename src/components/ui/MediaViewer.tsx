@@ -19,7 +19,7 @@ export function MediaViewer({
           <Image
             src={imageSrc}
             fill
-            className="relative w-full object-cover rounded-lg"
+            className="relative w-full object-cover rounded-lg h-auto"
             alt={`Avatar ${index + 1}`}
             onLoad={onLoad}
             loading="eager"

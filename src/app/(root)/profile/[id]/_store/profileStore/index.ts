@@ -2,7 +2,7 @@ import * as threadActions from "@/server-actions/thread/thread.actions";
 import { CreateThreadParams, FetchThreadsParams } from "@/types/Thread";
 import { Thread } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { create, useStore } from "zustand";
+import { create } from "zustand";
 import useUserStore from "../../../../../../store/userStore";
 import { profileStore } from "../../_types/profileStore";
 
