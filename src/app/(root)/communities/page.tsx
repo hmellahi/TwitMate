@@ -1,9 +1,8 @@
-import React from "react";
-import { currentUser, useOrganization } from "@clerk/nextjs";
-import { fetchCommunities } from "@/server-actions/community/community.actions";
-import { Community } from "@prisma/client";
 import CommunityCard from "@/components/community/CommunityCard";
 import { SearchInput } from "@/components/ui/searchInput";
+import { fetchCommunities } from "@/server-actions/community/community.actions";
+import { currentUser } from "@clerk/nextjs";
+import { Community } from "@prisma/client";
 
 export default async function page({
   searchParams: { query },
@@ -27,7 +26,7 @@ export default async function page({
   //     role: "basic_member",
   //   });
   // } catch (e) {
-  //   console.log(e);
+  //   ;
   // }
 
   return (

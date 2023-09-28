@@ -5,6 +5,7 @@ import Feed from "./_components/feed";
 
 export default async function Home() {
   const user = await currentUser();
+
   if (!user) return null;
 
   const [userInfo, initialThreadsData] = await Promise.all([

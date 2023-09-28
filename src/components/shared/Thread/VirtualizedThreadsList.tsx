@@ -30,11 +30,11 @@ export default function VirtualizedThreadsList({
       ref={registerChild}
     />
   );
-  console.log(
-    "Rerendered : virtual threads list wrapper",
-    isThreadsLoading,
-    threads
-  );
+  
+  //   "Rerendered : virtual threads list wrapper",
+  //   isThreadsLoading,
+  //   threads
+  // );
 
   return (
     <VirtualAndInfiniteScroll

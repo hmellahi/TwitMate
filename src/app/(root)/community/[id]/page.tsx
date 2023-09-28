@@ -19,8 +19,6 @@ export default async function profile({ params }: { params: { id: string } }) {
     currentUser(),
   ]);
 
-  console.log({ userFromClerk });
-
   if (!userFromClerk || !community) return null;
   const user = await fetchUser(userFromClerk.id);
   if (!user) {

@@ -1,13 +1,12 @@
 import Activity from "@/app/(root)/activity/_components/Activity";
 import { getUserActivity } from "@/server-actions/activity/activity.actions";
 import { currentUser } from "@clerk/nextjs";
-import React from "react";
 
 export default async function page() {
   const user = await currentUser();
   if (!user) return null;
   let userActivity = await getUserActivity({ userId: user.id });
-  console.log({ userActivity });
+
   return (
     <div className="text-white">
       <h3 className="text-body-normal text-[40px] mb-10">Activity</h3>

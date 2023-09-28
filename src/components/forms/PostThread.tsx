@@ -95,7 +95,6 @@ export default function PostThread({
         title: "Thread created successfully!",
       });
     } catch (e) {
-      console.log({e});
     } finally {
       form.setValue("text", "");
       setThreadImages([]);

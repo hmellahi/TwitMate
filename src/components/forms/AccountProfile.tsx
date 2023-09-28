@@ -1,10 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { UserValidation } from "@/lib/validations/user";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,16 +10,36 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import * as z from "zod";
-import Image from "next/image";
-import { UserData } from "@/types/User";
-import { isBase64Image } from "@/lib/utils";
-import { updateUser } from "@/server-actions/user/user.actions";
-import { usePathname, useRouter } from "next/navigation";
-import { Label } from "../ui/label";
-import { useUser } from "@clerk/nextjs";
+import { Textarea } from "@/components/ui/textarea";
+import { compressImage } from "@/lib/compressImage";
 import uploadImages from "@/lib/uploadImages";
+import { isBase64Image } from "@/lib/utils";
+import { UserValidation } from "@/lib/validations/user";
+import { updateUser } from "@/server-actions/user/user.actions";
+import { UserData } from "@/types/User";
+import { useSessionList } from "@clerk/nextjs";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { Label } from "../ui/label";
+
+const updateProfileImageInClerk = async (newUserImage: File) => {
+  const compressedProfileImg = await compressImage(newUserImage);
+  const sessions = useSessionList();
+
+  const formData = new FormData();
+  formData.append("file", compressedProfileImg);
+
+  await axios.post(
+    "https://bold-mole-6.clerk.accounts.dev/v1/me/profile_image?_clerk_js_version=4.58.2&_clerk_session_id=sess_2VrK95eOzTEVBsoILsZw20FWvwC&__dev_session=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXYiOiJkdmJfMlVhalZCdzRZMjlMSTVjOFlBNHk0d3VTTlpOIiwiaWQiOiJjbGllbnRfMlZySzh5alBQbDZZVE8xT2c2SDRVR0tQV2NpIiwicm90YXRpbmdfdG9rZW4iOiJjOHlheWh0NmVqbzcyYzM4dzU2N2dzeGo1ODF5MThsbTF3N2VnNmcxIn0.Gts094WyZr24MKZ3j3uBc3JStULoNT6iTw03sVcofCjg8fmVyD_bynMZReKKQbgjxw-8K3mUtGDWLqolte3znRNRPdUblY1OggwhyIwy7vhXyfo16XlM_VDN5hW7fyDptqGypv-Rmjdeysjk1zRWtn_d1aP9CTnDEOjLfZMoBsT-MW2Fb8G2fZHkJUBJbVRYcT9dV_CZzSYsv_at4eU9YwloxW71-JdGKRNKGUowz1LKAn7EDBmAPu7LRzpifJTKOD7AIy6qims77abPqCwYxLf80LyHpoomYqGEzdoiqK-gHDbq946-bwj2M7qg1SakKqAfREgy_GdoYOvdEbdNLg",
+    formData,
+    { withCredentials: true }
+  );
+};
 
 export default function AccountProfile({
   user,
@@ -35,6 +51,8 @@ export default function AccountProfile({
   const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
   const router = useRouter();
   const pathname = usePathname();
+  const [isLoading, setIsLoading] = useState(false);
+  const { sessions } = useSessionList();
 
   const form = useForm({
     resolver: zodResolver(UserValidation),
@@ -46,12 +64,26 @@ export default function AccountProfile({
     },
   });
 
+  useEffect(() => {
+    let l = async () => {
+      // const s = User
+
+      let token = null;
+      if (sessions?.length) token = await sessions[0].getToken();
+    };
+    l();
+  }, []);
+
   async function onSubmit(values: z.infer<typeof UserValidation>) {
+    setIsLoading(true);
     const blob = values.profile_photo;
 
+    let updateProfileImageInClerkPromise = null;
     const hasImageChanged = isBase64Image(blob);
 
     if (hasImageChanged && profilePhoto) {
+      updateProfileImageInClerkPromise =
+        updateProfileImageInClerk(profilePhoto);
       let uploadedImagesUrls = await uploadImages([profilePhoto]);
 
       if (uploadedImagesUrls?.length) {
@@ -59,22 +91,24 @@ export default function AccountProfile({
       }
     }
 
-    // currentUser?.setProfileImage({ file: values.profile_photo });
     await updateUser(
       {
         id: user.id,
         image: values.profile_photo,
         ...values,
       },
-      "/"
+      `/profile/${user.id}`
     );
 
-    if (pathname === "/settings") {
+    await updateProfileImageInClerkPromise;
+
+    if (pathname !== "/settings") {
       router.back();
     } else {
       // First Time
       router.push("/");
     }
+    setIsLoading(false);
   }
 
   function updateProfilePhoto(
@@ -198,7 +232,12 @@ export default function AccountProfile({
             </FormItem>
           )}
         />
-        <Button type="submit" className=" w-full">
+        <Button
+          type="submit"
+          className={` w-full ${isLoading && "!py-2"}`}
+          disabled={isLoading}
+          spinnerClass="mx-auto h-5 w-5"
+        >
           {btnTitle}
         </Button>
       </form>

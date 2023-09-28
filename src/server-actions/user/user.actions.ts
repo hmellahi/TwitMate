@@ -2,8 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "../../lib/prisma";
-import { currentUser } from "@clerk/nextjs";
-// import { currentUser } from "@clerk/nextjs/server";
 
 interface UpdateUser {
   id: string | undefined;
@@ -12,35 +10,10 @@ interface UpdateUser {
   bio?: string;
   image: string;
 }
-import Clerk from "@clerk/clerk-sdk-node/esm/instance";
-
-// TODO REMOVE
-// const clerk = new Clerk({ secretKey: process.env.CLERK_SECRET_KEY });
-// console.log({ clerk });
-
-// const updateUserMapper = (user: UpdateUser) => {
-//   const { username, name, image } = user;
-//   return {
-//     firstName: name,
-//     username,
-//     imageUrl: image,
-//   };
-// };
-
-// const updateUserInClerk = async (updateUser: UpdateUser) => {
-  // let loggedUser = await currentUser();
-  // if (!loggedUser) return null;
-  // const userId = loggedUser.id;
-  // const updateUserData = updateUserMapper(updateUser)
-  // console.log({ updateUserData });
-  // await clerk.users.updateUser(userId, updateUserData);
-  // setProfileImage
-  //https://api.clerk.com/v1/users/{user_id}/profile_image
-// };
 
 export async function updateUser(newUserData: UpdateUser, path: string) {
   const { username, name, bio, image, id } = newUserData;
-  // console.log({us})
+  //
   const updatedUser = {
     name,
     username,
@@ -60,11 +33,8 @@ export async function updateUser(newUserData: UpdateUser, path: string) {
     });
 
     revalidatePath(path);
-    // updateUserInClerk(updatedUser);
     return updateUser;
-  } catch (error: any) {
-    console.log(error);
-  }
+  } catch (error: any) {}
 }
 
 export async function fetchUser(userId: string) {
@@ -73,9 +43,7 @@ export async function fetchUser(userId: string) {
       where: { id: userId },
     });
     return user;
-  } catch (error: any) {
-    console.log(error);
-  }
+  } catch (error: any) {}
 }
 
 export async function fetchUsers({
@@ -118,7 +86,5 @@ export async function fetchUsers({
       },
     });
     return users;
-  } catch (error: any) {
-    console.log(error);
-  }
+  } catch (error: any) {}
 }

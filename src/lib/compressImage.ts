@@ -8,10 +8,9 @@ export function compressImage(image: File): Promise<File> {
       maxHeight: 800,
       convertSize: 20000,
       success: (compressedResult: File) => {
-        console.log("compressed");
         // Resolve the promise with the compressed file
         resolve(compressedResult);
-      }, 
+      },
       error: (error) => {
         // Handle the error by returning the original file
         console.error("Image compression error:", error);

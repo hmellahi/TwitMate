@@ -4,6 +4,9 @@ import { CreateThreadParams, FetchThreadsParams } from "@/types/Thread";
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { prisma } from "../../lib/prisma";
+import { getThreadPreviewFields } from "./_utils/getThreadPreviewFields";
+import { getUserLike } from "./_utils/getUserLike";
+import { feedSortingFields } from "./constants/feedSortingFields";
 
 export async function createThread({
   userId,
@@ -41,47 +44,11 @@ export async function createThread({
 
     return newThread;
   } catch (error: any) {
-    console.log(error);
     throw error;
   } finally {
     revalidatePath(path);
   }
 }
-
-const getUserLike = (userId: string) => ({
-  where: {
-    userId,
-  },
-  select: {
-    id: true,
-  },
-  take: 1,
-});
-
-const threadPreviewData = (userId: string) => ({
-  id: true,
-  text: true,
-  createdAt: true,
-  author: {
-    select: {
-      id: true,
-      username: true,
-      image: true,
-    },
-  },
-  _count: {
-    select: {
-      likes: true,
-      childrens: true,
-    },
-  },
-  images: {
-    select: {
-      imageUrl: true,
-    },
-  },
-  likes: getUserLike(userId),
-});
 
 export async function fetchThread({
   threadId,
@@ -94,16 +61,10 @@ export async function fetchThread({
     return prisma.thread.findFirst({
       where: { id: threadId },
       select: {
-        ...threadPreviewData(userId),
-        // childrens: {
-        //   select: {
-        //     ...threadPreviewData(authorId),
-        //   },
-        // },
+        ...getThreadPreviewFields(userId),
       },
     });
   } catch (error: any) {
-    console.log(error);
     throw error;
   }
 }
@@ -128,7 +89,7 @@ export async function fetchThreadReplies({
       prisma.thread.findMany({
         where: query.where,
         select: {
-          ...threadPreviewData(userId),
+          ...getThreadPreviewFields(userId),
         },
         take: limit,
         skip: (page - 1) * limit,
@@ -137,7 +98,6 @@ export async function fetchThreadReplies({
     ]);
     return { threads, totalCount };
   } catch (error: any) {
-    console.log(error);
     throw error;
   }
 }
@@ -147,22 +107,25 @@ export async function fetchThreads({
   page = 1,
   limit = 7,
   communityId,
+  sortByLikesAndReplies = true,
 }: FetchThreadsParams) {
   const query: Prisma.ThreadFindManyArgs = {
     where: { communityId },
   };
-  // const startTime = performance.now();
+
   try {
     const [threads, totalCount] = await prisma.$transaction([
       prisma.thread.findMany({
         where: query.where,
         skip: (page - 1) * limit,
         take: limit,
-        orderBy: {
-          createdAt: "desc",
-        },
+        orderBy: sortByLikesAndReplies
+          ? feedSortingFields
+          : {
+              createdAt: "desc",
+            },
         select: {
-          ...threadPreviewData(userId),
+          ...getThreadPreviewFields(userId),
           childrens: {
             take: 4,
             select: {
@@ -179,12 +142,8 @@ export async function fetchThreads({
       prisma.thread.count({ where: query.where }),
     ]);
     const isLastPage = page + limit >= totalCount;
-    // const endTime = performance.now();
-    // const elapsedTime = endTime - startTime;
-    // console.log(`fetchThreads took ${elapsedTime} milliseconds.`);
     return { threads, totalCount, isLastPage };
   } catch (error: any) {
-    console.log(error);
     throw error;
   }
 }
@@ -226,7 +185,6 @@ export async function fetchUserThreads({
 
     return { threads, totalCount };
   } catch (error: any) {
-    console.log(error);
     throw error;
   }
 }
@@ -242,7 +200,6 @@ export async function toggleThread({
   userId: string;
   path: string;
 }) {
-  // if (value){
   const action: Function = value ? likeThread : unLikeThread;
 
   await action({
@@ -285,7 +242,6 @@ export async function likeThread({
 
     revalidatePath(path);
   } catch (e) {
-    console.log(e);
     throw e;
   }
 }
@@ -307,7 +263,6 @@ export async function unLikeThread({
     });
     revalidatePath(path);
   } catch (e) {
-    console.log(e);
     // throw e;
   }
 }

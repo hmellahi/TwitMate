@@ -19,7 +19,6 @@ const rowRenderer = ({
     parent,
   },
 }) => {
-  // const RowComponent = renderRow({ item: list[index], style });
   return (
     <CellMeasurer
       key={key}
@@ -64,8 +63,7 @@ export default function VirtualAndInfiniteScroll({
 
   const handleNewPageLoad = async () => {
     let pageCount = Math.floor(list.length / 7) + 1;
-    console.log({ isNextPageLoading });
-    console.log({ pageCount });
+
     if (isNextPageLoading) {
       return;
     }
@@ -75,7 +73,6 @@ export default function VirtualAndInfiniteScroll({
   let [listRef, setListRef] = useState(null);
 
   useEffect(() => {
-    console.log({ s: listRef?.recomputeRowHeights });
     // Recompute row heights and offsets
     listRef?.recomputeRowHeights();
     // Reset cached measurements for all cells.
@@ -96,8 +93,7 @@ export default function VirtualAndInfiniteScroll({
                 isRowLoaded={isRowLoaded}
                 loadMoreRows={handleNewPageLoad}
                 rowCount={totalCount}
-                threshold={3}
-                minimumBatchSize={8}
+                threshold={8}
               >
                 {({ onRowsRendered, registerChild }) => (
                   <List
@@ -136,7 +132,7 @@ export default function VirtualAndInfiniteScroll({
           <div className="h-full " style={{ flex: '1 1 auto' }}>
             <AutoSizer>
               {({ width, height }) => {
-                console.log({height});
+                
                 return (
                   <List
                     rowCount={list.length}

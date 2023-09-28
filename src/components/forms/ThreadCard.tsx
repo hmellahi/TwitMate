@@ -38,10 +38,6 @@ function ThreadCard(
   },
   ref
 ) {
-  if (thread.isDeleted) {
-    return null;
-  }
-
   const { redirectToProfile, redirectToThread } = useRedirect();
   const { text, author } = thread;
   const isLikedByCurrentUser = thread?.likes?.length > 0;
@@ -110,6 +106,7 @@ function ThreadCard(
       className={`${bg} ${className} text-white py-7 px-0 sm:px-2 cursor-pointer`}
       onClick={() => redirectToThread(thread.id)}
       style={style}
+      ref={ref}
     >
       <div className="flex justify-between items-start">
         <div className={`flex gap-3 relative w-full`}>

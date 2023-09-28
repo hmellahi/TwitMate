@@ -1,11 +1,11 @@
 import { Community, User } from "@prisma/client";
-import { prisma } from "../../lib/prisma";
+import { revalidatePath } from "next/cache";
 import {
   CommunityNotFoundError,
   UserAlreadyMemberError,
   UserNotMemberError,
 } from "../../lib/errors/communityErrors";
-import { revalidatePath } from "next/cache";
+import { prisma } from "../../lib/prisma";
 
 interface addCommunity {
   id: string;
@@ -153,7 +153,7 @@ async function updateCommunityInfo(
   try {
     // Assuming you have a valid structure for updating a community
     const { id: communityId, ...communityUpdateData } = updatedCommunityData;
-    console.log({ communityUpdateData, communityId });
+
     // Update the community information
     const updatedCommunity = await prisma.community.update({
       where: { id: communityId },
@@ -204,9 +204,7 @@ async function fetchCommunities({
       take: limit,
     });
     return communities;
-  } catch (error: any) {
-    console.log(error);
-  }
+  } catch (error: any) {}
 }
 
 export {

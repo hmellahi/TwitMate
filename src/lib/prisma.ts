@@ -1,10 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import {
-  Args,
-  Call,
-  DynamicClientExtensionThis,
-  TypeMapCbDef,
-} from "@prisma/client/runtime/library";
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
@@ -31,7 +25,7 @@ const CustomPrismaClient = () => new PrismaClient();
 //           // Query the likes table to check if the thread is liked by the current user
 //           const userLikeId = likes?.find((like) => like.userId === user.id)?.id;
 
-//           console.log({ likeRecord });
+//
 
 //           // Return a boolean indicating whether the thread is liked by the current user
 //           return likeRecord;

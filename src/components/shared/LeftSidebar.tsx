@@ -13,7 +13,7 @@ import LogoImg from "./logoImg";
 const OrganizationSwitcher = dynamic(
   () => import("@clerk/nextjs").then((module) => module.OrganizationSwitcher),
   {
-    ssr: true,
+    ssr: false,
   }
 );
 
@@ -33,6 +33,7 @@ const SignedIn = dynamic(
 
 export default function LeftSidebar({ currentUser }: { currentUser: User }) {
   const router = useRouter();
+
   if (!currentUser) {
     return null;
   }
@@ -54,6 +55,8 @@ export default function LeftSidebar({ currentUser }: { currentUser: User }) {
       </div>
       <div className="flex flex-col gap-y-4">
         <OrganizationSwitcher
+          currentUser={currentUser}
+          organizationProfileUrl="/"
           appearance={{
             baseTheme: dark,
             elements: {

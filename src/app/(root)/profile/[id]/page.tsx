@@ -13,7 +13,7 @@ export default async function profile({ params }: { params: { id: string } }) {
   if (!userId) return null;
 
   let [loggedInUser, user] = await Promise.all([
-    currentUser,
+    currentUser(),
     fetchUser(userId),
   ]);
 

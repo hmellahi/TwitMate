@@ -18,6 +18,7 @@ export default async function AuthLayout({
 }) {
   const user = await currentUser();
   if (!user) return null;
+
   const userInfos = await fetchUser(user.id);
   if (!userInfos) return null;
 

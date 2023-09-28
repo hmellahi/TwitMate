@@ -27,4 +27,5 @@ export interface FetchThreadsParams {
   page?: number;
   limit?: number;
   communityId?: null | string;
+  sortByLikesAndReplies?:boolean
 }
