@@ -8,8 +8,8 @@ export default async function uploadImages(images) {
   const formData = new FormData();
 
   for (const file of images) {
-    let l = await compressImage(file);
-    formData.append("file", l);
+    let compressedFile = await compressImage(file);
+    formData.append("file", compressedFile);
   }
 
   formData.append("upload_preset", "threads-images");

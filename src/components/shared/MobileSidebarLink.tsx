@@ -20,7 +20,7 @@ export function MobileSidebarLink({
     <Link
       key={sidebarLink.route}
       href={sidebarLink.route}
-      className={`text-white bottombar_link ${isActive && "bg-primary-500"}`}
+      className={`text-white bottombar_link hover_effect ${isActive && "bg-primary-500"}`}
     >
       {sidebarLink.imgURL.includes("search") ? (
         <Search width="20" height="20"></Search>

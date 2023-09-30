@@ -1,7 +1,7 @@
 import * as threadActions from "@/server-actions/thread/thread.actions";
 import { fetchUser } from "@/server-actions/user/user.actions";
 import { currentUser } from "@clerk/nextjs";
-import Feed from "./_components/feed";
+import Feed from "./_components/Feed";
 
 export default async function Home() {
   const user = await currentUser();
@@ -13,6 +13,7 @@ export default async function Home() {
     threadActions.fetchThreads({
       userId: user.id,
       path: "/",
+      sortByLikesAndReplies:true
     }),
   ]);
 

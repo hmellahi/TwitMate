@@ -11,26 +11,19 @@ export const metadata = {
   title: "Threads",
 };
 
-export default async function AuthLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function AuthLayout({ children }: { children: React.ReactNode }) {
   const user = await currentUser();
   if (!user) return null;
 
   const userInfos = await fetchUser(user.id);
-  if (!userInfos) return null;
 
-  if (!userInfos.onboarded) {
+  if (!userInfos?.onboarded) {
     redirect("/onboarding");
   }
 
   return (
     <ClerkProvider>
-      <div
-        className={`sm:px-[2rem] md:px-[2rem] xl:px-[6rem] 2xl:px-[13rem] h-screen`}
-      >
+      <div className={`sm:px-[2rem] md:px-[2rem] xl:px-[6rem] 2xl:px-[13rem] h-screen`}>
         <AppHeader />
         <main className="flex items-start justify-center overflow-hiddden">
           <LeftSidebar currentUser={user} />

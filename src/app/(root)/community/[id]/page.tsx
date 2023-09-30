@@ -7,8 +7,8 @@ import { fetchUser } from "@/server-actions/user/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
 import TotalThreadsCount from "./_components/TotalThreadsCount";
-import CommunityMembers from "./_components/communityMembersTab";
-import CommunityThreadsTab from "./_components/communityThreadsTab";
+import CommunityMembers from "./_components/CommunityMembersTab";
+import CommunityThreadsTab from "./_components/CommunityThreadsTab";
 
 export default async function profile({ params }: { params: { id: string } }) {
   const communityId = params.id;

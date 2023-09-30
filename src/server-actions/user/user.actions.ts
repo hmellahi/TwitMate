@@ -1,5 +1,6 @@
 "use server";
 
+import { User } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { prisma } from "../../lib/prisma";
 
@@ -13,7 +14,7 @@ interface UpdateUser {
 
 export async function updateUser(newUserData: UpdateUser, path: string) {
   const { username, name, bio, image, id } = newUserData;
-  //
+
   const updatedUser = {
     name,
     username,
@@ -43,7 +44,9 @@ export async function fetchUser(userId: string) {
       where: { id: userId },
     });
     return user;
-  } catch (error: any) {}
+  } catch (error: any) {
+    return null;
+  }
 }
 
 export async function fetchUsers({

@@ -174,6 +174,11 @@ module.exports = {
       ],
     },
     extend: {
+      aspectRatio: {
+        '16/9': '56.25%', // 16:9 aspect ratio (h/w * 100)
+        '4/3': '75%',    // 4:3 aspect ratio
+        // Add more aspect ratios as needed
+      },
       colors: {
         white: "var(--white-color)",
         black: "var(--black-color)",

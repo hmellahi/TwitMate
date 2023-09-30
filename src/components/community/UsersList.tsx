@@ -1,38 +1,15 @@
 import { User } from "@prisma/client";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import { ProfileImg } from "../shared/ProfileImg";
 
-export function UsersList({
-  users,
-  className = "",
-  children,
-}: {
-  users: User[];
-  className?: string;
-  children: React.ReactNode;
-}) {
+export function UsersList({ users, className = "" }: { users: User[]; className?: string }) {
   if (!users) {
     return null;
   }
+
   return (
-    <div className={`inline-flex row-reverse ${className}`}>
+    <div className={`inline-flex row-reverse ${className}`} role="links">
       {users?.map((user, index) => (
-        <Link
-          href={`/profile/${user.id}`}
-          key={index}
-          className={`w-6 h-6 relative rounded-full overflow-hidden  avatar -ml-[.6rem] border-2 border-dark-2
-          `}
-        >
-          {children}
-          <Image
-            src={user.image}
-            alt={`Avatar ${index + 1}`}
-            className="w-full h-full object-cover block"
-            fill
-            loading="lazy"
-          />
-        </Link>
+        <ProfileImg key={index} user={user} index={index} className="-ml-[.6rem]"></ProfileImg>
       ))}
     </div>
   );

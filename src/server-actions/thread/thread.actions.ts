@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "../../lib/prisma";
 import { getThreadPreviewFields } from "./_utils/getThreadPreviewFields";
 import { getUserLike } from "./_utils/getUserLike";
-import { feedSortingFields } from "./constants/feedSortingFields";
+import { feedSortingFields, sortByLatest } from "./constants/feedSortingFields";
 
 export async function createThread({
   userId,
@@ -107,11 +107,15 @@ export async function fetchThreads({
   page = 1,
   limit = 7,
   communityId,
-  sortByLikesAndReplies = true,
+  sortByLikesAndReplies = false,
 }: FetchThreadsParams) {
   const query: Prisma.ThreadFindManyArgs = {
     where: { communityId },
   };
+
+  const OrderByFields = sortByLikesAndReplies
+    ? feedSortingFields
+    : sortByLatest;
 
   try {
     const [threads, totalCount] = await prisma.$transaction([
@@ -119,11 +123,7 @@ export async function fetchThreads({
         where: query.where,
         skip: (page - 1) * limit,
         take: limit,
-        orderBy: sortByLikesAndReplies
-          ? feedSortingFields
-          : {
-              createdAt: "desc",
-            },
+        orderBy: OrderByFields,
         select: {
           ...getThreadPreviewFields(userId),
           childrens: {

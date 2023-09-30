@@ -1,12 +1,12 @@
 "use client";
 
+import useFeedStore from "@/app/(root)/(feed)/_store/feeds-store";
 import PostThread from "@/components/forms/PostThread";
-import { useStore } from "zustand";
-import useFeedStore from "@/app/(root)/(feed)/_store/feedsStore";
 import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
 import useUserStore from "@/store/userStore";
 import { User } from "@prisma/client";
 import { useEffect } from "react";
+import { useStore } from "zustand";
 
 export default function Feed({
   user,

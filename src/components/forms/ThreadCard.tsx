@@ -17,6 +17,7 @@ import { UsersList } from "../community/UsersList";
 import ThreadActions from "../shared/Thread/ThreadActions";
 import { Heart, HeartFilled, Reply, Repost, Share } from "../svgs";
 import { MediaViewer } from "../ui/MediaViewer";
+import { ProfileImg } from "../shared/ProfileImg";
 
 function ThreadCard(
   {
@@ -111,19 +112,24 @@ function ThreadCard(
       <div className="flex justify-between items-start">
         <div className={`flex gap-3 relative w-full`}>
           <div className="flex flex-col items-center">
-            <div
+            {/* <button
               onClick={(event) => redirectToProfile(event, author.id)}
               className="relative h-11 w-11"
+              role="button"
+              aria-Labelledby="link to profile"
+              tabIndex="0"
             >
               <Image
                 onLoad={measure}
-                src={author.image || ""}
+                src={author.image}
                 alt="avatar"
                 fill
                 className="cursor-pointer rounded-full object-cover"
                 loading="lazy"
+                role="img"
               ></Image>
-            </div>
+            </button> */}
+            <ProfileImg className="!h-11 !w-11" aria-Labelledby="link to profile" user={author} />
             {hasReplies && <div className="thread-card_bar" />}
           </div>
           <div className="w-full">
@@ -167,13 +173,9 @@ function ThreadCard(
               <div className="icon-hover relative" onClick={reactToThread}>
                 <LikeIcon width="25" height="25" className="cursor-pointer" />
               </div>
-              <Link
-                href={`/thread/${thread.id}`}
-                className="icon-hover"
-                aria-label="Comment"
-              >
+              <div className="icon-hover">
                 <Reply width="25" height="25" />
-              </Link>
+              </div>
               <div className="icon-hover">
                 <Repost width="25" height="25" />
               </div>
@@ -184,27 +186,27 @@ function ThreadCard(
           </div>
         </div>
       </div>
-      {(hasReplies || hasLikes) && (
-        <div className="flex items-center">
-          <UsersList
-            className="z-20 w-[3.7rem] justify-center"
-            users={threadRepliers}
-            width={15}
-            height={15}
-          ></UsersList>
-          <div className="text-[#A0A0A0] flex items-center gap-x-2 ">
-            {hasReplies && (
-              <>
-                <p>{thread?.childrens?.length} replies</p>
-                {hasLikes && (
-                  <div className="rounded-full w-1 h-1 bg-gray-1"></div>
-                )}
-              </>
-            )}
-            {showLikesCount(likesCount)}
-          </div>
-        </div>
-      )}
+      <div className="flex items-center">
+        {(hasReplies || hasLikes) && (
+          <>
+            <UsersList
+              className="z-20 w-[3.7rem] justify-center"
+              users={threadRepliers}
+            ></UsersList>
+            <div className="text-[#A0A0A0] flex items-center gap-x-2 ">
+              {hasReplies && (
+                <>
+                  <p>{thread?.childrens?.length} replies</p>
+                  {hasLikes && (
+                    <div className="rounded-full w-1 h-1 bg-gray-1"></div>
+                  )}
+                </>
+              )}
+              {showLikesCount(likesCount)}
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

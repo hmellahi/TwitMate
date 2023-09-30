@@ -1,7 +1,9 @@
+const CompressionPlugin = require("compression-webpack-plugin");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   compiler: {
-    removeConsole: process.env.NODE_ENV === "production"
+    removeConsole: process.env.NODE_ENV === "production",
   },
   typescript: {
     // !! WARN !!
@@ -33,7 +35,7 @@ const nextConfig = {
         protocol: "https",
         hostname: "placehold.co",
       },
-      {
+      { 
         protocol: "https",
         hostname: "res.cloudinary.com",
       },
@@ -54,18 +56,6 @@ const nextConfig = {
 
     return config;
   },
-  // {
-  //   test: /\.svg$/,
-  //   use: [
-  //     {
-  //       loader: '@svgr/webpack',
-  //       options: {
-  //         native: true,
-  //       },
-  //     },
-  //   ],
-  // }
-  // ```
 };
 
 module.exports = nextConfig;

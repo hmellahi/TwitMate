@@ -13,3 +13,9 @@ export const feedSortingFields = [
     createdAt: "desc",
   },
 ];
+
+export const sortByLatest = [
+  {
+    createdAt: "desc",
+  },
+];

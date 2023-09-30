@@ -85,6 +85,10 @@
   .leftsidebar_link {
     @apply relative flex justify-start gap-4 rounded-lg p-4;
   }
+  
+  .hover_effect {
+    @apply transition ease-in-out duration-300 hover:bg-primary-500
+  }
 
   .pagination {
     @apply mt-10 flex w-full items-center justify-center gap-5;

@@ -1,13 +1,10 @@
 "use client";
 import PostThread from "@/components/forms/PostThread";
 import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
-import useFeedStore from "@/app/(root)/(feed)/_store/feedsStore";
-import { ThreadWithDetails } from "@/types/Thread";
-import { User } from "@prisma/client";
-import React, { useEffect } from "react";
+import useUserStore from "@/store/userStore";
+import { useEffect } from "react";
 import { useStore } from "zustand";
 import useThreadDetailsStore from "../_store/threadDetailsStore";
-import useUserStore from "@/store/userStore";
 
 export default function ThreadDetails({
   user,
@@ -17,14 +14,8 @@ export default function ThreadDetails({
   threadId: string;
   userImage: string;
 }) {
-  let {
-    fetchReplies,
-    deleteThread,
-    threads,
-    createThread,
-    totalCount,
-    isRepliesLoading,
-  } = useStore(useThreadDetailsStore);
+  let { fetchReplies, deleteThread, threads, createThread, totalCount, isRepliesLoading } =
+    useStore(useThreadDetailsStore);
   let { setCurrentUser } = useStore(useUserStore);
   const { id: userId, image: userImage } = user;
 

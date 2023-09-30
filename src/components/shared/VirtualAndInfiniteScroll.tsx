@@ -72,11 +72,20 @@ export default function VirtualAndInfiniteScroll({
 
   let [listRef, setListRef] = useState(null);
 
-  useEffect(() => {
+  const reset = () => {
+    console.log('resized')
     // Recompute row heights and offsets
     listRef?.recomputeRowHeights();
     // Reset cached measurements for all cells.
     cache.current.clearAll();
+  };
+
+  useEffect(() => {
+    reset();
+
+    window.addEventListener("resize", reset);
+
+    return () => window.removeEventListener("resize", reset);
   }, [list]);
 
   if (!isNextPageLoading && !list.length) {
