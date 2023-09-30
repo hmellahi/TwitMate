@@ -1,4 +1,4 @@
-import { FetchThreadsParams } from "@/types/Thread";
+import { FetchThreadsParams } from "@/types/thread";
 import { Thread } from "@prisma/client";
 
 export type threadDetailsStore = {

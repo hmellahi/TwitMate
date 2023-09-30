@@ -1,15 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import uploadImages from "@/lib/uploadImages";
+import uploadImages from "@/lib/upload-images";
 import { cn } from "@/lib/utils";
 import { CreateThreadValidation } from "@/lib/validations/thread";
 import { useOrganization } from "@clerk/nextjs";
@@ -89,9 +83,7 @@ export default function PostThread({
       });
 
       toast({
-        className: cn(
-          "top-0 right-0 flex fixed md:max-w-[20rem] md:top-4 md:right-4 py-4"
-        ),
+        className: cn("top-0 right-0 flex fixed md:max-w-[20rem] md:top-4 md:right-4 py-4"),
         title: "Thread created successfully!",
       });
     } catch (e) {
@@ -107,10 +99,7 @@ export default function PostThread({
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className={`w-full ${className}`}
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className={`w-full ${className}`}>
         <div className={`flex justify-cdenter gap-3 items-end`}>
           <div className="relative h-10 w-10">
             <Image
@@ -140,17 +129,10 @@ export default function PostThread({
           />
         </div>
         <div className="pl-12">
-          <MediaViewerWrapper
-            className="mb-2 mt-5"
-            images={threadImages}
-          ></MediaViewerWrapper>
+          <MediaViewerWrapper className="mb-2 mt-5" images={threadImages}></MediaViewerWrapper>
           <div className="flex justify-between items-center mt-6">
             <MediaUploader images={threadImages} setImages={setThreadImages} />
-            <Button
-              type="submit"
-              className={`${postBtnClass} !py-1`}
-              disabled={isCreatingPost}
-            >
+            <Button type="submit" className={`${postBtnClass} !py-1`} disabled={isCreatingPost}>
               {btnTitle}
             </Button>
           </div>

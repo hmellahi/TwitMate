@@ -2,22 +2,18 @@
 
 import { debounce } from "@/lib/debounce";
 import useRedirect from "@/lib/hooks/useRedirect";
-import { timeAgo } from "@/lib/timeConverter";
+import { timeAgo } from "@/lib/time-converter";
 import { showLikesCount } from "@/lib/utils";
-import {
-  likeThread,
-  unLikeThread,
-} from "@/server-actions/thread/thread.actions";
-import { ThreadWithDetails } from "@/types/Thread";
+import { likeThread, unLikeThread } from "@/server-actions/thread/thread.actions";
+import { ThreadWithDetails } from "@/types/thread";
 import { User } from "@prisma/client";
-import Image from "next/image";
 import Link from "next/link";
 import { forwardRef, useCallback, useState } from "react";
 import { UsersList } from "../community/UsersList";
+import { ProfileImg } from "../shared/ProfileImg";
 import ThreadActions from "../shared/Thread/ThreadActions";
 import { Heart, HeartFilled, Reply, Repost, Share } from "../svgs";
 import { MediaViewer } from "../ui/MediaViewer";
-import { ProfileImg } from "../shared/ProfileImg";
 
 function ThreadCard(
   {
@@ -55,30 +51,23 @@ function ThreadCard(
     }
   });
 
-  const [isUserLikedThread, setisUserLikedThread] =
-    useState(isLikedByCurrentUser);
+  const [isUserLikedThread, setisUserLikedThread] = useState(isLikedByCurrentUser);
 
   // Debounce the saveUserReaction function
-  const debouncedSaveUserReaction = debounce(
-    async (isUserLikedThread: boolean) => {
-      if (isUserLikedThread) {
-        await unLikeThread({ userId: userId, threadId: thread.id, path });
-      } else {
-        await likeThread({
-          userId: userId,
-          threadId: thread.id,
-          path,
-        });
-      }
-    },
-    200
-  );
+  const debouncedSaveUserReaction = debounce(async (isUserLikedThread: boolean) => {
+    if (isUserLikedThread) {
+      await unLikeThread({ userId: userId, threadId: thread.id, path });
+    } else {
+      await likeThread({
+        userId: userId,
+        threadId: thread.id,
+        path,
+      });
+    }
+  }, 200);
 
   // Use useCallback to memoize the debounced function
-  const memoizedDebouncedSaveUserReaction = useCallback(
-    debouncedSaveUserReaction,
-    []
-  );
+  const memoizedDebouncedSaveUserReaction = useCallback(debouncedSaveUserReaction, []);
 
   // Update reactToThread to call the memoized debounced function
   async function reactToThread(e) {
@@ -136,10 +125,7 @@ function ThreadCard(
             <div className="w-full">
               <div className="flex justify-between w-full items-start ">
                 <div className="w-full">
-                  <Link
-                    href={`/profile/${author.id}`}
-                    className="relative h-11 w-11"
-                  >
+                  <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
                     {author?.username}
                   </Link>
                 </div>
@@ -158,16 +144,10 @@ function ThreadCard(
                   )}
                 </div>
               </div>
-              <p className="whitespace-pre-line	text-small-regular font-light mt-1">
-                {text}
-              </p>
+              <p className="whitespace-pre-line	text-small-regular font-light mt-1">{text}</p>
             </div>
             {threadImages?.length > 0 && (
-              <MediaViewer
-                className="mt-4"
-                imageURLs={threadImages}
-                onLoad={measure}
-              ></MediaViewer>
+              <MediaViewer className="mt-4" imageURLs={threadImages} onLoad={measure}></MediaViewer>
             )}
             <div className={`flex gap-2 mt-2 text-white items-center`}>
               <div className="icon-hover relative" onClick={reactToThread}>
@@ -197,9 +177,7 @@ function ThreadCard(
               {hasReplies && (
                 <>
                   <p>{thread?.childrens?.length} replies</p>
-                  {hasLikes && (
-                    <div className="rounded-full w-1 h-1 bg-gray-1"></div>
-                  )}
+                  {hasLikes && <div className="rounded-full w-1 h-1 bg-gray-1"></div>}
                 </>
               )}
               {showLikesCount(likesCount)}

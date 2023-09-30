@@ -1,10 +1,10 @@
 import * as threadActions from "@/server-actions/thread/thread.actions";
-import { CreateThreadParams, FetchThreadsParams } from "@/types/Thread";
+import { CreateThreadParams, FetchThreadsParams } from "@/types/thread";
 import { Thread } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { create } from "zustand";
-import useUserStore from "../../../../../../store/userStore";
-import { threadDetailsStore } from "../../_types/threadDetailsStore";
+import useUserStore from "../../../../../../store/user-store";
+import { threadDetailsStore } from "../../_types/thread-details-store";
 
 const deleteThread = ({
   path,
@@ -20,10 +20,7 @@ const deleteThread = ({
   const threadIndex = threads.indexOf(thread);
   if (!thread) return;
 
-  threads = [
-    ...threads.slice(0, threadIndex),
-    ...threads.slice(threadIndex + 1, threads.length),
-  ];
+  threads = [...threads.slice(0, threadIndex), ...threads.slice(threadIndex + 1, threads.length)];
 
   useThreadDetailsStore.setState({ totalCount: --totalCount, threads });
 
@@ -31,12 +28,8 @@ const deleteThread = ({
   if (path.includes("thread")) useRouter().push("/");
 };
 
-const fetchReplies = async (
-  params: FetchThreadsParams,
-  clearOldList: boolean = false
-) => {
-  const { threads, setIsRepliesLoading, setThreads } =
-    useThreadDetailsStore.getState();
+const fetchReplies = async (params: FetchThreadsParams, clearOldList: boolean = false) => {
+  const { threads, setIsRepliesLoading, setThreads } = useThreadDetailsStore.getState();
 
   if (clearOldList) {
     setThreads([]);
@@ -44,8 +37,7 @@ const fetchReplies = async (
 
   setIsRepliesLoading(true);
 
-  let { threads: newThreads, totalCount } =
-    await threadActions.fetchThreadReplies(params);
+  let { threads: newThreads, totalCount } = await threadActions.fetchThreadReplies(params);
 
   if (!clearOldList && threads) {
     newThreads = [...threads, ...newThreads];
@@ -82,8 +74,7 @@ const useThreadDetailsStore = create<threadDetailsStore>((set) => ({
   fetchReplies,
   createThread,
   setThreads: (newThreads: Thread[]) => set(() => ({ threads: newThreads })),
-  setIsRepliesLoading: (value: boolean) =>
-    set(() => ({ isRepliesLoading: value })),
+  setIsRepliesLoading: (value: boolean) => set(() => ({ isRepliesLoading: value })),
 }));
 
 export default useThreadDetailsStore;

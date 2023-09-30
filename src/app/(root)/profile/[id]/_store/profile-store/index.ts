@@ -1,10 +1,10 @@
 import * as threadActions from "@/server-actions/thread/thread.actions";
-import { CreateThreadParams, FetchThreadsParams } from "@/types/Thread";
+import { CreateThreadParams, FetchThreadsParams } from "@/types/thread";
 import { Thread } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { create } from "zustand";
-import useUserStore from "../../../../../../store/userStore";
-import { profileStore } from "../../_types/profileStore";
+import useUserStore from "../../../../../../store/user-store";
+import { profileStore } from "../../_types/profile-store";
 
 const deleteThread = ({
   path,
@@ -20,10 +20,7 @@ const deleteThread = ({
   const threadIndex = threads.indexOf(thread);
   if (!thread) return;
 
-  threads = [
-    ...threads.slice(0, threadIndex),
-    ...threads.slice(threadIndex + 1, threads.length),
-  ];
+  threads = [...threads.slice(0, threadIndex), ...threads.slice(threadIndex + 1, threads.length)];
 
   useProfileStore.setState({ totalCount: --totalCount, threads });
 
@@ -31,12 +28,8 @@ const deleteThread = ({
   if (path.includes("thread")) useRouter().push("/");
 };
 
-const fetchUserThreads = async (
-  params: FetchThreadsParams,
-  clearOldList: boolean = false
-) => {
-  const { threads, setIsThreadsLoading, setThreads } =
-    useProfileStore.getState();
+const fetchUserThreads = async (params: FetchThreadsParams, clearOldList: boolean = false) => {
+  const { threads, setIsThreadsLoading, setThreads } = useProfileStore.getState();
 
   if (clearOldList) {
     setThreads([]);
@@ -44,8 +37,7 @@ const fetchUserThreads = async (
 
   setIsThreadsLoading(true);
 
-  let { threads: newThreads, totalCount } =
-    await threadActions.fetchUserThreads(params);
+  let { threads: newThreads, totalCount } = await threadActions.fetchUserThreads(params);
 
   if (!clearOldList && threads) {
     newThreads = [...threads, ...newThreads];
@@ -83,8 +75,7 @@ const useProfileStore = create<profileStore>((set) => ({
   fetchUserThreads,
   createThread,
   setThreads: (newThreads: Thread[]) => set(() => ({ threads: newThreads })),
-  setIsThreadsLoading: (value: boolean) =>
-    set(() => ({ isThreadsLoading: value })),
+  setIsThreadsLoading: (value: boolean) => set(() => ({ isThreadsLoading: value })),
 }));
 
 export default useProfileStore;

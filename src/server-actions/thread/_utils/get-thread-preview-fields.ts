@@ -1,6 +1,6 @@
 "use server";
 
-import { getUserLike } from "./getUserLike";
+import { getUserLike } from "./get-user-like";
 
 export const getThreadPreviewFields = (userId: string) => ({
   id: true,

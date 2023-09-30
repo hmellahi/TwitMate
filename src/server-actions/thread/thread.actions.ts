@@ -1,12 +1,12 @@
 "use server";
 
-import { CreateThreadParams, FetchThreadsParams } from "@/types/Thread";
+import { CreateThreadParams, FetchThreadsParams } from "@/types/thread";
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { prisma } from "../../lib/prisma";
-import { getThreadPreviewFields } from "./_utils/getThreadPreviewFields";
-import { getUserLike } from "./_utils/getUserLike";
-import { feedSortingFields, sortByLatest } from "./constants/feedSortingFields";
+import { getThreadPreviewFields } from "./_utils/get-thread-preview-fields";
+import { getUserLike } from "./_utils/get-user-like";
+import { feedSortingFields, sortByLatest } from "./constants/feed-sorting-fields";
 
 export async function createThread({
   userId,
@@ -50,13 +50,7 @@ export async function createThread({
   }
 }
 
-export async function fetchThread({
-  threadId,
-  userId,
-}: {
-  threadId: string;
-  userId: string;
-}) {
+export async function fetchThread({ threadId, userId }: { threadId: string; userId: string }) {
   try {
     return prisma.thread.findFirst({
       where: { id: threadId },
@@ -113,9 +107,7 @@ export async function fetchThreads({
     where: { communityId },
   };
 
-  const OrderByFields = sortByLikesAndReplies
-    ? feedSortingFields
-    : sortByLatest;
+  const OrderByFields = sortByLikesAndReplies ? feedSortingFields : sortByLatest;
 
   try {
     const [threads, totalCount] = await prisma.$transaction([
@@ -246,14 +238,7 @@ export async function likeThread({
   }
 }
 
-export async function unLikeThread({
-  threadId,
-  userId,
-  path,
-}: {
-  threadId: string;
-  path: string;
-}) {
+export async function unLikeThread({ threadId, userId, path }: { threadId: string; path: string }) {
   try {
     await prisma.threadLikes.delete({
       where: {
@@ -303,13 +288,7 @@ export async function removeThread({
   }
 }
 
-export async function getUserReplies({
-  userId,
-  path,
-}: {
-  userId: string;
-  path: string;
-}) {
+export async function getUserReplies({ userId, path }: { userId: string; path: string }) {
   try {
     let userReplies = await prisma.thread.findMany({
       where: {

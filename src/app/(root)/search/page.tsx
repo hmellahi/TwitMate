@@ -3,7 +3,6 @@ import { SearchInput } from "@/components/ui/searchInput";
 import { fetchUsers } from "@/server-actions/user/user.actions";
 import { currentUser } from "@clerk/nextjs/server";
 import { User } from "@prisma/client";
-import React from "react";
 
 export default async function page({
   searchParams: { query },
@@ -26,7 +25,7 @@ export default async function page({
       ></SearchInput>
       <div className="flex flex-col gap-6 mt-3">
         {users?.map((user: User) => (
-          <UserCard user={user} className="line-break"/>
+          <UserCard user={user} className="line-break" />
         ))}
       </div>
     </div>

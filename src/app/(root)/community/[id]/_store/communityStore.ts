@@ -1,10 +1,10 @@
 import * as threadActions from "@/server-actions/thread/thread.actions";
-import useUserStore from "@/store/userStore";
-import { CreateThreadParams, FetchThreadsParams } from "@/types/Thread";
+import useUserStore from "@/store/user-store";
+import { CreateThreadParams, FetchThreadsParams } from "@/types/thread";
 import { Thread } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { create } from "zustand";
-import { CommunityStore } from "../_types/communityStore";
+import { CommunityStore } from "../_types/community-store";
 
 const deleteThread = ({
   path,
@@ -20,10 +20,7 @@ const deleteThread = ({
   const threadIndex = threads.indexOf(thread);
   if (!thread) return;
 
-  threads = [
-    ...threads.slice(0, threadIndex),
-    ...threads.slice(threadIndex + 1, threads.length),
-  ];
+  threads = [...threads.slice(0, threadIndex), ...threads.slice(threadIndex + 1, threads.length)];
 
   useCommunityStore.setState({ totalCount: --totalCount, threads });
 
@@ -31,12 +28,8 @@ const deleteThread = ({
   if (path.includes("thread")) useRouter().push("/");
 };
 
-const fetchThreads = async (
-  params: FetchThreadsParams,
-  clearOldList: boolean = false
-) => {
-  const { threads, setIsThreadsLoading, setThreads } =
-    useCommunityStore.getState();
+const fetchThreads = async (params: FetchThreadsParams, clearOldList: boolean = false) => {
+  const { threads, setIsThreadsLoading, setThreads } = useCommunityStore.getState();
 
   if (clearOldList) {
     setThreads([]);
@@ -44,9 +37,7 @@ const fetchThreads = async (
 
   setIsThreadsLoading(true);
 
-  let { threads: newThreads, totalCount } = await threadActions.fetchThreads(
-    params
-  );
+  let { threads: newThreads, totalCount } = await threadActions.fetchThreads(params);
 
   if (!clearOldList && threads) {
     newThreads = [...threads, ...newThreads];
@@ -81,8 +72,7 @@ const useCommunityStore = create<CommunityStore>((set) => ({
   fetchThreads,
   createThread,
   setThreads: (newThreads: Thread[]) => set(() => ({ threads: newThreads })),
-  setIsThreadsLoading: (value: boolean) =>
-    set(() => ({ isThreadsLoading: value })),
+  setIsThreadsLoading: (value: boolean) => set(() => ({ isThreadsLoading: value })),
 }));
 
 export default useCommunityStore;

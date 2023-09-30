@@ -3,7 +3,7 @@
 import useFeedStore from "@/app/(root)/(feed)/_store/feeds-store";
 import PostThread from "@/components/forms/PostThread";
 import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
-import useUserStore from "@/store/userStore";
+import useUserStore from "@/store/user-store";
 import { User } from "@prisma/client";
 import { useEffect } from "react";
 import { useStore } from "zustand";

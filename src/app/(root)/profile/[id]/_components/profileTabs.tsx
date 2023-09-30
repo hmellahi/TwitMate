@@ -4,17 +4,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { profileTabs } from "@/constants";
 import { User } from "@prisma/client";
 import { useStore } from "zustand";
-import useProfileStore from "../_store/profileStore";
-import RepliesTab from "./tabs/repliesTab/repliesTab";
-import ThreadsTab from "./tabs/threadsTab";
+import useProfileStore from "../_store/profile-store";
+import ThreadsTab from "./tabs/ThreadsTab";
+import RepliesTab from "./tabs/repliesTab/RepliesTab";
 
-export default function ProfileTabs({
-  // threads,
-  user,
-}: {
-  // threads: ThreadWithDetails[];
-  user: User;
-}) {
+export default function ProfileTabs({ user }: { user: User }) {
   let { totalCount } = useStore(useProfileStore);
 
   return (

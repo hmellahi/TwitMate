@@ -1,4 +1,4 @@
-import { CreateThreadParams, FetchThreadsParams } from "@/types/Thread";
+import { CreateThreadParams, FetchThreadsParams } from "@/types/thread";
 import { Thread } from "@prisma/client";
 
 export type CommunityStore = {

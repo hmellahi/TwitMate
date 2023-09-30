@@ -1,44 +1,0 @@
-
-> twitter@0.1.0 build
-> prisma generate && next build
-
-Environment variables loaded from .env
-
-   Creating an optimized production build ...
-   Skipping validation of types
-   Linting ...
-   Collecting page data ...
-   Generating static pages (0/11) ...
-   Generating static pages (2/11) 
-   Generating static pages (5/11) 
-   Generating static pages (8/11) 
- ✓ Generating static pages (11/11) 
-   Finalizing page optimization ...
-
-Route (app)                              Size     First Load JS
-┌ λ /                                    3.84 kB         201 kB
-├ ○ /_not-found                          875 B          83.7 kB
-├ λ /activity                            209 B           108 kB
-├ λ /api/clerk/webhooks                  0 B                0 B
-├ λ /communities                         219 B           121 kB
-├ λ /community/[id]                      1.48 kB         178 kB
-├ λ /create-thread                       3.8 kB          143 kB
-├ λ /onboarding                          431 B           156 kB
-├ λ /profile/[id]                        3.05 kB         180 kB
-├ λ /search                              217 B           108 kB
-├ λ /settings                            209 B           156 kB
-├ λ /sign-in/[[...sign-in]]              196 B            96 kB
-├ λ /sign-up/[[...sign-up]]              195 B            96 kB
-└ λ /thread/[id]                         3.82 kB         201 kB
-+ First Load JS shared by all            82.8 kB
-  ├ chunks/26-9345f92080c99b79.js        27.1 kB
-  ├ chunks/bf6a786c-950580dda8b5f73c.js  53.6 kB
-  ├ chunks/main-app-1ab4d480d6fd8ba4.js  219 B
-  └ chunks/webpack-9b6b3a646583068e.js   1.84 kB
-
-
-ƒ Middleware                             171 kB
-
-λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
-○  (Static)  automatically rendered as static HTML (uses no initial props)
-

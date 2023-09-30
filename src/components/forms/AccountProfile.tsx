@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { compressImage } from "@/lib/compressImage";
-import uploadImages from "@/lib/uploadImages";
+import { compressImage } from "@/lib/compress-image";
+import uploadImages from "@/lib/upload-images";
 import { isBase64Image } from "@/lib/utils";
 import { UserValidation } from "@/lib/validations/user";
-import { UserData } from "@/types/User";
+import { UserData } from "@/types/user";
 import { useSessionList } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";

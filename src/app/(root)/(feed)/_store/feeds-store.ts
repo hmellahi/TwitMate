@@ -1,9 +1,9 @@
 import * as threadActions from "@/server-actions/thread/thread.actions";
-import { CreateThreadParams, FetchThreadsParams } from "@/types/Thread";
+import { CreateThreadParams, FetchThreadsParams } from "@/types/thread";
 import { Thread } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { create } from "zustand";
-import useUserStore from "../../../../store/userStore";
+import useUserStore from "../../../../store/user-store";
 import useCommunityStore from "../../community/[id]/_store/communityStore";
 
 type feedStore = {
@@ -29,10 +29,7 @@ const deleteThread = ({
   const threadIndex = threads.indexOf(thread);
   if (!thread) return;
 
-  threads = [
-    ...threads.slice(0, threadIndex),
-    ...threads.slice(threadIndex + 1, threads.length),
-  ];
+  threads = [...threads.slice(0, threadIndex), ...threads.slice(threadIndex + 1, threads.length)];
 
   useCommunityStore.setState({ totalCount: --totalCount, threads });
 
@@ -40,10 +37,7 @@ const deleteThread = ({
   if (path.includes("thread")) useRouter().push("/");
 };
 
-const fetchThreads = async (
-  params: FetchThreadsParams,
-  clearOldList: boolean = false
-) => {
+const fetchThreads = async (params: FetchThreadsParams, clearOldList: boolean = false) => {
   const { threads, setIsThreadsLoading, setThreads } = useFeedStore.getState();
 
   if (clearOldList) {
@@ -90,8 +84,7 @@ const useFeedStore = create<feedStore>((set) => ({
   fetchThreads,
   createThread,
   setThreads: (newThreads: Thread[]) => set(() => ({ threads: newThreads })),
-  setIsThreadsLoading: (value: boolean) =>
-    set(() => ({ isThreadsLoading: value })),
+  setIsThreadsLoading: (value: boolean) => set(() => ({ isThreadsLoading: value })),
 }));
 
 export default useFeedStore;

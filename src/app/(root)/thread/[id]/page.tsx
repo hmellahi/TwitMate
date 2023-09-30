@@ -7,7 +7,7 @@ import { fetchUser } from "@/server-actions/user/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import React from "react";
-import ThreadDetails from "./_components/threadDetails";
+import ThreadDetails from "./_components/ThreadDetails";
 
 export default async function page({ params }: { params: { id: string } }) {
   const threadId = params.id;

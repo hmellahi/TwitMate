@@ -4,7 +4,7 @@ import {
   CommunityNotFoundError,
   UserAlreadyMemberError,
   UserNotMemberError,
-} from "../../lib/errors/communityErrors";
+} from "../../lib/errors/community-errors";
 import { prisma } from "../../lib/prisma";
 
 interface addCommunity {

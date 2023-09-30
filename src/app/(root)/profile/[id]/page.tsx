@@ -1,6 +1,6 @@
 "use server";
 
-import ProfileTabs from "@/app/(root)/profile/[id]/_components/profileTabs";
+import ProfileTabs from "@/app/(root)/profile/[id]/_components/ProfileTabs";
 import { Edit } from "@/components/svgs";
 import { Button } from "@/components/ui/button";
 import { fetchUser } from "@/server-actions/user/user.actions";

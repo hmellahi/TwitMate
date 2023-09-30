@@ -1,4 +1,4 @@
-import { FetchThreadsParams } from "@/types/Thread";
+import { FetchThreadsParams } from "@/types/thread";
 import { Thread } from "@prisma/client";
 
 export type profileStore = {
@@ -7,9 +7,6 @@ export type profileStore = {
   deleteThread: () => Promise<void>;
   createThread: () => Promise<void>;
   setIsThreadsLoading: (value: boolean) => Promise<void>;
-  fetchUserThreads: (
-    params: FetchThreadsParams,
-    clearOldList?: boolean
-  ) => void;
+  fetchUserThreads: (params: FetchThreadsParams, clearOldList?: boolean) => void;
   setThreads: (newThreads: Thread[]) => void;
 };

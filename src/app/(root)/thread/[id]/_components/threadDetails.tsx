@@ -1,10 +1,10 @@
 "use client";
 import PostThread from "@/components/forms/PostThread";
 import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
-import useUserStore from "@/store/userStore";
+import useUserStore from "@/store/user-store";
 import { useEffect } from "react";
 import { useStore } from "zustand";
-import useThreadDetailsStore from "../_store/threadDetailsStore";
+import useThreadDetailsStore from "../_store/thread-details-store";
 
 export default function ThreadDetails({
   user,
