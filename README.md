@@ -1,7 +1,5 @@
 # Twitter Clone Project
 
-**Demo:** Explore the live demo of this project at [preads.hmellahi.me](https://preads.hmellahi.me)
-
 ## Project Overview
 
 Taking inspiration from Twitter, I embarked on this project for the purpose of learning and personal growth. It brings together the best of social media, allowing you to post updates, join conversations, and even create your own communities. Your account is protected with secure login options, and the platform ensures everything runs smoothly. It's a safe and engaging space for connecting with others, all while serving as a valuable learning experience
