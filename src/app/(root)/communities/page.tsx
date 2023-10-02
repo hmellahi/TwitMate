@@ -1,8 +1,8 @@
-import CommunityCard from "@/components/community/CommunityCard";
-import { SearchInput } from "@/components/ui/searchInput";
+import { SearchInput } from "@/components/ui/SearchInput";
 import { fetchCommunities } from "@/server-actions/community/community.actions";
 import { currentUser } from "@clerk/nextjs";
 import { Community } from "@prisma/client";
+import CommunityCard from "./_components/CommunityCard";
 
 export default async function page({
   searchParams: { query },
@@ -17,17 +17,6 @@ export default async function page({
     userId: user.id,
     searchKeyword,
   });
-
-  // const { organization } = useOrganization();
-
-  // try {
-  //   await organization?.addMember({
-  //     userId: user.id,
-  //     role: "basic_member",
-  //   });
-  // } catch (e) {
-  //   ;
-  // }
 
   return (
     <div>

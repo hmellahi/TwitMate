@@ -1,8 +1,7 @@
+import { ProfileImg } from "@/components/shared/ProfileImg";
 import { Thread, User } from "@prisma/client";
-import Image from "next/image";
-import React from "react";
-import { Button } from "../../../../../../../components/ui/button";
 import Link from "next/link";
+import { Button } from "../../../../../../../components/ui/Button";
 
 export default function Reply({
   reply,
@@ -17,18 +16,9 @@ export default function Reply({
 }) {
   if (!author) author = reply.author;
   return (
-    <div
-      className={`flex justify-between text-white items-center ${className}`}
-    >
+    <div className={`flex justify-between text-white items-center ${className}`}>
       <div className="flex gap-3 items-center">
-        <div className="w-12 h-12 relative">
-          <Image
-            fill
-            alt="avatar"
-            src={author.image}
-            className="cursor-pointer object-cover rounded-full"
-          />
-        </div>
+        <ProfileImg user={author} className="!h-12 !w-12" />
         <div>
           <div className="flex items-center">
             <p className={isSmall ? "text-small-medium" : ""}>{author.name} </p>
@@ -37,10 +27,7 @@ export default function Reply({
           </div>
           <p className="text-gray-4 text-small-regular sm:text-base-regular">
             Replied to
-            <Link
-              href={`/thread/${reply.parentId}`}
-              className="text-primary-500 text-bold"
-            >
+            <Link href={`/thread/${reply.parentId}`} className="text-primary-500 text-bold">
               {" "}
               thread
             </Link>
@@ -48,9 +35,7 @@ export default function Reply({
         </div>
       </div>
       <Link href={`/thread/${reply.parentId}`}>
-        <Button className={`px-8 ${isSmall && "text-small-medium"}`}>
-          View
-        </Button>
+        <Button className={`px-8 ${isSmall && "text-small-medium"}`}>View</Button>
       </Link>
     </div>
   );

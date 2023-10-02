@@ -1,5 +1,5 @@
 import UserCard from "@/components/shared/UserCard";
-import { SearchInput } from "@/components/ui/searchInput";
+import { SearchInput } from "@/components/ui/SearchInput";
 import { fetchUsers } from "@/server-actions/user/user.actions";
 import { currentUser } from "@clerk/nextjs/server";
 import { User } from "@prisma/client";
@@ -23,7 +23,7 @@ export default async function page({
         route="search"
         placeholder="Type username or name"
       ></SearchInput>
-      <div className="flex flex-col gap-6 mt-3">
+      <div className="flex flex-col gap-2 mt-3">
         {users?.map((user: User) => (
           <UserCard user={user} className="line-break" />
         ))}

@@ -20,13 +20,7 @@ const rowRenderer = ({
   },
 }) => {
   return (
-    <CellMeasurer
-      key={key}
-      cache={cache.current}
-      parent={parent}
-      rowIndex={index}
-      columnIndex={0}
-    >
+    <CellMeasurer key={key} cache={cache.current} parent={parent} rowIndex={index} columnIndex={0}>
       {({ measure, registerChild }) =>
         renderRow({ item: list[index], style, measure, registerChild })
       }
@@ -40,7 +34,7 @@ export default function VirtualAndInfiniteScroll({
   totalCount,
   fetchHandler,
   list,
-  className,
+  className = "",
   isNextPageLoading,
 }: {
   renderRow: ({ item, style }) => ReactElement<React.FC>;
@@ -73,7 +67,6 @@ export default function VirtualAndInfiniteScroll({
   let [listRef, setListRef] = useState(null);
 
   const reset = () => {
-    console.log('resized')
     // Recompute row heights and offsets
     listRef?.recomputeRowHeights();
     // Reset cached measurements for all cells.
@@ -89,7 +82,7 @@ export default function VirtualAndInfiniteScroll({
   }, [list]);
 
   if (!isNextPageLoading && !list.length) {
-    return <div></div>;
+    return null;
   }
 
   return (
@@ -119,9 +112,7 @@ export default function VirtualAndInfiniteScroll({
                     onScroll={onChildScroll}
                     rowCount={list.length}
                     rowHeight={cache.current.rowHeight}
-                    rowRenderer={(rowData) =>
-                      rowRenderer({ cache, list, renderRow, rowData })
-                    }
+                    rowRenderer={(rowData) => rowRenderer({ cache, list, renderRow, rowData })}
                     scrollTop={scrollTop}
                     width={width}
                   />

@@ -1,6 +1,6 @@
 "use client";
-import SvgIcon from "@/components/ui/svgIcon";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import SvgIcon from "@/components/ui/SvgIcon";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { profileTabs } from "@/constants";
 import { User } from "@prisma/client";
 import { useStore } from "zustand";

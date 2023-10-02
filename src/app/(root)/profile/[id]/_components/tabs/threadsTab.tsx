@@ -1,6 +1,6 @@
 "use client";
 import useProfileStore from "@/app/(root)/profile/[id]/_store/profile-store";
-import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
+import ThreadsListWrapper from "@/components/shared/Thread/ThreadsListWrapper";
 import useUserStore from "@/store/user-store";
 import { User } from "@prisma/client";
 import { useEffect } from "react";

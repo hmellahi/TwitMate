@@ -1,7 +1,7 @@
 import AppHeader from "@/components/shared/AppHeader";
-import BottomBar from "@/components/shared/BottomBar";
-import LeftSidebar from "@/components/shared/LeftSidebar";
-import RightSidebar from "@/components/shared/RightSidebar/RightSidebar";
+import BottomBar from "@/components/shared/bottom-bar/BottomBar";
+import LeftSidebar from "@/components/shared/left-sidebar/LeftSidebar";
+import RightSidebar from "@/components/shared/right-sidebar/RightSidebar";
 import { fetchUser } from "@/server-actions/user/user.actions";
 import { ClerkProvider, currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";

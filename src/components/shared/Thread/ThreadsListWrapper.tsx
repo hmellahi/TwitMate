@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import VirtualizedThreadsList from "./Thread/VirtualizedThreadsList";
+import VirtualizedThreadsList from "./VirtualizedThreadsList";
 
 export default function ThreadsListWrapper({
   userId,

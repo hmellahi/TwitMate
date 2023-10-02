@@ -1,14 +1,14 @@
-import SvgIcon from "@/components/ui/svgIcon";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import SvgIcon from "@/components/ui/SvgIcon";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { communityTabs } from "@/constants";
 import { camelToSnakeCase } from "@/lib/utils";
 import { fetchCommunity } from "@/server-actions/community/community.actions";
 import { fetchUser } from "@/server-actions/user/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
-import TotalThreadsCount from "./_components/TotalThreadsCount";
 import CommunityMembers from "./_components/CommunityMembersTab";
 import CommunityThreadsTab from "./_components/CommunityThreadsTab";
+import TotalThreadsCount from "./_components/TotalThreadsCount";
 
 export default async function profile({ params }: { params: { id: string } }) {
   const communityId = params.id;
@@ -40,9 +40,7 @@ export default async function profile({ params }: { params: { id: string } }) {
             />
           </div>
           <div>
-            <p className="text-heading3-bold font-bold capitalize">
-              {community.name}
-            </p>
+            <p className="text-heading3-bold font-bold capitalize">{community.name}</p>
             <h3 className="text-gray-1">@{camelToSnakeCase(community.name)}</h3>
           </div>
         </div>

@@ -4,7 +4,6 @@ import { Thread } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { create } from "zustand";
 import useUserStore from "../../../../store/user-store";
-import useCommunityStore from "../../community/[id]/_store/communityStore";
 
 type feedStore = {
   threads: Thread[];
@@ -31,7 +30,7 @@ const deleteThread = ({
 
   threads = [...threads.slice(0, threadIndex), ...threads.slice(threadIndex + 1, threads.length)];
 
-  useCommunityStore.setState({ totalCount: --totalCount, threads });
+  useFeedStore.setState({ totalCount: --totalCount, threads });
 
   threadActions.removeThread({ path, authorId, threadId });
   if (path.includes("thread")) useRouter().push("/");

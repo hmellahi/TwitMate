@@ -267,6 +267,7 @@ export async function removeThread({
         threadId,
       },
     });
+
     let deleteThreadImagesPromise = prisma.threadImages.deleteMany({
       where: {
         threadId,

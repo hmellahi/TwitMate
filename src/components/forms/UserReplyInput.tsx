@@ -1,17 +1,16 @@
 "use client";
 
+import { CreateThreadValidation } from "@/lib/validations/thread";
+import { createThread } from "@/server-actions/thread/thread.actions";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@prisma/client";
 import Image from "next/image";
-import React from "react";
-import { Button } from "../ui/button";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem } from "../ui/form";
-import { z } from "zod";
-import { CreateThreadValidation } from "@/lib/validations/thread";
-import { useForm } from "react-hook-form";
-import { Input } from "../ui/input";
-import { createThread } from "@/server-actions/thread/thread.actions";
 import { usePathname } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "../ui/Button";
+import { Form, FormControl, FormField, FormItem } from "../ui/Form";
+import { Input } from "../ui/Input";
 
 export default function UserReplyInput({
   user,
@@ -49,12 +48,7 @@ export default function UserReplyInput({
       >
         <div className="">
           <div className="relative h-11 w-11 ">
-            <Image
-              src={userImage}
-              fill
-              alt="avatar"
-              className="rounded-full object-cover"
-            />
+            <Image src={userImage} fill alt="avatar" className="rounded-full object-cover" />
           </div>
         </div>
         <FormField

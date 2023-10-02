@@ -1,12 +1,8 @@
-import PostThread from "@/components/forms/PostThread";
 import ThreadCard from "@/components/forms/ThreadCard";
-import { ThreadsList } from "@/components/shared/ThreadsList";
-import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
 import { fetchThread } from "@/server-actions/thread/thread.actions";
 import { fetchUser } from "@/server-actions/user/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import React from "react";
 import ThreadDetails from "./_components/ThreadDetails";
 
 export default async function page({ params }: { params: { id: string } }) {

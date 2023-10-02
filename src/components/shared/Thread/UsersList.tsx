@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import { ProfileImg } from "../shared/ProfileImg";
+import { ProfileImg } from "../ProfileImg";
 
 export function UsersList({ users, className = "" }: { users: User[]; className?: string }) {
   if (!users) {

@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/Button";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/Form";
+import { Textarea } from "@/components/ui/Textarea";
 import uploadImages from "@/lib/upload-images";
 import { cn } from "@/lib/utils";
 import { CreateThreadValidation } from "@/lib/validations/thread";
@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import MediaUploader from "../shared/Thread/MediaUploader";
 import MediaViewerWrapper from "../shared/Thread/MediaViewerWrapper";
-import { useToast } from "../ui/Toast/use-toast";
+import { useToast } from "../ui/toast/use-toast";
 
 export default function PostThread({
   userId,
@@ -44,23 +44,6 @@ export default function PostThread({
   const [isCreatingPost, setIsCreatingPost] = useState(false);
 
   const form = useForm({
-    // resolver: (data) => {
-    //   // const result = zodResolver(CreateThreadValidation)(data);
-    //   // Custom validation logic
-    //   if (
-    //     threadImages.length <= 0 &&
-    //     (!result.text || result.text.length < 3)
-    //   ) {
-    //     return {
-    //       values: {},
-    //       errors: {
-    //         // text: "Please upload at least one image or enter text with a length of at least 3 characters.",
-    //       },
-    //     };
-    //   }
-
-    //   return result;
-    // },
     resolver: zodResolver(CreateThreadValidation),
     defaultValues: {
       text: "",

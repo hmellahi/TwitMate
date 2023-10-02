@@ -38,3 +38,7 @@ next-env.d.ts
 1
 
 Todos
+
+*.sql
+
+seeder

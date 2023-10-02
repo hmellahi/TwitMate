@@ -4,7 +4,7 @@ import { sidebarLink } from "@/types/sidebar-link";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search } from "../svgs";
+import { Search } from "../../svgs";
 
 export function MobileSidebarLink({ sidebarLink }: { sidebarLink: sidebarLink }) {
   const pathname = usePathname();

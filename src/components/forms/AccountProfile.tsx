@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import {
   Form,
   FormControl,
@@ -8,9 +8,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/components/ui/Form";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
 import { compressImage } from "@/lib/compress-image";
 import uploadImages from "@/lib/upload-images";
 import { isBase64Image } from "@/lib/utils";
@@ -24,7 +24,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Label } from "../ui/label";
+import { Label } from "../ui/Label";
 
 const updateProfileImageInClerk = async (
   newUserImage: File,

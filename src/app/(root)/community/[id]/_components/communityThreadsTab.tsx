@@ -1,11 +1,11 @@
 "use client";
-import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
+import ThreadsListWrapper from "@/components/shared/Thread/ThreadsListWrapper";
 import useUserStore from "@/store/user-store";
 import { FetchThreadsParams } from "@/types/thread";
 import { User } from "@prisma/client";
 import { useEffect } from "react";
 import { useStore } from "zustand";
-import useCommunityStore from "../_store/communityStore";
+import useCommunityStore from "../_store/community-store";
 
 export default function CommunityThreadsTab({
   user,

@@ -1,11 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import { Input } from "./input";
-import { useEffect, useState } from "react";
-import { fetchUsers } from "@/server-actions/user/user.actions";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Search } from "../svgs";
+import { Input } from "./Input";
 
 export function SearchInput({
   keyword,

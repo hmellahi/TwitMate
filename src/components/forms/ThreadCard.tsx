@@ -9,11 +9,11 @@ import { ThreadWithDetails } from "@/types/thread";
 import { User } from "@prisma/client";
 import Link from "next/link";
 import { forwardRef, useCallback, useState } from "react";
-import { UsersList } from "../community/UsersList";
-import { ProfileImg } from "../shared/ProfileImg";
 import ThreadActions from "../shared/Thread/ThreadActions";
 import { Heart, HeartFilled, Reply, Repost, Share } from "../svgs";
 import { MediaViewer } from "../ui/MediaViewer";
+import { UsersList } from "../shared/Thread/UsersList";
+import { ProfileImg } from "../shared/ProfileImg";
 
 function ThreadCard(
   {

@@ -1,21 +1,18 @@
 "use server";
 
 import ProfileTabs from "@/app/(root)/profile/[id]/_components/ProfileTabs";
+import { ProfileImg } from "@/components/shared/ProfileImg";
 import { Edit } from "@/components/svgs";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { fetchUser } from "@/server-actions/user/user.actions";
 import { currentUser } from "@clerk/nextjs";
-import Image from "next/image";
 import Link from "next/link";
 
 export default async function profile({ params }: { params: { id: string } }) {
   const userId = params.id;
   if (!userId) return null;
 
-  let [loggedInUser, user] = await Promise.all([
-    currentUser(),
-    fetchUser(userId),
-  ]);
+  let [loggedInUser, user] = await Promise.all([currentUser(), fetchUser(userId)]);
 
   if (!user) return null;
 
@@ -25,18 +22,9 @@ export default async function profile({ params }: { params: { id: string } }) {
         <div className="mx-0">
           <div className="flex gap-4 mb-10 justify-between">
             <div className="flex gap-4 items-start">
-              <div className="relative h-20 w-20">
-                <Image
-                  src={user.image}
-                  alt="avatar"
-                  fill
-                  className="cursor-pointer rounded-full"
-                ></Image>
-              </div>
+              <ProfileImg className="!h-20 !w-20" user={user} />
               <div>
-                <p className="text-heading3-bold font-bold capitalize">
-                  {user.username}
-                </p>
+                <p className="text-heading3-bold font-bold capitalize">{user.username}</p>
                 <h3 className="text-gray-1">@{user.name}</h3>
               </div>
             </div>

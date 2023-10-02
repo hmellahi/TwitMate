@@ -1,6 +1,6 @@
 "use client";
 import PostThread from "@/components/forms/PostThread";
-import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
+import ThreadsListWrapper from "@/components/shared/Thread/ThreadsListWrapper";
 import useUserStore from "@/store/user-store";
 import { useEffect } from "react";
 import { useStore } from "zustand";

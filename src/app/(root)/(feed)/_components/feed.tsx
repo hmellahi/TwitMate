@@ -2,7 +2,7 @@
 
 import useFeedStore from "@/app/(root)/(feed)/_store/feeds-store";
 import PostThread from "@/components/forms/PostThread";
-import ThreadsListWrapper from "@/components/shared/ThreadsListWrapper";
+import ThreadsListWrapper from "@/components/shared/Thread/ThreadsListWrapper";
 import useUserStore from "@/store/user-store";
 import { User } from "@prisma/client";
 import { useEffect } from "react";
@@ -32,10 +32,10 @@ export default function Feed({
     if (!initialThreadsData) {
       return;
     }
+
     const { threads, totalCount } = initialThreadsData;
     setThreads(threads);
     useFeedStore.setState({ totalCount, isThreadsLoading: false });
-    // fetchThreads({ userId: user.id }, true);
   }, []);
 
   return (

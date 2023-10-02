@@ -11,7 +11,7 @@ export function ProfileImg({ user, index = 0, className = "", loading = "lazy" }
       role="link"
       tabIndex={0}
       aria-label={`Profile of ${user.name}`}
-      className={`w-7 h-7 relative rounded-full overflow-hidden avatar border-2 border-dark-2 transition-opacity group hover:opacity-100 hover:bg-opacity-75 ${className}`}
+      className={`${className} w-7 h-7 relative rounded-full overflow-hidden avatar border-2 border-dark-2 transition-opacity group hover:opacity-100 hover:bg-opacity-75`}
     >
       <Image
         src={user.image}

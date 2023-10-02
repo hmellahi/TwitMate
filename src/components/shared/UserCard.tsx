@@ -1,8 +1,7 @@
 import { User } from "@prisma/client";
-import Image from "next/image";
-import React from "react";
-import { Button } from "../ui/button";
 import Link from "next/link";
+import { Button } from "../ui/Button";
+import { ProfileImg } from "./ProfileImg";
 
 export default function UserCard({
   user,
@@ -14,18 +13,9 @@ export default function UserCard({
   className: string;
 }) {
   return (
-    <div
-      className={`flex justify-between text-white items-center ${className} pb-3`}
-    >
-      <div className="flex gap-4 items-center">
-        <Link href={`/profile/${user.id} `} className="h-12 w-12 relative">
-          <Image
-            fill
-            alt="avatar"
-            src={user.image}
-            className="cursor-pointer object-cover rounded-full"
-          />
-        </Link>
+    <div className={`flex justify-between text-white items-center ${className} pb-3`}>
+      <div className="flex gap-2 items-center">
+        <ProfileImg user={user} className="!h-12 !w-12" />
         <div>
           <p className={isSmall ? "text-small-medium" : ""}>{user.name}</p>
           <p className="text-gray-300 text-small-medium">@{user.username}</p>
