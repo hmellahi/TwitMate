@@ -9,11 +9,11 @@ import { ThreadWithDetails } from "@/types/thread";
 import { User } from "@prisma/client";
 import Link from "next/link";
 import { forwardRef, useCallback, useState } from "react";
+import { ProfileImg } from "../shared/ProfileImg";
 import ThreadActions from "../shared/Thread/ThreadActions";
+import { UsersList } from "../shared/Thread/UsersList";
 import { Heart, HeartFilled, Reply, Repost, Share } from "../svgs";
 import { MediaViewer } from "../ui/MediaViewer";
-import { UsersList } from "../shared/Thread/UsersList";
-import { ProfileImg } from "../shared/ProfileImg";
 
 function ThreadCard(
   {
@@ -101,23 +101,6 @@ function ThreadCard(
       <div className="flex justify-between items-start">
         <div className={`flex gap-3 relative w-full`}>
           <div className="flex flex-col items-center">
-            {/* <button
-              onClick={(event) => redirectToProfile(event, author.id)}
-              className="relative h-11 w-11"
-              role="button"
-              aria-Labelledby="link to profile"
-              tabIndex="0"
-            >
-              <Image
-                onLoad={measure}
-                src={author.image}
-                alt="avatar"
-                fill
-                className="cursor-pointer rounded-full object-cover"
-                loading="lazy"
-                role="img"
-              ></Image>
-            </button> */}
             <ProfileImg className="!h-11 !w-11" aria-Labelledby="link to profile" user={author} />
             {hasReplies && <div className="thread-card_bar" />}
           </div>

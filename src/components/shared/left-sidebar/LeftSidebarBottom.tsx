@@ -4,10 +4,10 @@ import { SignOutButton, SignedIn } from "@clerk/clerk-react";
 import { OrganizationSwitcher } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import Image from "next/image";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function LeftSidebarBottom() {
-  // const router
+  const router = useRouter();
   return (
     <div className="flex flex-col gap-y-4">
       <OrganizationSwitcher
@@ -22,7 +22,7 @@ export default function LeftSidebarBottom() {
         }}
       />
       <SignedIn>
-        <SignOutButton signOutCallback={() => redirect("/sign-in")}>
+        <SignOutButton signOutCallback={() => router.push("/sign-in")}>
           <div className="flex px-10 gap-4 cursor-pointer">
             <Image
               className="cursor-pointer"

@@ -8,14 +8,21 @@ import { cn } from "@/lib/utils";
 import { CreateThreadValidation } from "@/lib/validations/thread";
 import { useOrganization } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import MediaUploader from "../shared/Thread/MediaUploader";
-import MediaViewerWrapper from "../shared/Thread/MediaViewerWrapper";
 import { useToast } from "../ui/toast/use-toast";
+
+const MediaViewerWrapper = dynamic(
+  () => import("../shared/Thread/MediaViewerWrapper").then((module) => module),
+  {
+    ssr: false,
+  }
+);
 
 export default function PostThread({
   userId,
@@ -56,6 +63,8 @@ export default function PostThread({
     try {
       let uploadedImagesUrls = await uploadImages(threadImages);
 
+      let localImageUrl = threadImages?.length ? URL.createObjectURL(threadImages[0]) : null;
+
       await createThreadHandler({
         userId,
         ...values,
@@ -63,13 +72,13 @@ export default function PostThread({
         communityId: organization?.id,
         images: uploadedImagesUrls,
         parentId: parentThreadId,
+        localImageUrl,
       });
 
       toast({
         className: cn("top-0 right-0 flex fixed md:max-w-[20rem] md:top-4 md:right-4 py-4"),
         title: "Thread created successfully!",
       });
-    } catch (e) {
     } finally {
       form.setValue("text", "");
       setThreadImages([]);

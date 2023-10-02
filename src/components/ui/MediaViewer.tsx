@@ -22,7 +22,6 @@ export function MediaViewer({
             className="!relative w-full object-cover rounded-xl !h-auto bodder-2 border-white"
             alt={`Avatar ${index + 1}`}
             onLoad={onLoad}
-            loading="eager"
             sizes="700px"
           />
         </div>

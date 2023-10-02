@@ -63,12 +63,13 @@ const fetchThreads = async (params: FetchThreadsParams, clearOldList: boolean = 
 const createThread = async (params: CreateThreadParams) => {
   const { setThreads, threads, totalCount } = useFeedStore.getState();
   const { currentUser } = useUserStore.getState();
-  const { images } = params;
+  const { localImageUrl } = params;
 
   const createdThread = await threadActions.createThread(params);
   createdThread.author = currentUser;
-  if (images?.length) {
-    createdThread.images = [{ imageUrl: images[0] }];
+
+  if (localImageUrl) {
+    createdThread.images = [{ imageUrl: localImageUrl }];
   }
 
   setThreads([createdThread, ...threads]);

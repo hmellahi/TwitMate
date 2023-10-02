@@ -15,6 +15,7 @@ import { compressImage } from "@/lib/compress-image";
 import uploadImages from "@/lib/upload-images";
 import { isBase64Image } from "@/lib/utils";
 import { UserValidation } from "@/lib/validations/user";
+import { updateUser } from "@/server-actions/user/user.actions";
 import { UserData } from "@/types/user";
 import { useSessionList } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -72,20 +73,24 @@ export default function AccountProfile({ user, btnTitle }: { user: UserData; btn
     setIsLoading(true);
     const blob = values.profile_photo;
 
-    let updateProfileImageInClerkPromise = null;
     const hasImageChanged = isBase64Image(blob);
 
     if (hasImageChanged && profilePhoto) {
-      updateProfileImageInClerkPromise = updateProfileImageInClerk(
-        profilePhoto,
-        currentUserToken.current,
-        sessions[0].id
-      );
-      return;
       let uploadedImagesUrls = await uploadImages([profilePhoto]);
+
+      if (uploadedImagesUrls?.length) {
+        values.profile_photo = uploadedImagesUrls[0];
+      }
     }
 
-    await updateProfileImageInClerkPromise;
+    await updateUser(
+      {
+        id: user.id,
+        image: values.profile_photo,
+        ...values,
+      },
+      `/profile/${user.id}`
+    );
 
     if (pathname !== "/settings") {
       router.back();
