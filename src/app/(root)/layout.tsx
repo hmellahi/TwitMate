@@ -18,7 +18,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
   const userInfos = await fetchUser(user.id);
 
   if (!userInfos?.onboarded) {
-    redirect("/onboarding");
+    // redirect("/onboarding");
   }
 
   return (

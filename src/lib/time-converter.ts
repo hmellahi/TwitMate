@@ -15,3 +15,8 @@ export const timeAgo = (date: string) => {
     return `${Math.floor(duration.asDays())}d`;
   }
 };
+
+export function unixTimestampToDateTime(unixTimestamp: number) {
+  const milliseconds = unixTimestamp * 1000; // Convert to milliseconds
+  return new Date(milliseconds);
+}

@@ -1,15 +1,15 @@
 import { compressImage } from "./compress-image";
 
-export default async function uploadImages(images) {
+export default async function uploadImages(images, compress = true) {
   if (!images.length) {
     return [];
   }
 
   const formData = new FormData();
 
-  for (const file of images) {
-    let compressedFile = await compressImage(file);
-    formData.append("file", compressedFile);
+  for (let file of images) {
+    if (compress) file = await compressImage(file);
+    formData.append("file", file);
   }
 
   formData.append("upload_preset", "threads-images");

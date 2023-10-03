@@ -1,6 +1,5 @@
 "use server";
 
-import { User } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { prisma } from "../../lib/prisma";
 
@@ -50,17 +49,20 @@ export async function fetchUser(userId: string) {
 }
 
 export async function fetchUsers({
-  userId,
+  userId = null,
   searchKeyword = "",
-  limit,
+  limit = 10,
+  isFake = null,
 }: {
-  userId: string;
+  userId?: string | null;
   searchKeyword?: string;
-  limit: number;
-}) {
+  limit?: number;
+  isFake?: boolean | null;
+} = {}) {
   try {
     let users = await prisma.user.findMany({
       where: {
+        isFake,
         NOT: { id: userId },
         OR: [
           {
