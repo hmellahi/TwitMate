@@ -17,6 +17,8 @@ model User {
   name              String
   image             String
   bio               String?
+  isFake            Boolean
+
   threads           Thread[]
   communities       Community[]    @relation("MemberOf")
   CreatedCommunites Community[]    @relation("CreatedCommunity")

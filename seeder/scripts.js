@@ -1,34 +1,57 @@
 const fs = require("fs");
-const xlsx = require("xlsx");
+const readline = require("readline");
 
-// Load the Excel file
-// const workbook = xlsx.readFile("./assets/TweetsElonMusk.csv"); // Replace with your Excel file path
-const workbook = xlsx.readFile("./assets/sarcasm/test.csv"); // Replace with your Excel file path
+const fn = () => {
+  try {
+    console.log("wtf");
 
-// Assume the data is in the first sheet
-const sheetName = workbook.SheetNames[0];
-const sheet = workbook.Sheets[sheetName];
+    // Create a readable stream from the CSV file
+    const inputStream = fs.createReadStream("./assets/data4.csv"); // Replace with your CSV file path
+    const rl = readline.createInterface({
+      input: inputStream,
+      terminal: false,
+    });
 
-// Convert the sheet data to JSON
-const data = xlsx.utils.sheet_to_json(sheet);
+    let rowCount = 0;
 
-// Loop through each row (tweet)
-data.forEach((row, index) => {
-  if (index > 20) return;
-  // Check if the row has photos
-  const photos = row.photos;
-  console.log(row)
+    rl.on("line", (line) => {
+      // Process only the first 2000 rows
+      if (rowCount < 2000) {
+        try {
+          // Parse the JSON part of the line
+          const jsonStart = line.indexOf("[");
+          const jsonEnd = line.lastIndexOf("]");
+          const json = line.substring(jsonStart, jsonEnd + 1);
+          console.log(json)
+          throw 'wtf'
+          // const rowData = JSON.parse(json);
 
-  if (photos && photos.length > 0) {
-    console.log(row);
-    console.log(`Tweet ${index + 1} Images:`);
-    // photos.forEach((photo, photoIndex) => {
-    //   // Download and save the image
-    //   const imageBuffer = Buffer.from(photo, "base64");
-    //   fs.writeFileSync(`tweet_${index + 1}_image_${photoIndex + 1}.png`, imageBuffer);
-    //   console.log(`Image ${photoIndex + 1} saved.`);
-    // });
-  } else {
-    console.log(`Tweet ${index + 1} has no images.`);
+          // // Extract the profile image and hashtags
+          // const profileImage = rowData[3];
+          // const hashtags = rowData[2];
+
+          // console.log(`Row ${rowCount + 1} Avatar: ${profileImage}`);
+          // console.log(`Hashtags: ${hashtags.join(", ")}`);
+        } catch (error) {
+          console.error("Error parsing line:", error);
+        }
+
+        rowCount++;
+      } else {
+        rl.close(); // Stop processing after the first 2000 rows
+      }
+    });
+
+    rl.on("close", () => {
+      console.log("Finished reading CSV.");
+    });
+  } catch (e) {
+    console.log({ e });
   }
-});
+};
+
+try {
+  fn();
+} catch (e) {
+  console.log({ e });
+}

@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "exceljs": "^4.3.0",
+    "fast-csv": "^4.3.6",
     "fs": "^0.0.1-security",
+    "read-excel-file": "^5.6.1",
     "xlsx": "^0.18.5"
   }
 }
