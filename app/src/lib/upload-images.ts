@@ -1,7 +1,7 @@
 import { compressImage } from "./compress-image";
 import { downloadImage } from "./download-img";
 
-export default async function uploadImages(images, compress = true) {
+export default async function uploadImages(images:any[], compress = true) {
   if (!images.length) {
     return [];
   }

@@ -1,9 +1,11 @@
 // import { User } from "./types/User";
 
+import { prisma } from "../../../lib/prisma";
 import { faker } from "@faker-js/faker";
+import { User } from "@prisma/client";
 import fs from "fs";
 import path from "path";
-import uploadImages from "../../../lib/upload-images.ts";
+import uploadImages from "../../../lib/upload-images";
 
 // const { User } = require("./types/User");
 
@@ -50,7 +52,7 @@ const prepareRandomUsers = async () => {
   return Promise.all(creationPromises);
 };
 
-const saveUsers = async (users) => {
+const saveUsers = async (users: User[]) => {
   // save in db using prisma
   try {
     const result = await prisma.user.createMany({
@@ -59,7 +61,7 @@ const saveUsers = async (users) => {
     });
 
     console.log(`Created ${result.count} users in the database.`);
-  } catch (e: unknown) {
+  } catch (e: any) {
     console.error("Error saving users to the database:", e.message);
   } finally {
     await prisma.$disconnect();
@@ -68,12 +70,12 @@ const saveUsers = async (users) => {
 
 const generateUsers = async () => {
   try {
-    const users = prepareRandomUsers();
+    const users = await prepareRandomUsers();
     console.log(users);
     await saveUsers(users);
 
     console.log("Finished generatating users.");
-  } catch (e) {
+  } catch (e: any) {
     console.error("Error reading or parsing users.json:", e.message);
   }
 };

@@ -1,3 +1,5 @@
+import { User } from "@prisma/client";
+
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
@@ -12,7 +14,7 @@ export default async function removeFakeData() {
     });
 
     // Step 2: Delete posts and associated post images concurrently
-    const deletionPromises = usersWithFakePosts.map(async (user) => {
+    const deletionPromises = usersWithFakePosts.map(async (user:User) => {
       const deletePostsPromise = prisma.thread.deleteMany({
         where: { authorId: user.id },
       });
