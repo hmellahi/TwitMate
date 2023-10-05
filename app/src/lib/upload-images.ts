@@ -12,7 +12,6 @@ export default async function uploadImages(images, compress = true) {
     // if its a link not a file
     if (typeof file === "string") {
       file = await downloadImage(file);
-      console.log({file})
     }
     if (compress) file = await compressImage(file);
     formData.append("file", file);
