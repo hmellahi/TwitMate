@@ -6,7 +6,7 @@ export default async function SuggestedUsers({ currentUserId }: { currentUserId:
   const users = await fetchUsers({
     userId: currentUserId,
     searchKeyword: "",
-    limit: 4,
+    limit: 5,
   });
 
   return (

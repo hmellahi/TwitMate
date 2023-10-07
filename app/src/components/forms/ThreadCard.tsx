@@ -6,7 +6,7 @@ import { timeAgo } from "@/lib/time-converter";
 import { showLikesCount } from "@/lib/utils";
 import { likeThread, unLikeThread } from "@/server-actions/thread/thread.actions";
 import { ThreadWithDetails } from "@/types/thread";
-import { User } from "@prisma/client";
+import { ThreadImages } from "@prisma/client";
 import Link from "next/link";
 import { forwardRef, useCallback, useState } from "react";
 import { ProfileImg } from "../shared/ProfileImg";
@@ -35,21 +35,11 @@ function ThreadCard(
   },
   ref
 ) {
-  const { redirectToProfile, redirectToThread } = useRedirect();
-  const { text, author } = thread;
+  const { redirectToThread } = useRedirect();
+  const { text, author, threadReactors } = thread;
   const isLikedByCurrentUser = thread?.likes?.length > 0;
-  const threadRepliers: User[] = [];
-  const uniqueAuthors: { [id: string]: string } = {};
 
-  thread.childrens?.forEach((subThread: ThreadWithDetails) => {
-    if (subThread?.author?.id) {
-      const authorId = subThread.author.id;
-      if (!uniqueAuthors[authorId]) {
-        uniqueAuthors[authorId] = authorId;
-        threadRepliers.push(subThread.author);
-      }
-    }
-  });
+  console.log(thread.threadReactors);
 
   const [isUserLikedThread, setisUserLikedThread] = useState(isLikedByCurrentUser);
 
@@ -85,15 +75,15 @@ function ThreadCard(
   if (isUserLikedThread && likesCount == 0) {
     likesCount = 1;
   }
+
   const hasLikes = likesCount > 0;
 
   const LikeIcon = isUserLikedThread ? HeartFilled : Heart;
-  const bg = isComment ? "bg-transparent" : "bg-dark-2d";
-  const threadImages = thread?.images?.map((image) => image.imageUrl);
+  const threadImages = thread?.images?.map((image: ThreadImages) => image.imageUrl);
 
   return (
     <div
-      className={`${bg} ${className} text-white py-7 px-0 sm:px-2 cursor-pointer`}
+      className={`bg-transparent ${className} text-white py-7 px-0 sm:px-2 cursor-pointer`}
       onClick={() => redirectToThread(thread.id)}
       style={style}
       ref={ref}
@@ -102,7 +92,7 @@ function ThreadCard(
         <div className={`flex gap-3 relative w-full`}>
           <div className="flex flex-col items-center">
             <ProfileImg className="!h-11 !w-11" aria-Labelledby="link to profile" user={author} />
-            {hasReplies && <div className="thread-card_bar" />}
+            {threadReactors && <div className="thread-card_bar" />}
           </div>
           <div className="w-full">
             <div className="w-full">
@@ -114,9 +104,9 @@ function ThreadCard(
                 </div>
 
                 <div
-                  className={`text-gray-2 text-small-regular mr-0 sm:mr-4 flex gap-2 items-center -mt-[.3rem] `}
+                  className={`text-gray-2 text-small-regular mr-0 sm:mr-4 flex gap-2 items-center -mt-[.3rem]`}
                 >
-                  {timeAgo(thread.createdAt)}
+                  <p className="whitespace-nowrap">{timeAgo(thread.createdAt)}</p>
                   {author.id === userId && (
                     <ThreadActions
                       threadId={thread.id}
@@ -153,8 +143,8 @@ function ThreadCard(
         {(hasReplies || hasLikes) && (
           <>
             <UsersList
-              className="z-20 w-[3.7rem] justify-center"
-              users={threadRepliers}
+              className="z-20 w-[3.5rem] justify-center"
+              users={threadReactors}
             ></UsersList>
             <div className="text-[#A0A0A0] flex items-center gap-x-2 ">
               {hasReplies && (

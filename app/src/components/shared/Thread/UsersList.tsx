@@ -13,7 +13,7 @@ export function UsersList({ users, className = "" }: { users: User[]; className?
           key={index}
           user={user}
           index={index}
-          className="-ml-[.6rem]"
+          className="-ml-[.5rem]"
         ></ProfileImg>
       ))}
     </div>
