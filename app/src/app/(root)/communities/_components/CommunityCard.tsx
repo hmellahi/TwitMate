@@ -1,9 +1,9 @@
+import { Button } from "@/components/ui/Button";
 import { camelToSnakeCase } from "@/lib/utils";
 import { Community } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { UsersList } from "../../../../components/shared/Thread/UsersList";
-import { Button } from "@/components/ui/Button";
 
 export default function CommunityCard({
   community,
@@ -28,7 +28,7 @@ export default function CommunityCard({
         <div>
           <p>{community.name}</p>
           <p className="text-gray-300 text-small-medium">@{camelToSnakeCase(community.name)}</p>
-          <p>{community.bio}</p>
+          <p className="mt-2">{community.bio}</p>
         </div>
       </div>
 

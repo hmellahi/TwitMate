@@ -6,6 +6,7 @@ import { fetchCommunity } from "@/server-actions/community/community.actions";
 import { fetchUser } from "@/server-actions/user/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import CommunityMembers from "./_components/CommunityMembersTab";
 import CommunityThreadsTab from "./_components/CommunityThreadsTab";
 import TotalThreadsCount from "./_components/TotalThreadsCount";
@@ -19,7 +20,8 @@ export default async function profile({ params }: { params: { id: string } }) {
     currentUser(),
   ]);
 
-  if (!userFromClerk || !community) return null;
+  if (!userFromClerk || !community) return redirect("/");
+
   const user = await fetchUser(userFromClerk.id);
   if (!user) {
     return;
@@ -44,7 +46,7 @@ export default async function profile({ params }: { params: { id: string } }) {
             <h3 className="text-gray-1">@{camelToSnakeCase(community.name)}</h3>
           </div>
         </div>
-        <h3 className="text-body-medium mb-10">{user.bio}</h3>
+        <h3 className="text-body-medium mb-3 ml-2">{user.bio}</h3>
 
         <Tabs defaultValue="threads" className="w-full">
           <TabsList className="w-full flex justify-between text-center tab">

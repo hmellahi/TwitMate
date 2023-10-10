@@ -2,11 +2,12 @@
 
 import ProfileTabs from "@/app/(root)/profile/[id]/_components/ProfileTabs";
 import { ProfileImg } from "@/components/shared/ProfileImg";
-import { Edit } from "@/components/svgs";
+import { Edit, Location } from "@/components/svgs";
 import { Button } from "@/components/ui/Button";
 import { fetchUser } from "@/server-actions/user/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function profile({ params }: { params: { id: string } }) {
   const userId = params.id;
@@ -14,13 +15,13 @@ export default async function profile({ params }: { params: { id: string } }) {
 
   let [loggedInUser, user] = await Promise.all([currentUser(), fetchUser(userId)]);
 
-  if (!user) return null;
+  if (!user) return redirect('/');
 
   return (
     <div>
       <div className="text-white flex gap-y-4 gap-x-8 flex-col">
         <div className="mx-0">
-          <div className="flex gap-4 mb-10 justify-between">
+          <div className="flex gap-4 mb-5 justify-between">
             <div className="flex gap-4 items-start">
               <ProfileImg className="!h-20 !w-20" user={user} />
               <div>
@@ -40,6 +41,11 @@ export default async function profile({ params }: { params: { id: string } }) {
             </div>
           </div>
           <h3 className="text-body-medium mb-2">{user.bio}</h3>
+          {user?.location && (
+            <div className="flex mt-4 text-gray-1 items-end gap-2">
+              <Location width={25} height={25} /> {user.location}
+            </div>
+          )}
         </div>
         <ProfileTabs user={user} />
       </div>
