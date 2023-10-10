@@ -20,6 +20,7 @@ model User {
   isFake            Boolean         @default(false)
   gender            String          @default("male")
   location          String?
+  isAdmin           Boolean         @default(false)
 
   threads           Thread[]
   communities       Community[]    @relation("MemberOf")
@@ -34,7 +35,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
-  @@index(fields: [username, image, createdAt, onboarded, bio, name, updatedAt])
+  @@index(fields: [username, image, createdAt, onboarded, bio, name, updatedAt,location, isAdmin])
 }
 
 model Thread {
@@ -53,6 +54,7 @@ model Thread {
 
   likes  ThreadLikes[]
   images ThreadImages[]
+
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -87,6 +89,7 @@ model ThreadLikes {
   updatedAt DateTime @updatedAt
 
   @@index(fields: [createdAt, userId, threadId])
+  @@unique([userId, threadId])
 }
 
 model ThreadImages {
@@ -95,9 +98,11 @@ model ThreadImages {
   user      User     @relation(fields: [userId], references: [id], map: "author")
   userId    String
   thread    Thread   @relation(fields: [threadId], references: [id])
+  height    Int?
+  width     Int?
   threadId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index(fields: [imageUrl, createdAt, userId, threadId])
+  @@index(fields: [imageUrl, createdAt, userId, threadId,height,width])
 }
