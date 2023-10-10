@@ -6,7 +6,7 @@ import { SidebarLink } from "../SidebarLink";
 import LogoImg from "../logoImg";
 
 const LeftSidebarBottom = dynamic(() => import("./LeftSidebarBottom").then((module) => module), {
-  ssr: true,
+  ssr: false,
 });
 
 export default function LeftSidebar({ currentUser }: { currentUser: User }) {

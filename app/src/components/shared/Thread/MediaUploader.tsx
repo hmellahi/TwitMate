@@ -1,6 +1,5 @@
 import { Create } from "@/components/svgs";
 import { Label } from "@radix-ui/react-label";
-import React, { useEffect, useState } from "react";
 
 interface HTMLInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -14,7 +13,7 @@ export default function MediaUploader({ images, setImages }) {
     }
   };
   return (
-    <div className="w-full ">
+    <div className="w-full flex gap-4 text-white">
       <Label htmlFor="post" className="cursor-pointer !m-0 !p-0">
         <Create width={25} height={25} />
       </Label>
@@ -26,6 +25,7 @@ export default function MediaUploader({ images, setImages }) {
         onChange={onImageChange}
         className="hidden"
       />
+      <p className="text-2xl">Media</p>
     </div>
   );
 }

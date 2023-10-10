@@ -4,8 +4,8 @@ import { CreateThreadParams, FetchThreadsParams } from "@/types/thread";
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { prisma } from "../../lib/prisma";
+import { addThreadReactors } from "./_utils/add-thread-reactors";
 import { getThreadPreviewFields } from "./_utils/get-thread-preview-fields";
-import { getUserLike } from "./_utils/get-user-like";
 import { feedSortingFields, sortByLatest } from "./constants/feed-sorting-fields";
 
 export async function createThread({
@@ -52,12 +52,19 @@ export async function createThread({
 
 export async function fetchThread({ threadId, userId }: { threadId: string; userId: string }) {
   try {
-    return prisma.thread.findFirst({
+    const thread = await prisma.thread.findFirst({
       where: { id: threadId },
       select: {
         ...getThreadPreviewFields(userId),
       },
     });
+    
+    if (!thread) {
+      return;
+    }
+    await addThreadReactors([thread], userId);
+
+    return thread;
   } catch (error: any) {
     throw error;
   }
@@ -90,6 +97,9 @@ export async function fetchThreadReplies({
       }),
       prisma.thread.count({ where: query.where }),
     ]);
+
+    await addThreadReactors(threads, userId);
+
     return { threads, totalCount };
   } catch (error: any) {
     throw error;
@@ -104,7 +114,12 @@ export async function fetchThreads({
   sortByLikesAndReplies = false,
 }: FetchThreadsParams) {
   const query: Prisma.ThreadFindManyArgs = {
-    where: { communityId },
+    where: {
+      communityId,
+      // author: { // TODO REMOVE
+      //   isFake: false,
+      // },
+    },
   };
 
   const OrderByFields = sortByLikesAndReplies ? feedSortingFields : sortByLatest;
@@ -118,23 +133,14 @@ export async function fetchThreads({
         orderBy: OrderByFields,
         select: {
           ...getThreadPreviewFields(userId),
-          childrens: {
-            take: 4,
-            select: {
-              author: {
-                select: {
-                  id: true,
-                  image: true,
-                },
-              },
-            },
-          },
         },
       }),
       prisma.thread.count({ where: query.where }),
     ]);
-    const isLastPage = page + limit >= totalCount;
-    return { threads, totalCount, isLastPage };
+
+    await addThreadReactors(threads, userId);
+
+    return { threads, totalCount };
   } catch (error: any) {
     throw error;
   }
@@ -161,44 +167,18 @@ export async function fetchUserThreads({
         orderBy: {
           createdAt: "desc",
         },
-        include: {
-          author: true,
-          likes: getUserLike(userId),
-          images: true,
-          childrens: {
-            select: {
-              author: true,
-            },
-          },
+        select: {
+          ...getThreadPreviewFields(userId),
         },
       }),
       prisma.thread.count({ where: query.where }),
     ]);
 
+    await addThreadReactors(threads, userId);
     return { threads, totalCount };
   } catch (error: any) {
     throw error;
   }
-}
-
-export async function toggleThread({
-  value,
-  threadId,
-  userId,
-  path,
-}: {
-  value: boolean;
-  threadId: string;
-  userId: string;
-  path: string;
-}) {
-  const action: Function = value ? likeThread : unLikeThread;
-
-  await action({
-    threadId,
-    userId,
-    path,
-  });
 }
 
 export async function likeThread({
@@ -238,16 +218,26 @@ export async function likeThread({
   }
 }
 
-export async function unLikeThread({ threadId, userId, path }: { threadId: string; path: string }) {
+export async function unLikeThread({
+  threadId,
+  userId,
+  path,
+}: {
+  threadId: string;
+  path: string;
+  userId: string;
+}) {
   try {
-    await prisma.threadLikes.delete({
+    await prisma.threadLikes.deleteMany({
       where: {
         threadId,
         userId,
       },
     });
+    console.log("deleted");
     revalidatePath(path);
   } catch (e) {
+    console.log(e);
     // throw e;
   }
 }

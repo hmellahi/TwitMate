@@ -1,7 +1,3 @@
-"use server";
-
-import { getUserLike } from "./get-user-like";
-
 export const getThreadPreviewFields = (userId: string) => ({
   id: true,
   text: true,
@@ -22,7 +18,32 @@ export const getThreadPreviewFields = (userId: string) => ({
   images: {
     select: {
       imageUrl: true,
+      width: true,
+      height: true,
     },
   },
-  likes: getUserLike(userId),
+  childrens: {
+    take: 3,
+    where: { NOT: { authorId: userId } },
+    select: {
+      author: {
+        select: {
+          id: true,
+          image: true,
+        },
+      },
+    },
+  },
+  likes: {
+    take: 3,
+    where: { NOT: { userId } },
+    select: {
+      user: {
+        select: {
+          id: true,
+          image: true,
+        },
+      },
+    },
+  },
 });

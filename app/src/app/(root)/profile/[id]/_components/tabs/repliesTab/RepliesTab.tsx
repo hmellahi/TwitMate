@@ -18,9 +18,9 @@ export default function RepliesTab({ user }: { user: User }) {
   });
   if (!userReplies) return null;
   return (
-    <div className="flex flex-col gap-y-6 px-0 sm:px-6 ">
+    <div className="flex flex-col gap-y-4 px-0 sm:px-6 ">
       {userReplies.map((reply) => (
-        <Reply reply={reply} author={user} className="border-b-2 border-light-gray pb-3" />
+        <Reply reply={reply} author={user} className="border-b-2 border-light-gray pb-2" />
       ))}
     </div>
   );

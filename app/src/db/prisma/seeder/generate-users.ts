@@ -1,15 +1,13 @@
 // import { User } from "./types/User";
 
-import { prisma } from "../../../lib/prisma";
 import { faker } from "@faker-js/faker";
 import { User } from "@prisma/client";
 import fs from "fs";
 import path from "path";
-import uploadImages from "../../../lib/upload-images";
+import { prisma } from "../../../lib/prisma";
+import { uploadImage } from "../../../lib/upload-images";
 
-// const { User } = require("./types/User");
-
-const prepareRandomUsers = async () => {
+const generateRandomUsers = async () => {
   // Get the current directory
   const currentDir = __dirname;
   // Read the users.json file
@@ -21,30 +19,41 @@ const prepareRandomUsers = async () => {
 
   // Parse the JSON data into an object
   const users = JSON.parse(data).results;
-  const selectedUsers = users.slice(0, 2);
 
   // Iterate over each user and print it
-  let creationPromises = selectedUsers.map(async (user: any) => {
+  let creationPromises = users.map(async (user: any, index: number) => {
+    // Delay the creation of each user by 1 second
+    const delayMilliseconds = 1000; // 1 second
+    await new Promise((resolve) => setTimeout(resolve, index * delayMilliseconds));
+
     const {
       name,
       location: { city, country },
       gender,
     } = user;
     // Upload Profile Img to cloud
-    const imgLink = user.picture.large;
-    const UploadedImages = "wtf" || (await uploadImages([imgLink]));
+    const UploadedImage = await uploadImage(
+      {
+        imgLink: user.picture.large,
+        imgName: user.login.username,
+      },
+      false
+    );
+
     const userLocation = `${city}, ${country}`;
 
     const generatedUser = {
       username: user.login.username,
       name: `${name.first} ${name.last}`,
-      image: UploadedImages[0],
+      image: UploadedImage,
       isFake: true,
       onboarded: true,
       bio: faker.person.bio(),
       location: userLocation,
       gender,
     };
+
+    await saveUsers([generatedUser]);
 
     return generatedUser;
   });
@@ -57,7 +66,7 @@ const saveUsers = async (users: User[]) => {
   try {
     const result = await prisma.user.createMany({
       data: users,
-      skipDuplicates: true, // Skip duplicates (if applicable)
+      // skipDuplicates: true, // Skip duplicates (if applicable)
     });
 
     console.log(`Created ${result.count} users in the database.`);
@@ -70,13 +79,11 @@ const saveUsers = async (users: User[]) => {
 
 const generateUsers = async () => {
   try {
-    const users = await prepareRandomUsers();
-    console.log(users);
-    await saveUsers(users);
-
+    await generateRandomUsers();
     console.log("Finished generatating users.");
   } catch (e: any) {
-    console.error("Error reading or parsing users.json:", e.message);
+    console.error("Error reading or parsing users.json:", e);
+    throw e;
   }
 };
 

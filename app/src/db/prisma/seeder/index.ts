@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import generateUsers from "./generateUsers";
-import removeFakeData from "./removeFakeData";
+import { assignThreadsToCommunities } from "./assign-threads-to-communities";
 
 require("dotenv").config(); // Load environment variables from a .env file
 
@@ -45,19 +44,20 @@ async function main() {
 
     // Remove fake data
     console.log("Removing fake data...");
-    await removeFakeData();
+    // await removeFakeData(); // TODO UnComment
     console.log("Fake users, their posts, and post images have been removed.");
 
     // // Generate fake users
-    console.log("Generating Fake Users");
-    await generateUsers();
-    console.log("Fake Users are generated");
+    // console.log("Generating Fake Users");
+    // await generateUsers(); // TODO UnComment
+    // console.log("Fake Users are generated");
 
     // // Generate posts
-    // console.log("Generating Posts");
-    // await generatePosts();
-    // console.log("Posts are generated");
+    console.log("Generating Posts");
+    // await generatePosts(); // TODO UnComment
+    console.log("Posts are generated");
 
+    assignThreadsToCommunities();
     // // Restore the database
     // await restoreDatabase();
   } catch (error) {

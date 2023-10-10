@@ -15,7 +15,6 @@ const nextConfig = {
 
   experimental: {
     serverActions: true,
-    // serverComponentsExternalPackages: ["mongoose"],
   },
   images: {
     remotePatterns: [
@@ -38,6 +37,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
+      },
+      {
+        protocol: "https",
+        hostname: "www.francetvinfo.fr",
       },
     ],
   },

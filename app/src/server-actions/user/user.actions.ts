@@ -11,6 +11,13 @@ interface UpdateUser {
   image: string;
 }
 
+type UserSearchQuery = {
+  userId?: string | null;
+  searchKeyword?: string;
+  limit?: number;
+  isFake?: boolean | null;
+};
+
 export async function updateUser(newUserData: UpdateUser, path: string) {
   const { username, name, bio, image, id } = newUserData;
 
@@ -53,15 +60,10 @@ export async function fetchUsers({
   searchKeyword = "",
   limit = 10,
   isFake = null,
-}: {
-  userId?: string | null;
-  searchKeyword?: string;
-  limit?: number;
-  isFake?: boolean | null;
-} = {}) {
+}: UserSearchQuery = {}) {
   try {
-    let whereClause = {
-      NOT: { id: userId },
+    // Define the whereClause object with the extracted type
+    let whereClause: any = {
       OR: [
         {
           username: {
@@ -80,7 +82,11 @@ export async function fetchUsers({
 
     // Conditionally include the isFake filter if it's not null
     if (isFake !== null) {
-      whereClause["isFake"] = isFake;
+      whereClause.isFake = isFake;
+    }
+
+    if (userId !== null) {
+      whereClause["NOT"] = { id: userId };
     }
 
     let users = await prisma.user.findMany({

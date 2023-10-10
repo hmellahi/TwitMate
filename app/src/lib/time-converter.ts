@@ -1,22 +1,17 @@
-import moment from "moment";
+import { formatDistanceToNow } from "date-fns";
 
-export const timeAgo = (date: string) => {
-  const now = new Date();
-  const pastMoment = moment(date);
-  const duration = moment.duration(now - pastMoment);
+export const timeAgo = (dateString: string): string => {
+  const pastDate = new Date(dateString);
 
-  if (duration.asMinutes() < 1) {
-    return `${Math.floor(duration.asSeconds())}s`;
-  } else if (duration.asHours() < 1) {
-    return `${Math.floor(duration.asMinutes())}m`;
-  } else if (duration.asDays() < 1) {
-    return `${Math.floor(duration.asHours())}h`;
-  } else {
-    return `${Math.floor(duration.asDays())}d`;
-  }
+  const timeDifference = formatDistanceToNow(pastDate);
+
+  // Remove "about" and "ago" parts from the time difference
+  const timeDifferenceWithoutAboutAndAgo = timeDifference.replace("about ", "").replace(" ago", "");
+
+  return timeDifferenceWithoutAboutAndAgo;
 };
 
-export function unixTimestampToDateTime(unixTimestamp: number) {
+export function unixTimestampToDateTime(unixTimestamp: number): Date {
   const milliseconds = unixTimestamp * 1000; // Convert to milliseconds
   return new Date(milliseconds);
 }

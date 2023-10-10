@@ -23,6 +23,7 @@ export function MediaViewer({
             alt={`Avatar ${index + 1}`}
             onLoad={onLoad}
             sizes="700px"
+            priority={index < 2}
           />
         </div>
       ))}

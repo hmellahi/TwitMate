@@ -38,7 +38,7 @@
   }
 
   .line-break {
-    @apply border-b-[.01px] border-[#2A2C2E]
+    @apply border-b-[.01px] border-[#2A2C2E];
   }
 
   /* User card */
@@ -85,9 +85,9 @@
   .leftsidebar_link {
     @apply relative flex justify-start gap-4 rounded-lg p-4;
   }
-  
+
   .hover_effect {
-    @apply transition ease-in-out duration-300 hover:bg-primary-500
+    @apply transition ease-in-out duration-300 hover:bg-primary-500;
   }
 
   .pagination {
@@ -95,11 +95,17 @@
   }
 
   .rightsidebar {
-    @apply sticky right-0 top-0 z-20 flex h-screen w-fit flex-col justify-between gap-12 overflow-auto border-l border-l-dark-4 bg-dark-1 px-7 pb-6 max-xl:hidden;
+    @apply sticky right-0 top-0 z-20 flex h-screen w-fit flex-col justify-between gap-12 overflow-auto border-l border-l-dark-4 bg-dark-1 px-7 pb-6 max-2xl:hidden;
   }
 
   .icon-hover {
-    @apply hover:bg-light-gray p-1 rounded-full cursor-pointer;
+    @apply p-1 rounded-full cursor-pointer;
+    transition: background-color 0.3s; /* Optional: Add a smooth transition effect */
+  }
+
+  .icon-hover:hover {
+    @apply bg-gray-1
+    /* @apply bg-primary-500 hover:bg-opacity-10; */;
   }
 }
 
@@ -133,9 +139,7 @@
   @apply max-sm:hidden;
 }
 
-.cl-organizationSwitcherTrigger
-  .cl-organizationPreview
-  .cl-organizationPreviewTextContainer {
+.cl-organizationSwitcherTrigger .cl-organizationPreview .cl-organizationPreviewTextContainer {
   @apply max-sm:hidden;
 }
 
@@ -244,4 +248,3 @@
 .repositoryName {
   padding: 0 1rem;
 }
-

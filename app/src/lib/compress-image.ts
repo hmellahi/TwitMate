@@ -1,8 +1,8 @@
 import Compressor from "compressorjs";
 
-export function compressImage(image: File): Promise<File> {
+export function compressImage(imageFile: File): Promise<File> {
   return new Promise((resolve, reject) => {
-    new Compressor(image, {
+    new Compressor(imageFile, {
       quality: 0.7,
       maxWidth: 800,
       maxHeight: 800,
@@ -16,7 +16,7 @@ export function compressImage(image: File): Promise<File> {
         console.error("Image compression error:", error);
         // You can also add any additional error handling here.
         // Resolve the promise with the original file
-        resolve(image);
+        resolve(imageFile);
       },
     });
   });

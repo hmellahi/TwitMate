@@ -27,7 +27,7 @@ export function SearchInput({
       } else {
         router.push(`/${route}`);
       }
-    }, 700);
+    }, 300);
 
     return () => clearTimeout(searchUsersDebounce);
   }, [searchKeyword]);

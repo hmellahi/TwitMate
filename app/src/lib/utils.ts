@@ -53,8 +53,7 @@ export const catchAsync = async (promise: Function) => {
 };
 
 export const camelToSnakeCase = (str: string) => {
-  var result = str.replace(/([A-Z])/g, " $1");
-  return result.split(" ").join("_").toLowerCase().substring(1);
+  return str.split(" ").join("_").toLowerCase();
 };
 
 export const showLikesCount = (likesCount: number) => {

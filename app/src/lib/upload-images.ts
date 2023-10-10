@@ -1,7 +1,11 @@
 import { compressImage } from "./compress-image";
 import { downloadImage } from "./download-img";
 
-export default async function uploadImages(images:any[], compress = true) {
+export default async function uploadImages(
+  images: any[],
+  compress = true,
+  compressionFunc = compressImage
+) {
   if (!images.length) {
     return [];
   }
@@ -10,10 +14,11 @@ export default async function uploadImages(images:any[], compress = true) {
 
   for (let file of images) {
     // if its a link not a file
-    if (typeof file === "string") {
-      file = await downloadImage(file);
+    if (file?.imgLink !== undefined) {
+      const { imgLink, imgName } = file;
+      file = await downloadImage(imgLink, imgName);
     }
-    if (compress) file = await compressImage(file);
+    if (compress) file = await compressionFunc(file);
     formData.append("file", file);
   }
 
@@ -25,4 +30,11 @@ export default async function uploadImages(images:any[], compress = true) {
   }).then((r) => r.json());
 
   return [data.secure_url];
+}
+
+export async function uploadImage(image: any, compress = true, compressionFunc = compressImage) {
+  let uploadedImages = await uploadImages([image], compress, compressionFunc);
+  if (!uploadImages?.length) return null;
+
+  return uploadedImages[0];
 }
