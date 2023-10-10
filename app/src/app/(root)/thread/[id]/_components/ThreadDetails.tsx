@@ -27,7 +27,7 @@ export default function ThreadDetails({
   return (
     <>
       <PostThread
-        className="border-y-[.01px] border-[#2A2C2E] pb-4 pt-2"
+        className="border-y-[.01px] border-[#2A2C2E] pb-4 !pt-6 px-6"
         userId={userId}
         parentThreadId={threadId}
         btnTitle="Reply"

@@ -20,7 +20,7 @@ import { useToast } from "../ui/toast/use-toast";
 const MediaViewerWrapper = dynamic(
   () => import("../shared/Thread/MediaViewerWrapper").then((module) => module),
   {
-    ssr: false,
+    ssr: true,
   }
 );
 
@@ -92,8 +92,8 @@ export default function PostThread({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className={`w-full ${className}`}>
-        <div className={`flex justify-cdenter gap-3 items-end`}>
-          <div className="relative h-10 w-10">
+        <div className={`flex justify-cdenter gap-3 items-start`}>
+          <div className="relative h-10 w-10 mt-1">
             <Image
               src={organization?.imageUrl || userImage}
               alt="avatar"
@@ -105,7 +105,7 @@ export default function PostThread({
             control={form.control}
             name="text"
             render={({ field }) => (
-              <FormItem className="flex flex-col gap-2 mt-4 w-full">
+              <FormItem className="flex flex-col gap-2 w-full">
                 <FormControl className="text-gray-200 text-base-semibold flex-1">
                   <Textarea
                     rows={3}

@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
-import { compressImage } from "@/lib/compress-image";
 import uploadImages from "@/lib/upload-images";
 import { isBase64Image } from "@/lib/utils";
 import { UserValidation } from "@/lib/validations/user";
@@ -19,30 +18,12 @@ import { updateUser } from "@/server-actions/user/user.actions";
 import { UserData } from "@/types/user";
 import { useSessionList } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Label } from "../ui/Label";
-
-const updateProfileImageInClerk = async (
-  newUserImage: File,
-  currentUserToken: string | null,
-  currentSessionId: string
-) => {
-  const compressedProfileImg = await compressImage(newUserImage);
-
-  const formData = new FormData();
-  formData.append("file", compressedProfileImg);
-
-  await axios.post(
-    `https://bold-mole-6.clerk.accounts.dev/v1/me/profile_image?_clerk_js_version=4.58.2&_clerk_session_id=${currentSessionId}&__dev_session=${currentUserToken}`,
-    formData,
-    { withCredentials: true }
-  );
-};
 
 export default function AccountProfile({ user, btnTitle }: { user: UserData; btnTitle: string }) {
   const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
@@ -90,9 +71,9 @@ export default function AccountProfile({ user, btnTitle }: { user: UserData; btn
         ...values,
       },
       `/profile/${user.id}`
-    );
+    ); 
 
-    if (pathname !== "/settings") {
+    if (pathname === "/settings") {
       router.back();
     } else {
       // First Time
