@@ -15,9 +15,6 @@ import { UsersList } from "../shared/Thread/UsersList";
 import { Heart, HeartFilled, Reply } from "../svgs";
 import { MediaViewer } from "../ui/MediaViewer";
 
-// dynamic()
-// lazyload import likeThread and unLikeThread
-
 function ThreadCard(
   {
     thread,
@@ -86,7 +83,7 @@ function ThreadCard(
 
   return (
     <div
-      className={`bg-transparent ${className} text-white pt-4 pb-3 px-0 sm:px-2 cursor-pointer`}
+      className={`bg-transparent ${className} text-white pt-4 pb-5 px-0 sm:px-0 cursor-pointer`}
       onClick={() => redirectToThread(thread.id)}
       style={style}
       ref={ref}
@@ -132,6 +129,7 @@ function ThreadCard(
               <div className="icon-hover relative" onClick={reactToThread}>
                 <LikeIcon width="25" height="25" className="cursor-pointer" />
               </div>
+              {/* <AnimatedLike /> */}
               <div className="icon-hover">
                 <Reply width="25" height="25" />
               </div>

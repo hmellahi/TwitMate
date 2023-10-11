@@ -81,10 +81,11 @@ export default function VirtualAndInfiniteScroll({
     return () => window.removeEventListener("resize", reset);
   }, [list]);
 
+  console.log('wt')
   if (!isNextPageLoading && !list.length) {
     return null;
   }
-
+  console.log('wtf')
   return (
     <div className={`mt-4 ${className} h-full`}>
       <AutoSizer disableHeight={true}>

@@ -19,9 +19,11 @@ export default function ThreadDetails({
   let { setCurrentUser } = useStore(useUserStore);
   const { id: userId, image: userImage } = user;
 
+  const fetchHandler = (...args) => fetchReplies({ userId, threadId, ...args }, true);
+
   useEffect(() => {
     setCurrentUser(user);
-    fetchReplies({ userId, threadId }, true);
+    fetchHandler();
   }, []);
 
   return (
@@ -39,7 +41,7 @@ export default function ThreadDetails({
         userId={userId}
         initialThreadsData={null}
         onDeleteThread={deleteThread}
-        onFetchThreads={fetchReplies}
+        onFetchThreads={fetchHandler}
         threads={threads}
         isThreadsLoading={isRepliesLoading}
         totalCount={totalCount}

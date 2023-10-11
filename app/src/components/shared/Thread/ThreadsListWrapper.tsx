@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import VirtualizedThreadsList from "./VirtualizedThreadsList";
 
 export default function ThreadsListWrapper({
@@ -13,6 +14,18 @@ export default function ThreadsListWrapper({
   userId: string;
   initialThreadsData: unknown;
 }) {
+  const [clientRendered, setClientRendered] = useState(false);
+
+  // Check if we are on the client side
+  useEffect(() => {
+    setClientRendered(true);
+  }, []);
+
+  if (!clientRendered) {
+    // If we are on the server side, don't render anything
+    return null;
+  }
+
   const fetchHandler = async (page: number) => {
     let threadsData = await onFetchThreads({
       userId,

@@ -15,8 +15,8 @@ export default async function SuggestedCommunities({ currentUserId }: { currentU
     <div>
       <h3 className="text-heading3-medium text-light-1">Suggested Communities</h3>
       <div className="flex flex-col gap-4 mt-5 ">
-        {communities?.map((community: Community) => (
-          <CommunityCard community={community} isSmall={true} />
+        {communities?.map((community: Community, index:number) => (
+          <CommunityCard community={community} isSmall={true} key={index} />
         ))}
       </div>
     </div>

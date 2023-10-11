@@ -116,9 +116,6 @@ export async function fetchThreads({
   const query: Prisma.ThreadFindManyArgs = {
     where: {
       communityId,
-      // author: { // TODO REMOVE
-      //   isFake: false,
-      // },
     },
   };
 

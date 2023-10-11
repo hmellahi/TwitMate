@@ -15,9 +15,10 @@ export default function LeftSidebarBottom() {
         appearance={{
           baseTheme: dark,
           elements: {
-            rootBox: "py-2 px-8 w-[17rem] max-lg:w-[1rem]",
+            rootBox: "py-2 px-8 w-[10rem] max-lg:w-[1rem]",
             organizationSwitcherTriggerIcon: "max-lg:hidden",
             userPreviewTextContainer: "max-lg:hidden",
+            organizationPreviewMainIdentifier__organizationSwitcher:"max-lg:hidden"
           },
         }}
       />

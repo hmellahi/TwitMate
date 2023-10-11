@@ -100,6 +100,8 @@ export default function PostThread({
               fill
               className="cursor-pointer rounded-full object-cover"
             ></Image>
+            {/* width={60} */}
+            {/* height={60}         */}
           </div>
           <FormField
             control={form.control}

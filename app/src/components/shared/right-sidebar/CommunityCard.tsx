@@ -11,6 +11,8 @@ export default function CommunityCard({
   community: Community;
   isSmall: boolean;
 }) {
+  // height={PROFILE_IMG_SIZE}
+            // width={PROFILE_IMG_SIZE}
   return (
     <div className="flex justify-between text-white items-center gap-x-12">
       <div className="flex gap-2 items-center">

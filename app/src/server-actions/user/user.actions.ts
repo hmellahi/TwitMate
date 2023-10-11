@@ -62,6 +62,7 @@ export async function fetchUsers({
   isFake = null,
 }: UserSearchQuery = {}) {
   try {
+    
     // Define the whereClause object with the extracted type
     let whereClause: any = {
       OR: [

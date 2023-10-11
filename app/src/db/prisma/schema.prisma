@@ -95,12 +95,16 @@ model ThreadLikes {
 model ThreadImages {
   id        String   @id @default(uuid())
   imageUrl  String
+
   user      User     @relation(fields: [userId], references: [id], map: "author")
   userId    String
+
   thread    Thread   @relation(fields: [threadId], references: [id])
+  threadId  String
+
   height    Int?
   width     Int?
-  threadId  String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

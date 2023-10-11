@@ -15,27 +15,15 @@ export default function Feed({
   user: User;
   initialThreadsData: unknown;
 }) {
-  let {
-    fetchThreads,
-    deleteThread,
-    threads,
-    createThread,
-    isThreadsLoading,
-    totalCount,
-    setThreads,
-  } = useStore(useFeedStore);
+  let { fetchThreads, deleteThread, threads, createThread, isThreadsLoading, totalCount } =
+    useStore(useFeedStore);
 
   let { setCurrentUser } = useStore(useUserStore);
 
   useEffect(() => {
     setCurrentUser(user);
-    if (!initialThreadsData) {
-      return;
-    }
-
-    const { threads, totalCount } = initialThreadsData;
-    setThreads(threads);
-    useFeedStore.setState({ totalCount, isThreadsLoading: false });
+    fetchThreads({ userId: user.id }, true);
+    console.log("wtf")
   }, []);
 
   return (
@@ -44,11 +32,11 @@ export default function Feed({
         userId={user?.id}
         userImage={user.image}
         createThreadHandler={createThread}
-        className="mb-4"
+        className="mb-2 line-break pb-4"
       />
       <ThreadsListWrapper
         userId={user.id}
-        initialThreadsData={initialThreadsData}
+        initialThreadsData={null}
         onDeleteThread={deleteThread}
         onFetchThreads={fetchThreads}
         threads={threads}

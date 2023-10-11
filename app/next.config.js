@@ -1,7 +1,11 @@
 const CompressionPlugin = require("compression-webpack-plugin");
+const path = require('path')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'styles')],
+  },
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
@@ -16,6 +20,7 @@ const nextConfig = {
   experimental: {
     serverActions: true,
   },
+  // compress: false,
   images: {
     remotePatterns: [
       {
