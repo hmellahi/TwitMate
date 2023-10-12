@@ -231,7 +231,6 @@ export async function unLikeThread({
         userId,
       },
     });
-    console.log("deleted");
     revalidatePath(path);
   } catch (e) {
     console.log(e);
