@@ -14,11 +14,6 @@ export const sidebarLinks = [
     route: "/activity",
     label: "Activity",
   },
-  // {
-  //   imgURL: "/assets/create.svg",
-  //   route: "/create-thread",
-  //   label: "Create Thread",
-  // },
   {
     imgURL: "/assets/community.svg",
     route: "/communities",
@@ -29,23 +24,18 @@ export const sidebarLinks = [
     route: "/profile",
     label: "Profile",
   },
-  // {
-  //   imgURL: "/assets/settings.svg",
-  //   route: "/settings",
-  //   label: "Settings",
-  // },
 ];
 
 export const profileTabs = [
   { value: "threads", label: "Threads", icon: "/assets/reply.svg" },
   { value: "replies", label: "Replies", icon: "/assets/members.svg" },
-  // { value: "tagged", label: "Tagged", icon: "/assets/tag.svg" },
 ];
 
 export const communityTabs = [
   { value: "threads", label: "Threads", icon: "/assets/reply.svg" },
   { value: "members", label: "Members", icon: "/assets/members.svg" },
-  // { value: "requests", label: "Requests", icon: "/assets/request.svg" },
 ];
 
 export const PROFILE_IMG_SIZE = 17;
+
+export const appName = "TwitMate";

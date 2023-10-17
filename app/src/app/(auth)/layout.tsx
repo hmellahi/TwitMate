@@ -1,8 +1,9 @@
+import { appName } from "@/constants";
 import { ClerkProvider } from "@clerk/nextjs";
 import "../globals.css";
 
 export const metadata = {
-  title: "Threads",
+  title: appName,
 };
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {

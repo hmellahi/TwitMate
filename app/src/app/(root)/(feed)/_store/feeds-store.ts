@@ -39,11 +39,11 @@ const deleteThread = ({
 const fetchThreads = async (params: FetchThreadsParams, clearOldList: boolean = false) => {
   const { threads, setIsThreadsLoading, setThreads } = useFeedStore.getState();
 
+  setIsThreadsLoading(true);
+
   if (clearOldList) {
     setThreads([]);
   }
-
-  setIsThreadsLoading(true);
 
   let { threads: newThreads, totalCount } = await threadActions.fetchThreads({
     ...params,

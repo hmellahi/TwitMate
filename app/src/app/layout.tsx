@@ -1,10 +1,14 @@
-import { Toaster } from "@/components/ui/toast/Toaster";
+import Toaster from "@/components/ui/toast/Toaster";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], weight: "400" });
+
+// const Toaster = dynamic(() => import("@/components/ui/toast/Toaster").then((module) => module), {
+//   ssr: false,
+// });
 
 export const metadata: Metadata = {
   title: "Create Next App",

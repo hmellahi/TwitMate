@@ -1,4 +1,5 @@
 import { authMiddleware } from "@clerk/nextjs";
+import { NextResponse } from "next/server";
 
 // This example protects all routes including api/trpc routes
 // Please edit this to allow other routes to be public as needed.
@@ -6,6 +7,11 @@ import { authMiddleware } from "@clerk/nextjs";
 export default authMiddleware({
   publicRoutes: ["/api/clerk/webhooks", "/api/uploadthing"],
   debug: false,
+  afterAuth: (auth, request) => {
+    if (auth.isApiRoute || auth.isPublicRoute) return;
+    request.headers.append("Cookie", `currentUserClerkId=${auth.userId}`);
+    return NextResponse.rewrite(request.url.toString(), { request });
+  },
 });
 
 export const config = {

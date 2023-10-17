@@ -3,6 +3,9 @@ const path = require('path')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    minimumCacheTTL: 864000, // 10days
+  },
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },

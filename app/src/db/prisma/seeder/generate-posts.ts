@@ -193,7 +193,7 @@ const savethread = async (
   }
 };
 
-const generateThreads = async () => {
+const generatePosts = async () => {
   try {
     const appUsers: any | null = await fetchUsers({ isFake: true, limit: 1000 });
 
@@ -210,4 +210,4 @@ const generateThreads = async () => {
   }
 };
 
-export default generateThreads;
+export default generatePosts;

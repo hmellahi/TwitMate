@@ -1,13 +1,13 @@
+import { getCurrentUserId } from "@/lib/get-current-user";
 import { fetchUser } from "@/server-actions/user/user.actions";
-import { currentUser } from "@clerk/nextjs";
 import Feed from "./_components/Feed";
 
 export default async function Home() {
-  const user = await currentUser();
+  const currentUserId = getCurrentUserId();
 
-  if (!user) return null;
+  if (!currentUserId) return null;
 
-  const userInfo = await fetchUser(user.id);
+  const userInfo = await fetchUser(currentUserId);
 
   if (!userInfo) return null;
 

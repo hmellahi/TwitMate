@@ -2,22 +2,27 @@ import AppHeader from "@/components/shared/AppHeader";
 import BottomBar from "@/components/shared/bottom-bar/BottomBar";
 import LeftSidebar from "@/components/shared/left-sidebar/LeftSidebar";
 import RightSidebar from "@/components/shared/right-sidebar/RightSidebar";
+import { appName } from "@/constants";
+import { getCurrentUserId } from "@/lib/get-current-user";
 import { fetchUser } from "@/server-actions/user/user.actions";
-import { ClerkProvider, currentUser } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import "../globals.css";
 
 export const metadata = {
-  title: "Threads",
+  title: appName,
 };
 
 export default async function AuthLayout({ children }: { children: React.ReactNode }) {
-  const user = await currentUser();
-  if (!user) return null;
+  const currentUserId = getCurrentUserId();
 
-  const userInfos = await fetchUser(user.id);
+  if (!currentUserId) {
+    return;
+  }
 
-  if (!userInfos?.onboarded) {
+  const user = await fetchUser(currentUserId);
+
+  if (!user?.onboarded) {
     redirect("/onboarding");
   }
 
@@ -30,7 +35,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
           <section className="main-container">
             <div className="w-full py-20 md:py-16">{children}</div>
           </section>
-          <RightSidebar />
+          <RightSidebar currentUserId={user.id} />
         </main>
         <BottomBar />
       </div>

@@ -17,7 +17,7 @@ export default function Activity({
   return (
     <div className={`flex justify-between text-white items-center ${className}`}>
       <div className="flex gap-2 items-center">
-        <ProfileImg user={author} className="!w-12 !h-12"></ProfileImg>
+        <ProfileImg user={author} className="!w-12 !h-12" size={40}></ProfileImg>
         <div>
           <div className="flex items-center">
             <p className={isSmall ? "text-small-medium" : ""}>{author.name} </p>

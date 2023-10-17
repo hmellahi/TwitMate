@@ -18,23 +18,16 @@ export default function VirtualizedThreadsList({
   onDelete: () => Promise<void>;
   totalCount: number;
 }) {
-  const renderThread = ({ item, style, registerChild, measure }) => (
+  const renderThread = ({ item, measure }) => (
     <ThreadCard
       thread={item}
       userId={userId}
       path={path}
       onDelete={onDeleteThread}
       className="line-break"
-      style={style}
       measure={measure}
-      ref={registerChild}
     />
   );
-  
-  //   "Rerendered : virtual threads list wrapper",
-  //   isThreadsLoading,
-  //   threads
-  // );
 
   return (
     <VirtualAndInfiniteScroll

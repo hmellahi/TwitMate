@@ -15,7 +15,7 @@ export default async function profile({ params }: { params: { id: string } }) {
 
   let [loggedInUser, user] = await Promise.all([currentUser(), fetchUser(userId)]);
 
-  if (!user) return redirect('/');
+  if (!user) return redirect("/");
 
   return (
     <div>
@@ -23,7 +23,7 @@ export default async function profile({ params }: { params: { id: string } }) {
         <div className="mx-0">
           <div className="flex gap-4 mb-5 justify-between">
             <div className="flex gap-4 items-start">
-              <ProfileImg className="!h-20 !w-20" user={user} />
+              <ProfileImg className="!h-20 !w-20" user={user} size={65} />
               <div>
                 <p className="text-heading3-bold font-bold capitalize">{user.username}</p>
                 <h3 className="text-gray-1">@{user.name}</h3>

@@ -66,7 +66,7 @@ export default function VirtualAndInfiniteScroll({
   }
 
   const handleNewPageLoad = async () => {
-    let pageCount = Math.floor(list.length / 7) + 1;
+    let pageCount = Math.floor(list.length / 5) + 1;
 
     if (isNextPageLoading) {
       return;
@@ -107,7 +107,7 @@ export default function VirtualAndInfiniteScroll({
   }
 
   return (
-    <div className={`mt-4 ${className} h-full`}>
+    <div className={`mt-4 ${className} h-full min-h-[200%]`}>
       <AutoSizer disableHeight={true}>
         {({ width }) => (
           <WindowScroller>
@@ -143,40 +143,6 @@ export default function VirtualAndInfiniteScroll({
           </WindowScroller>
         )}
       </AutoSizer>
-      {/* <InfiniteLoader
-        isRowLoaded={isRowLoaded}
-        loadMoreRows={handleNewPageLoad}
-        rowCount={totalCount}
-        ref={(ref) => setInfiniteLoaderRef(ref)}
-      >
-        {({ onRowsRendered, registerChild }) => (
-          <div className="h-full " style={{ flex: '1 1 auto' }}>
-            <AutoSizer>
-              {({ width, height }) => {
-                
-                return (
-                  <List
-                    rowCount={list.length}
-                    width={width}
-                    height={height}
-                    rowHeight={cache.current.rowHeight}
-                    rowRenderer={(rowData) =>
-                      rowRenderer({ cache, list, renderRow, rowData, height })
-                    }
-                    deferredMeasurementCache={cache.current.cellMeasurerCache}
-                    overscanRowCount={0}
-                    onRowsRendered={onRowsRendered}
-                    ref={(el) => {
-                      setListRef(el);
-                      registerChild(el);
-                    }}
-                  />
-                );
-              }}
-            </AutoSizer>
-          </div>
-        )}
-      </InfiniteLoader> */}
       {isNextPageLoading && loaderComponent}
     </div>
   );

@@ -15,7 +15,7 @@ export default function UserCard({
   return (
     <div className={`flex justify-between text-white items-center ${className} pb-3`}>
       <div className="flex gap-2 items-center">
-        <ProfileImg user={user} className="!h-12 !w-12" />
+        <ProfileImg user={user} className="!h-12 !w-12" size={40} />
         <div>
           <p className={isSmall ? "text-small-medium" : ""}>{user.name}</p>
           <p className="text-gray-300 text-subtle-medium">@{user.username}</p>

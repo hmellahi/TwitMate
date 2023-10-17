@@ -22,8 +22,8 @@ export default function Feed({
 
   useEffect(() => {
     setCurrentUser(user);
+    console.log('useeffect called')
     fetchThreads({ userId: user.id }, true);
-    console.log("wtf")
   }, []);
 
   return (

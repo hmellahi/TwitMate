@@ -58,7 +58,7 @@ export async function fetchThread({ threadId, userId }: { threadId: string; user
         ...getThreadPreviewFields(userId),
       },
     });
-    
+
     if (!thread) {
       return;
     }
@@ -109,10 +109,11 @@ export async function fetchThreadReplies({
 export async function fetchThreads({
   userId,
   page = 1,
-  limit = 7,
+  limit = 5,
   communityId,
   sortByLikesAndReplies = false,
 }: FetchThreadsParams) {
+  console.log("fetching " + page);
   const query: Prisma.ThreadFindManyArgs = {
     where: {
       communityId,

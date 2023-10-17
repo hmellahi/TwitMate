@@ -1,6 +1,5 @@
 import { Delete } from "@/components/svgs";
 import { cn } from "@/lib/utils";
-import { User } from "@prisma/client";
 import { useToast } from "../../ui/toast/use-toast";
 
 export default function ThreadActions({
@@ -8,12 +7,12 @@ export default function ThreadActions({
   threadId,
   path,
   onDelete,
-  userId,
+  canDelete,
 }: {
   path: string;
   authorId: string;
   threadId: string;
-  userId: string;
+  canDelete: boolean;
   onDelete?: Function;
 }) {
   const { toast } = useToast();
@@ -28,9 +27,7 @@ export default function ThreadActions({
     });
   };
 
-  const canDeleteThread = authorId === userId;
-
-  if (!canDeleteThread) {
+  if (!canDelete) {
     return null;
   }
 

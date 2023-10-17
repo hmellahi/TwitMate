@@ -1,14 +1,7 @@
-import { revalidatePath } from "next/cache";
-import { prisma } from "../../lib/prisma";
 import { Thread, ThreadLikes } from "@prisma/client";
+import { prisma } from "../../lib/prisma";
 
-export async function getUserActivity({
-  userId,
-  path,
-}: {
-  userId: string;
-  path?: string;
-}) {
+export async function getUserActivity({ userId, path }: { userId: string; path?: string }) {
   try {
     let userThreadsRepliersPromise = prisma.thread.findMany({
       where: {

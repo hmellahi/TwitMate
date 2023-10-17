@@ -12,7 +12,8 @@ import { forwardRef, useCallback, useState } from "react";
 import { ProfileImg } from "../shared/ProfileImg";
 import ThreadActions from "../shared/Thread/ThreadActions";
 import { UsersList } from "../shared/Thread/UsersList";
-import { Heart, HeartFilled, Reply } from "../svgs";
+import { Heart, HeartFilled, Reply, Repost, Share } from "../svgs";
+import AnimatedLike from "../ui/AnimatedLike/AnimatedLike";
 import { MediaViewer } from "../ui/MediaViewer";
 
 function ThreadCard(
@@ -36,10 +37,14 @@ function ThreadCard(
   ref
 ) {
   const { redirectToThread } = useRedirect();
-  const { text, author, threadReactors = [], isLikedByCurrentUser = false } = thread;
-
-  console.log(thread.threadReactors);
-
+  const {
+    text,
+    author,
+    threadReactors = [],
+    isLikedByCurrentUser = false,
+    canDelete = true,
+  } = thread;
+  console.log({ isLikedByCurrentUser });
   const [isUserLikedThread, setisUserLikedThread] = useState(isLikedByCurrentUser);
 
   // Debounce the saveUserReaction function
@@ -91,7 +96,12 @@ function ThreadCard(
       <div className="flex justify-between items-start">
         <div className={`flex gap-3 relative w-full`}>
           <div className="flex flex-col items-center w-[5.5rem]">
-            <ProfileImg className="!h-11 !w-11" aria-Labelledby="link to profile" user={author} />
+            <ProfileImg
+              className="!h-11 !w-11"
+              aria-Labelledby="link to profile"
+              user={author}
+              size={33}
+            />
             {hasReactions && <div className="thread-card_bar" />}
           </div>
           <div className="w-full">
@@ -112,7 +122,7 @@ function ThreadCard(
                     authorId={author.id}
                     path={path}
                     onDelete={onDelete}
-                    userId={userId}
+                    canDelete={canDelete}
                   />
                 </div>
               </div>
@@ -125,20 +135,23 @@ function ThreadCard(
                 onLoad={measure}
               ></MediaViewer>
             )}
-            <div className={`flex gap-2  text-white items-center`}>
-              <div className="icon-hover relative" onClick={reactToThread}>
-                <LikeIcon width="25" height="25" className="cursor-pointer" />
+            <div className={`flex  gap-2 text-white items-center`}>
+              <div
+                className="icon-hover relative flex justify-center items-center w-[3rem] h-[3rem] overflow-hidden scale-[.7]"
+                onClick={reactToThread}
+              >
+                <AnimatedLike value={isUserLikedThread} />
+                {/* <LikeIcon width="25" height="25" className="cursor-pointer" /> */}
               </div>
-              {/* <AnimatedLike /> */}
               <div className="icon-hover">
                 <Reply width="25" height="25" />
               </div>
-              {/* <div className="icon-hover">
+              <div className="icon-hover">
                 <Repost width="25" height="25" />
               </div>
               <div className="icon-hover">
                 <Share width="25" height="25" />
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

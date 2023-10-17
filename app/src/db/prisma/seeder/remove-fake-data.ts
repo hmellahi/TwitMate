@@ -23,9 +23,9 @@ async function removeAllUserThreads(userId: string) {
     prisma.threadLikes.deleteMany({
       where: { threadId: { in: threadIdsToDelete } },
     }),
-    // prisma.thread.deleteMany({
-    //   where: { parentId: { in: threadIdsToDelete } },
-    // }),
+    prisma.thread.deleteMany({
+      where: { parentId: { in: threadIdsToDelete } },
+    }),
     deleteThreadImagePromise,
   ];
 
@@ -68,10 +68,10 @@ export default async function removeFakeData() {
       await Promise.all(removeUserPromises);
     }
 
-    // Step 3: Delete the users themselves // TODO UnComment
-    // await prisma.user.deleteMany({
-    //   where: { isFake: true }, // Replace with your specific criteria
-    // });
+    // Step 3: Delete the users themselves
+    await prisma.user.deleteMany({
+      where: { isFake: true }, // Replace with your specific criteria
+    });
   } catch (error) {
     console.error("Error removing fake users and posts:", error);
     throw error;
