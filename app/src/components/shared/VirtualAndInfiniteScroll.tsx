@@ -21,9 +21,18 @@ const rowRenderer = ({
 }) => {
   return (
     <CellMeasurer key={key} cache={cache.current} parent={parent} rowIndex={index} columnIndex={0}>
-      {({ measure, registerChild }) =>
-        renderRow({ item: list[index], style, measure, registerChild })
-      }
+      {({ measure, registerChild }) => (
+        <div
+          style={style}
+          ref={(element): void => {
+            if (element && registerChild) {
+              registerChild(element);
+            }
+          }}
+        >
+          {renderRow({ item: list[index], measure })}
+        </div>
+      )}
     </CellMeasurer>
   );
 };
@@ -44,6 +53,7 @@ export default function VirtualAndInfiniteScroll({
   list: Array<unknown>;
   className?: string;
 }) {
+  const oldList = useRef([]);
   const cache = useRef(
     new CellMeasurerCache({
       defaultHeight: 700,
@@ -74,18 +84,28 @@ export default function VirtualAndInfiniteScroll({
   };
 
   useEffect(() => {
-    reset();
+    // this will reset the cache whenever
+    // an item is added to the list or removed
+    // this is a workaround and not the best way
+    if (Math.abs(oldList.current.length - list.length) === 1) {
+      reset();
+    }
+
+    oldList.current = list;
 
     window.addEventListener("resize", reset);
 
     return () => window.removeEventListener("resize", reset);
   }, [list]);
 
-  console.log('wt')
-  if (!isNextPageLoading && !list.length) {
-    return null;
+  console.log("rendered in the server"); // TODO remove after deploy
+  if (!list.length) {
+    if (!isNextPageLoading) {
+      return null;
+    }
+    return loaderComponent;
   }
-  console.log('wtf')
+
   return (
     <div className={`mt-4 ${className} h-full`}>
       <AutoSizer disableHeight={true}>
