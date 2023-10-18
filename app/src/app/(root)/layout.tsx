@@ -3,8 +3,7 @@ import BottomBar from "@/components/shared/bottom-bar/BottomBar";
 import LeftSidebar from "@/components/shared/left-sidebar/LeftSidebar";
 import RightSidebar from "@/components/shared/right-sidebar/RightSidebar";
 import { appName } from "@/constants";
-import { getCurrentUserId } from "@/lib/get-current-user";
-import { fetchUser } from "@/server-actions/user/user.actions";
+import { getCurrentUser } from "@/lib/get-current-user";
 import { ClerkProvider } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import "../globals.css";
@@ -14,14 +13,9 @@ export const metadata = {
 };
 
 export default async function AuthLayout({ children }: { children: React.ReactNode }) {
-  const currentUserId = getCurrentUserId();
+  const user = await getCurrentUser();
 
-  if (!currentUserId) {
-    return;
-  }
-
-  const user = await fetchUser(currentUserId);
-
+  // console.log({ user });
   if (!user?.onboarded) {
     redirect("/onboarding");
   }

@@ -46,7 +46,7 @@ export async function createThread({
   } catch (error: any) {
     throw error;
   } finally {
-    revalidatePath(path);
+    // revalidatePath(path);
   }
 }
 
@@ -113,7 +113,6 @@ export async function fetchThreads({
   communityId,
   sortByLikesAndReplies = false,
 }: FetchThreadsParams) {
-  console.log("fetching " + page);
   const query: Prisma.ThreadFindManyArgs = {
     where: {
       communityId,

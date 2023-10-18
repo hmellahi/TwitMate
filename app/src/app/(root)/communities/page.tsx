@@ -1,6 +1,6 @@
 import { SearchInput } from "@/components/ui/SearchInput";
+import { getCurrentUserId } from "@/lib/get-current-user";
 import { fetchCommunities } from "@/server-actions/community/community.actions";
-import { currentUser } from "@clerk/nextjs";
 import { Community } from "@prisma/client";
 import CommunityCard from "./_components/CommunityCard";
 
@@ -10,11 +10,12 @@ export default async function page({
   searchParams: { query: string };
 }) {
   const searchKeyword: string = query || "";
-  const user = await currentUser();
-  if (!user) return null;
+
+  const userId = getCurrentUserId();
+  if (!userId) return null;
 
   const communities = await fetchCommunities({
-    userId: user.id,
+    userId: userId,
     searchKeyword,
   });
 

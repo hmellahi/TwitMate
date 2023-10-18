@@ -1,7 +1,7 @@
 import UserCard from "@/components/shared/UserCard";
 import { SearchInput } from "@/components/ui/SearchInput";
+import { getCurrentUser } from "@/lib/get-current-user";
 import { fetchUsers } from "@/server-actions/user/user.actions";
-import { currentUser } from "@clerk/nextjs/server";
 import { User } from "@prisma/client";
 
 export default async function page({
@@ -10,7 +10,7 @@ export default async function page({
   searchParams: { query: string };
 }) {
   const searchKeyword: string = query || "";
-  const user = await currentUser();
+  const user = await getCurrentUser();
   if (!user) return null;
   const users = await fetchUsers({ userId: user.id, searchKeyword });
 

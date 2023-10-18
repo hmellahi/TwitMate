@@ -1,11 +1,9 @@
-"use server";
-
 import ProfileTabs from "@/app/(root)/profile/[id]/_components/ProfileTabs";
 import { ProfileImg } from "@/components/shared/ProfileImg";
 import { Edit, Location } from "@/components/svgs";
 import { Button } from "@/components/ui/Button";
+import { getCurrentUser } from "@/lib/get-current-user";
 import { fetchUser } from "@/server-actions/user/user.actions";
-import { currentUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -13,7 +11,7 @@ export default async function profile({ params }: { params: { id: string } }) {
   const userId = params.id;
   if (!userId) return null;
 
-  let [loggedInUser, user] = await Promise.all([currentUser(), fetchUser(userId)]);
+  let [loggedInUser, user] = await Promise.all([getCurrentUser(), fetchUser(userId)]);
 
   if (!user) return redirect("/");
 

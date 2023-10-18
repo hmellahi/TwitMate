@@ -14,7 +14,6 @@ const useUserStore = create<UserStore>((set) => ({
   setCurrentUser: (newUser: User) => set(() => ({ currentUser: newUser })),
   setCurrentUserClerkId: (newClerkId: string) => {
     set(() => ({ currentUserClerkId: newClerkId }));
-    console.log("-----------seet", {newClerkId});
   },
 }));
 

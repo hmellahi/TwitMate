@@ -8,7 +8,7 @@ export default authMiddleware({
   publicRoutes: ["/api/clerk/webhooks", "/api/uploadthing"],
   debug: false,
   afterAuth: (auth, request) => {
-    if (auth.isApiRoute || auth.isPublicRoute) return;
+    if (auth.isPublicRoute || !auth?.userId) return;
     request.headers.append("Cookie", `currentUserClerkId=${auth.userId}`);
     return NextResponse.rewrite(request.url.toString(), { request });
   },

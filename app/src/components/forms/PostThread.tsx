@@ -8,21 +8,21 @@ import { cn } from "@/lib/utils";
 import { CreateThreadValidation } from "@/lib/validations/thread";
 import { useOrganization } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import MediaUploader from "../shared/Thread/MediaUploader";
+import MediaViewerWrapper from "../shared/Thread/MediaViewerWrapper";
 import { useToast } from "../ui/toast/use-toast";
 
-const MediaViewerWrapper = dynamic(
-  () => import("../shared/Thread/MediaViewerWrapper").then((module) => module),
-  {
-    ssr: true,
-  }
-);
+// const MediaViewerWrapper = dynamic(
+//   () => import("../shared/Thread/MediaViewerWrapper").then((module) => module),
+//   {
+//     ssr: true,
+//   }
+// );
 
 export default function PostThread({
   userId,

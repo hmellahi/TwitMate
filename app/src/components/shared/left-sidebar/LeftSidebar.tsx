@@ -1,14 +1,13 @@
 import { appName, sidebarLinks } from "@/constants";
 import { User } from "@clerk/nextjs/server";
-// import dynamic from "next/dynamic";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { SidebarLink } from "../SidebarLink";
 import LogoImg from "../logoImg";
-import LeftSidebarBottom from "./LeftSidebarBottom";
 
-// const LeftSidebarBottom = dynamic(() => import("./LeftSidebarBottom").then((module) => module), {
-//   ssr: false,
-// });
+const LeftSidebarBottom = dynamic(() => import("./LeftSidebarBottom").then((module) => module), {
+  ssr: false,
+});
 
 export default function LeftSidebar({ currentUser }: { currentUser: User }) {
   if (!currentUser) {

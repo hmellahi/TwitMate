@@ -1,12 +1,14 @@
 import AccountProfile from "@/components/forms/AccountProfile";
+import { getCurrentUserId } from "@/lib/get-current-user";
 import { fetchUser } from "@/server-actions/user/user.actions";
+import { UserData } from "@/types/user";
 import { currentUser } from "@clerk/nextjs";
-import React from "react";
 
 export default async function page() {
-  const user: User | null = await currentUser();
-  if (!user) return null;
-  const userInfo = await fetchUser(user.id);
+  const userId = getCurrentUserId();
+  if (!userId) return null;
+
+  const [user, userInfo] = await Promise.all([currentUser(), fetchUser(userId)]);
 
   const userData: UserData = {
     id: user?.id,
@@ -16,6 +18,7 @@ export default async function page() {
     bio: userInfo?.bio || "",
     image: userInfo?.image || user?.imageUrl,
   };
+
   return (
     <div className="text-white">
       <div className="head-text">Account Settings</div>

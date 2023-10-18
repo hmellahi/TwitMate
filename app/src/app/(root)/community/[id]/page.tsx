@@ -1,10 +1,9 @@
 import SvgIcon from "@/components/ui/SvgIcon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { communityTabs } from "@/constants";
+import { getCurrentUser } from "@/lib/get-current-user";
 import { camelToSnakeCase } from "@/lib/utils";
 import { fetchCommunity } from "@/server-actions/community/community.actions";
-import { fetchUser } from "@/server-actions/user/user.actions";
-import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import CommunityMembers from "./_components/CommunityMembersTab";
@@ -15,17 +14,9 @@ export default async function profile({ params }: { params: { id: string } }) {
   const communityId = params.id;
   if (!communityId) return null;
 
-  const [community, userFromClerk] = await Promise.all([
-    fetchCommunity({ communityId }),
-    currentUser(),
-  ]);
+  const [community, user] = await Promise.all([fetchCommunity({ communityId }), getCurrentUser()]);
 
-  if (!userFromClerk || !community) return redirect("/");
-
-  const user = await fetchUser(userFromClerk.id);
-  if (!user) {
-    return;
-  }
+  if (!user || !community) return redirect("/");
 
   const { members } = community;
 

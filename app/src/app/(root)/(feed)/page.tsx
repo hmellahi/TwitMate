@@ -1,15 +1,10 @@
-import { getCurrentUserId } from "@/lib/get-current-user";
-import { fetchUser } from "@/server-actions/user/user.actions";
+import { getCurrentUser } from "@/lib/get-current-user";
 import Feed from "./_components/Feed";
 
 export default async function Home() {
-  const currentUserId = getCurrentUserId();
+  const currentUser = await getCurrentUser();
 
-  if (!currentUserId) return null;
+  if (!currentUser) return null;
 
-  const userInfo = await fetchUser(currentUserId);
-
-  if (!userInfo) return null;
-
-  return <Feed user={userInfo} initialThreadsData={null} />;
+  return <Feed user={currentUser} initialThreadsData={null} />;
 }

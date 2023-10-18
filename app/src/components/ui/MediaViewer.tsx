@@ -4,6 +4,7 @@ export function MediaViewer({
   imageURLs,
   className,
   onLoad,
+  isPriority,
   ...props
 }: {
   imageURLs: Array<string>;
@@ -24,7 +25,7 @@ export function MediaViewer({
             alt={`Avatar ${index + 1}`}
             onLoad={onLoad}
             sizes="(min-width: 820px) 506px, (min-width: 780px) calc(-305vw + 2915px), (min-width: 640px) calc(78.33vw - 59px), (min-width: 520px) 78vw, (min-width: 460px) calc(47.5vw + 112px), (min-width: 420px) 291px, (min-width: 360px) calc(47.5vw + 63px), calc(15vw + 145px)"
-            priority={index < 2}
+            priority={isPriority}
           />
         </div>
       ))}

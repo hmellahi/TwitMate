@@ -9,13 +9,14 @@ import { dark } from "@clerk/themes";
 import Image from "next/image";
 import Link from "next/link";
 import LogoImg from "./logoImg";
+import { appName } from "@/constants";
 
 export default function AppHeader() {
   return (
     <div className="topbar text-white flex flex-between md:hidden sm:pr-14">
       <Link href="/" className="flex items-center gap-4">
         <LogoImg />
-        Threads
+        {appName}
       </Link>
 
       <div className="flex gap-5 items-center lg:mr-[25rem]">

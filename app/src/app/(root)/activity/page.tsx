@@ -1,11 +1,12 @@
 import Activity from "@/app/(root)/activity/_components/Activity";
+import { getCurrentUserId } from "@/lib/get-current-user";
 import { getUserActivity } from "@/server-actions/activity/activity.actions";
-import { currentUser } from "@clerk/nextjs";
 
 export default async function page() {
-  const user = await currentUser();
-  if (!user) return null;
-  let userActivity = await getUserActivity({ userId: user.id });
+  const userId = getCurrentUserId();
+  if (!userId) return null;
+
+  let userActivity = await getUserActivity({ userId });
 
   return (
     <div className="text-white">

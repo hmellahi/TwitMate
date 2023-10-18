@@ -30,7 +30,7 @@ const rowRenderer = ({
             }
           }}
         >
-          {renderRow({ item: list[index], measure })}
+          {renderRow({ item: list[index], measure, index })}
         </div>
       )}
     </CellMeasurer>
@@ -68,7 +68,7 @@ export default function VirtualAndInfiniteScroll({
   const handleNewPageLoad = async () => {
     let pageCount = Math.floor(list.length / 5) + 1;
 
-    if (isNextPageLoading) {
+    if (isNextPageLoading ) {
       return;
     }
     await fetchHandler(pageCount);
@@ -98,7 +98,6 @@ export default function VirtualAndInfiniteScroll({
     return () => window.removeEventListener("resize", reset);
   }, [list]);
 
-  console.log("rendered in the server"); // TODO remove after deploy
   if (!list.length) {
     if (!isNextPageLoading) {
       return null;

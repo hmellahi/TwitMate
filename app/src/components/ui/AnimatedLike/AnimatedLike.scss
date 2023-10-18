@@ -6,6 +6,8 @@
   background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;
   background-position: 0 0;
   cursor: pointer;
+  // position: relative;
+  // right: -10px;
   transition: background-position 1s steps(28);
   transition-duration: 0s;
   

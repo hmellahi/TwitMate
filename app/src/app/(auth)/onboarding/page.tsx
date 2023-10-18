@@ -1,16 +1,14 @@
 import AccountProfile from "@/components/forms/AccountProfile";
 import { appName } from "@/constants";
-import { fetchUser } from "@/server-actions/user/user.actions";
+import { getCurrentUser } from "@/lib/get-current-user";
 import { UserData } from "@/types/user";
 import { currentUser } from "@clerk/nextjs";
-import { User } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
-  const user: User | null = await currentUser();
-  if (!user) return null;
-  const userInfo = await fetchUser(user.id);
+  const [user, userInfo] = await Promise.all([currentUser(), getCurrentUser()]);
 
+  // console.log({ userInfo });
   if (userInfo?.onboarded) {
     redirect("/");
   }

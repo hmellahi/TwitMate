@@ -18,7 +18,7 @@ export default function VirtualizedThreadsList({
   onDelete: () => Promise<void>;
   totalCount: number;
 }) {
-  const renderThread = ({ item, measure }) => (
+  const renderThread = ({ item, measure, index }) => (
     <ThreadCard
       thread={item}
       userId={userId}
@@ -26,6 +26,7 @@ export default function VirtualizedThreadsList({
       onDelete={onDeleteThread}
       className="line-break"
       measure={measure}
+      index={index}
     />
   );
 

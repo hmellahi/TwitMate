@@ -1,5 +1,3 @@
-"use server";
-
 import { fetchCommunities } from "@/server-actions/community/community.actions";
 import { Community } from "@prisma/client";
 import CommunityCard from "./CommunityCard";

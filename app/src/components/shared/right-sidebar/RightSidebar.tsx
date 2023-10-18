@@ -1,6 +1,3 @@
-"use server";
-
-import { currentUser } from "@clerk/nextjs";
 import SuggestedCommunities from "./SuggestedCommunities";
 import SuggestedUsers from "./SuggestedUsers";
 
