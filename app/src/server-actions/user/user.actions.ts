@@ -93,7 +93,7 @@ export async function fetchUsers({
     let users = await prisma.user.findMany({
       where: whereClause,
       orderBy: {
-        createdAt: "desc",
+      createdAt: "asc",
       },
       take: limit,
       select: {

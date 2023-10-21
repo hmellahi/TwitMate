@@ -26,7 +26,7 @@ export default async function page({ params }: { params: { id: string } }) {
 
   return (
     <div>
-      <ThreadCard thread={thread} user={userInfo} path="/thread" />
+      <ThreadCard thread={thread} userId={userInfo.id} path="/thread" />
       <ThreadDetails threadId={thread.id} user={userInfo} />
     </div>
   );

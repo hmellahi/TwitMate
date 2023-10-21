@@ -30,7 +30,7 @@ export default function CommunityCard({
       </div>
 
       <Link href={`/community/${community.id}`}>
-        <Button className={`${isSmall && "text-subtle-medium"}`}>View</Button>
+        <Button className={`text-small-medium`}>View</Button>
       </Link>
     </div>
   );

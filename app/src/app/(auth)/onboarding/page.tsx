@@ -8,7 +8,6 @@ import { redirect } from "next/navigation";
 export default async function Home() {
   const [user, userInfo] = await Promise.all([currentUser(), getCurrentUser()]);
 
-  // console.log({ userInfo });
   if (userInfo?.onboarded) {
     redirect("/");
   }

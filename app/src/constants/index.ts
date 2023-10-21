@@ -39,3 +39,5 @@ export const communityTabs = [
 export const PROFILE_IMG_SIZE = 17;
 
 export const appName = "TwitMate";
+
+export const THREADS_LIMIT = 5

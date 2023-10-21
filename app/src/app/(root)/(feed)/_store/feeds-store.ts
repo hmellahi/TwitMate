@@ -67,16 +67,17 @@ const createThread = async (params: CreateThreadParams) => {
 
   const createdThread = await threadActions.createThread(params);
   createdThread.author = currentUser;
-  createdThread._count = { likes: 0 };
+  createdThread._count = { likes: 0, childrens: 0 };
   createdThread.isLikedByCurrentUser = false;
+  createdThread.threadReactors = [];
 
   if (localImageUrl) {
     createdThread.images = [{ imageUrl: localImageUrl }];
+  } else {
+    createdThread.images = [];
   }
 
-  console.log({createdThread})
-
-  setThreads([createdThread, ...threads]);
+  setThreads([{ ...createdThread }, ...threads]);
   useFeedStore.setState({ totalCount: totalCount + 1 });
 };
 

@@ -33,7 +33,7 @@ export default async function page({
           <CommunityCard
             key={index}
             community={community}
-            className="basis-[90%] sm:basis-[46%] box-border"
+            className="basis-[100%] sm:basis-[48%] box-border"
           />
         ))}
       </div>

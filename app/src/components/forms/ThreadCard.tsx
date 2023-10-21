@@ -36,14 +36,9 @@ function ThreadCard(
   ref
 ) {
   const { redirectToThread } = useRedirect();
-  const {
-    text,
-    author,
-    threadReactors = [],
-    isLikedByCurrentUser = false,
-    canDelete = true,
-  } = thread;
-  const [isUserLikedThread, setisUserLikedThread] = useState(isLikedByCurrentUser);
+  const { text, author, threadReactors = [], isLikedByCurrentUser, canDelete = true } = thread;
+
+  const [isUserLikedThread, setIsUserLikedThread] = useState(isLikedByCurrentUser);
 
   // Debounce the saveUserReaction function
   const debouncedSaveUserReaction = debounce(async (isLiked: boolean) => {
@@ -66,12 +61,12 @@ function ThreadCard(
     e.preventDefault();
     e.stopPropagation();
 
-    setisUserLikedThread(!isUserLikedThread);
+    setIsUserLikedThread(!isUserLikedThread);
 
     memoizedDebouncedSaveUserReaction(isUserLikedThread);
   }
 
-  const hasReplies = thread?.childrens?.length > 0;
+  const hasReplies = thread?._count?.childrens > 0;
   let threadLikes = thread?._count?.likes || 0;
   let likesCount = isUserLikedThread + threadLikes + (isLikedByCurrentUser ? -1 : 0);
   if (isUserLikedThread && likesCount == 0) {
@@ -85,7 +80,7 @@ function ThreadCard(
 
   return (
     <div
-      className={`bg-transparent ${className} text-white pt-4 pb-5 px-0 sm:px-0 cursor-pointer`}
+      className={`bg-transparent ${className} text-white pt-4 pb-1 px-0 sm:px-0 cursor-pointer`}
       onClick={() => redirectToThread(thread.id)}
       style={style}
       ref={ref}
@@ -99,9 +94,6 @@ function ThreadCard(
               user={author}
               size={33}
             />
-            {isUserLikedThread ? "1" : "0"}
-            {"\n"}
-            {isLikedByCurrentUser ? "like" : "not liked"}
             {hasReactions && <div className="thread-card_bar" />}
           </div>
           <div className="w-full">
@@ -112,7 +104,6 @@ function ThreadCard(
                     {author?.username}
                   </Link>
                 </div>
-
                 <div
                   className={`text-gray-2 text-small-regular mr-0 sm:mr-4 flex gap-2 items-center -mt-[.3rem]`}
                 >
@@ -126,7 +117,7 @@ function ThreadCard(
                   />
                 </div>
               </div>
-              <p className="whitespace-pre-line	text-small-regular font-light mt-1 mb-2">{text}</p>
+              <p className="whitespace-pre-line	text-small-regular font-light mt-1">{text}</p>
             </div>
             {threadImages?.length > 0 && (
               <MediaViewer
@@ -138,7 +129,7 @@ function ThreadCard(
             )}
             <div className={`flex  gap-2 text-white items-center left-[-24px] relative`}>
               <div
-                className="icon-hover relative right-[-10px] flex justify-center items-center w-[3rem] h-[3rem] overflow-hidden scale-[.7]"
+                className="icon-hover relative right-[-10px] flex justify-center items-center w-[3rem] h-[3rem] overflow-visible scale-[.66]"
                 onClick={reactToThread}
               >
                 <AnimatedLike value={isUserLikedThread} />
@@ -156,7 +147,7 @@ function ThreadCard(
           </div>
         </div>
       </div>
-      <div className="flex items-center h-7">
+      <div className="flex items-center h-7 -top-2 relative">
         {(hasReplies || hasLikes) && (
           <>
             <UsersList className="z-20 w-[5rem] justify-center" users={threadReactors}></UsersList>

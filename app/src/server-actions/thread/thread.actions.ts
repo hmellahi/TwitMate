@@ -1,5 +1,6 @@
 "use server";
 
+import { THREADS_LIMIT } from "@/constants";
 import { CreateThreadParams, FetchThreadsParams } from "@/types/thread";
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
@@ -46,7 +47,7 @@ export async function createThread({
   } catch (error: any) {
     throw error;
   } finally {
-    // revalidatePath(path);
+    revalidatePath(path);
   }
 }
 
@@ -73,7 +74,7 @@ export async function fetchThread({ threadId, userId }: { threadId: string; user
 export async function fetchThreadReplies({
   threadId,
   userId,
-  limit = 7,
+  limit = THREADS_LIMIT,
   page = 1,
 }: {
   threadId: string;
@@ -109,10 +110,11 @@ export async function fetchThreadReplies({
 export async function fetchThreads({
   userId,
   page = 1,
-  limit = 5,
+  limit = THREADS_LIMIT,
   communityId,
   sortByLikesAndReplies = false,
 }: FetchThreadsParams) {
+  console.log({ page });
   const query: Prisma.ThreadFindManyArgs = {
     where: {
       communityId,
@@ -146,7 +148,7 @@ export async function fetchThreads({
 export async function fetchUserThreads({
   userId,
   page = 1,
-  limit = 7,
+  limit = THREADS_LIMIT,
 }: {
   userId: string;
   page?: number;
@@ -225,10 +227,12 @@ export async function unLikeThread({
   userId: string;
 }) {
   try {
-    await prisma.threadLikes.deleteMany({
+    await prisma.threadLikes.delete({
       where: {
-        threadId,
-        userId,
+        userId_threadId: {
+          userId,
+          threadId,
+        },
       },
     });
     revalidatePath(path);
@@ -262,6 +266,8 @@ export async function removeThread({
     });
 
     await Promise.all([deleteThreadLikesPromise, deleteThreadImagesPromise]);
+
+    console.log({ threadId, authorId });
 
     await prisma.thread.delete({
       where: {

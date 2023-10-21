@@ -24,7 +24,7 @@ export default function UserCard({
         </div>
       </div>
       <Link href={`/profile/${user.id}`}>
-        <Button className={`${isSmall && "text-subtle-medium"}`}>View</Button>
+        <Button className={`${isSmall && "text-small-medium"}`}>View</Button>
       </Link>
     </div>
   );

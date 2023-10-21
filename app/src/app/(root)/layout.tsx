@@ -15,7 +15,6 @@ export const metadata = {
 export default async function AuthLayout({ children }: { children: React.ReactNode }) {
   const user = await getCurrentUser();
 
-  // console.log({ user });
   if (!user?.onboarded) {
     redirect("/onboarding");
   }

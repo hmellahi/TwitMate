@@ -21,8 +21,7 @@ export default async function page() {
 
   return (
     <div className="text-white">
-      <div className="head-text">Account Settings</div>
-      <p className="mt-4 mb-10">Edit your profile</p>
+      <div className="head-text mb-5">Account Settings</div>
       <AccountProfile btnTitle="Save" user={userData} />
     </div>
   );

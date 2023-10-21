@@ -14,6 +14,9 @@ export async function addThreadReactors(threads: Thread[], userId: string) {
     thread.isLikedByCurrentUser = await isUserLikedThread({ userId, threadId });
     thread.canDelete = canDeleteThread(thread, userId);
     thread.threadReactors = getThreadReactors(thread);
+
+    delete thread.childrens;
+    delete thread.likes;
   });
 
   await Promise.all(addingThreadReactionsPromises);

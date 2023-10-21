@@ -1,3 +1,4 @@
+import { THREADS_LIMIT } from "@/constants";
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import {
   AutoSizer,
@@ -13,14 +14,19 @@ const rowRenderer = ({
   list,
   renderRow,
   rowData: {
-    key, // Unique key within array of rows
     index, // Index of row within collection
     style, // Style object to be applied to row (to position it)
     parent,
   },
 }) => {
   return (
-    <CellMeasurer key={key} cache={cache.current} parent={parent} rowIndex={index} columnIndex={0}>
+    <CellMeasurer
+      key={list[index].id}
+      cache={cache.current}
+      parent={parent}
+      rowIndex={index}
+      columnIndex={0}
+    >
       {({ measure, registerChild }) => (
         <div
           style={style}
@@ -66,9 +72,9 @@ export default function VirtualAndInfiniteScroll({
   }
 
   const handleNewPageLoad = async () => {
-    let pageCount = Math.floor(list.length / 5) + 1;
+    let pageCount = Math.floor(list.length / THREADS_LIMIT) + 1;
 
-    if (isNextPageLoading ) {
+    if (isNextPageLoading) {
       return;
     }
     await fetchHandler(pageCount);
@@ -81,6 +87,7 @@ export default function VirtualAndInfiniteScroll({
     listRef?.recomputeRowHeights();
     // Reset cached measurements for all cells.
     cache.current.clearAll();
+    // infiniteLoaderRef.resetLoadMoreRowsCache(true);
   };
 
   useEffect(() => {

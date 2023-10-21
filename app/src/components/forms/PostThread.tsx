@@ -3,26 +3,38 @@
 import { Button } from "@/components/ui/Button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/Form";
 import { Textarea } from "@/components/ui/Textarea";
-import uploadImages from "@/lib/upload-images";
 import { cn } from "@/lib/utils";
 import { CreateThreadValidation } from "@/lib/validations/thread";
 import { useOrganization } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import MediaUploader from "../shared/Thread/MediaUploader";
-import MediaViewerWrapper from "../shared/Thread/MediaViewerWrapper";
 import { useToast } from "../ui/toast/use-toast";
 
-// const MediaViewerWrapper = dynamic(
-//   () => import("../shared/Thread/MediaViewerWrapper").then((module) => module),
-//   {
-//     ssr: true,
-//   }
-// );
+const uploadImages = (() => {
+  let uploadImagesFun: null | Function = null;
+
+  return async (threadImages: Array<File>) => {
+    if (uploadImagesFun) {
+      return uploadImagesFun(threadImages);
+    }
+
+    const module = await import("@/lib/upload-images");
+    uploadImagesFun = module.default;
+  };
+})();
+
+const MediaViewerWrapper = dynamic(
+  () => import("../shared/Thread/MediaViewerWrapper").then((module) => module),
+  {
+    ssr: true,
+  }
+);
 
 export default function PostThread({
   userId,
