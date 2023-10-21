@@ -5,7 +5,7 @@ import { SidebarLink } from "./SidebarLink";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { User } from "@clerk/nextjs/server";
-import LogoImg from "./logoImg";
+import LogoImg from "./LogoImg";
 import Link from "next/link";
 import { dark } from "@clerk/themes";
 import dynamic from "next/dynamic";

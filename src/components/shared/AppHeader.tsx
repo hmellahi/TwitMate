@@ -8,7 +8,7 @@ import {
 import { dark } from "@clerk/themes";
 import Image from "next/image";
 import Link from "next/link";
-import LogoImg from "./logoImg";
+import LogoImg from "./LogoImg";
 
 export default function AppHeader() {
   return (
