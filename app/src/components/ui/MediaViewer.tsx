@@ -23,8 +23,7 @@ export function MediaViewer({
             className="!relative w-full object-cover rounded-xl !h-auto bodder-2 border-white"
             alt={`Avatar ${index + 1}`}
             onLoad={onLoad}
-            height={38}
-            width={70}
+            fill
             quality={75}
             sizes="(min-width: 820px) 536px, (min-width: 780px) calc(-305vw + 2915px), (min-width: 640px) calc(78.33vw - 59px), (min-width: 520px) 78vw, (min-width: 460px) calc(47.5vw + 112px), (min-width: 420px) 291px, (min-width: 360px) calc(47.5vw + 63px), 536px"
             priority={isPriority}
