@@ -3,7 +3,7 @@ import { User } from "@clerk/nextjs/server";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { SidebarLink } from "../SidebarLink";
-import LogoImg from "../logoImg";
+import LogoImg from "../LogoImg";
 
 const LeftSidebarBottom = dynamic(() => import("./LeftSidebarBottom").then((module) => module), {
   ssr: false,
