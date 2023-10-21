@@ -2,6 +2,7 @@
 import ThreadCard from "@/components/forms/ThreadCard";
 import VirtualAndInfiniteScroll from "../VirtualAndInfiniteScroll";
 import LoadingThreadCards from "./LoadingThreadCards";
+import { useCallback } from "react";
 
 export default function VirtualizedThreadsList({
   userId,
@@ -18,7 +19,7 @@ export default function VirtualizedThreadsList({
   onDelete: () => Promise<void>;
   totalCount: number;
 }) {
-  const renderThread = ({ item, measure, index }) => (
+  const renderThread = useCallback(({ item, measure, index }) => (
     <ThreadCard
       thread={item}
       userId={userId}
@@ -28,7 +29,7 @@ export default function VirtualizedThreadsList({
       measure={measure}
       index={index}
     />
-  );
+  ), [])
 
   return (
     <VirtualAndInfiniteScroll

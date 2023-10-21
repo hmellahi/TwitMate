@@ -1,4 +1,6 @@
 "use client";
+import { useCallback } from "react";
+import LoadingThreadCards from "./LoadingThreadCards";
 import VirtualizedThreadsList from "./VirtualizedThreadsList";
 
 export default function ThreadsListWrapper({
@@ -13,7 +15,7 @@ export default function ThreadsListWrapper({
   userId: string;
   initialThreadsData: unknown;
 }) {
-  const fetchHandler = async (page: number) => {
+  const fetchHandler = useCallback(async (page: number) => {
     let threadsData = await onFetchThreads({
       userId,
       page,
@@ -21,12 +23,19 @@ export default function ThreadsListWrapper({
     if (!threadsData) return;
     let { threads } = threadsData;
     return threads;
-  };
+  }, []);
 
   if (!threads) {
     threads = initialThreadsData?.threads || [];
   }
 
+  // Check if the code is executing on the server
+  if (typeof window === "undefined") {
+    // Return your loader component here
+    return <LoadingThreadCards count={3} />;
+  }
+
+  // If the code is executing on the client, return the VirtualizedThreadsList component
   return (
     <VirtualizedThreadsList
       userId={userId}

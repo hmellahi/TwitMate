@@ -1,5 +1,5 @@
 import { THREADS_LIMIT } from "@/constants";
-import React, { ReactElement, useEffect, useRef, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import {
   AutoSizer,
   CellMeasurer,
@@ -67,28 +67,28 @@ export default function VirtualAndInfiniteScroll({
     })
   );
 
-  function isRowLoaded({ index }) {
+  const isRowLoaded = useCallback(({ index }) => {
     return !!list[index];
-  }
+  }, [list]);
 
-  const handleNewPageLoad = async () => {
+  const handleNewPageLoad = useCallback(async () => {
     let pageCount = Math.floor(list.length / THREADS_LIMIT) + 1;
 
     if (isNextPageLoading) {
       return;
     }
     await fetchHandler(pageCount);
-  };
+  }, [list, isNextPageLoading]);
 
   let [listRef, setListRef] = useState(null);
 
-  const reset = () => {
+  const reset = useCallback(() => {
     // Recompute row heights and offsets
     listRef?.recomputeRowHeights();
     // Reset cached measurements for all cells.
     cache.current.clearAll();
     // infiniteLoaderRef.resetLoadMoreRowsCache(true);
-  };
+  }, [listRef, cache]);
 
   useEffect(() => {
     // this will reset the cache whenever
