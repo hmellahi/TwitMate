@@ -26,6 +26,7 @@ const uploadImages = (() => {
 
     const module = await import("@/lib/upload-images");
     uploadImagesFun = module.default;
+    return uploadImages(threadImages)
   };
 })();
 
