@@ -114,7 +114,6 @@ export default function PostThread({
               height={40}
               className="cursor-pointer rounded-full object-cover"
             />
-            {/* height={60}         */}
           </div>
           <FormField
             control={form.control}

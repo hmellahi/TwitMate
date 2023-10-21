@@ -124,7 +124,7 @@ function ThreadCard(
                 className="mt-4 mb-2"
                 imageURLs={threadImages}
                 onLoad={measure}
-                isPriority={index < 2}
+                isPriority={index === 0}
               ></MediaViewer>
             )}
             <div className={`flex  gap-2 text-white items-center left-[-24px] relative`}>

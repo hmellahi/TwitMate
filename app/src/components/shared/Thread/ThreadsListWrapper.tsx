@@ -32,7 +32,7 @@ export default function ThreadsListWrapper({
   // Check if the code is executing on the server
   if (typeof window === "undefined") {
     // Return your loader component here
-    return <LoadingThreadCards count={3} />;
+    return <LoadingThreadCards />;
   }
 
   // If the code is executing on the client, return the VirtualizedThreadsList component
