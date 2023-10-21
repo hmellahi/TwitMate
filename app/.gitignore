@@ -38,7 +38,7 @@ next-env.d.ts
 
 Todos
 
-*.sql
+# *.sql
 
 data
 
