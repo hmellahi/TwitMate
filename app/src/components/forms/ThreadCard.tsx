@@ -140,9 +140,6 @@ function ThreadCard(
               <div className="icon-hover">
                 <Repost width="25" height="25" />
               </div>
-              <div className="icon-hover">
-                <Share width="25" height="25" />
-              </div>
             </div>
           </div>
         </div>
