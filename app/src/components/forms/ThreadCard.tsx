@@ -8,11 +8,11 @@ import { likeThread, unLikeThread } from "@/server-actions/thread/thread.actions
 import { ThreadWithDetails } from "@/types/thread";
 import { ThreadImages } from "@prisma/client";
 import Link from "next/link";
-import { forwardRef, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { ProfileImg } from "../shared/ProfileImg";
 import ThreadActions from "../shared/Thread/ThreadActions";
 import { UsersList } from "../shared/Thread/UsersList";
-import { Reply, Repost, Share } from "../svgs";
+import { Reply, Repost } from "../svgs";
 import AnimatedLike from "../ui/AnimatedLike/AnimatedLike";
 import { MediaViewer } from "../ui/MediaViewer";
 
@@ -128,12 +128,7 @@ function ThreadCard(
               ></MediaViewer>
             )}
             <div className={`flex  gap-2 text-white items-center left-[-24px] relative`}>
-              <div
-                className="icon-hover relative right-[-10px] flex justify-center items-center w-[3rem] h-[3rem] overflow-visible scale-[.66]"
-                onClick={reactToThread}
-              >
-                <AnimatedLike value={isUserLikedThread} />
-              </div>
+              <AnimatedLike value={isUserLikedThread} onClick={reactToThread} />
               <div className="icon-hover">
                 <Reply width="25" height="25" />
               </div>
@@ -163,5 +158,3 @@ function ThreadCard(
     </div>
   );
 }
-
-export default forwardRef(ThreadCard);
