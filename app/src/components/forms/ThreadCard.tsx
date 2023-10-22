@@ -16,25 +16,22 @@ import { Reply, Repost } from "../svgs";
 import AnimatedLike from "../ui/AnimatedLike/AnimatedLike";
 import { MediaViewer } from "../ui/MediaViewer";
 
-function ThreadCard(
-  {
-    thread,
-    userId,
-    path,
-    className = "",
-    onDelete,
-    measure,
-    style,
-    index,
-  }: {
-    thread: ThreadWithDetails;
-    userId: string;
-    path: string;
-    className: string;
-    onDelete?: Function;
-  },
-  ref
-) {
+export default function ThreadCard({
+  thread,
+  userId,
+  path,
+  className = "",
+  onDelete,
+  measure,
+  style,
+  index,
+}: {
+  thread: ThreadWithDetails;
+  userId: string;
+  path: string;
+  className: string;
+  onDelete?: Function;
+}) {
   const { redirectToThread } = useRedirect();
   const { text, author, threadReactors = [], isLikedByCurrentUser, canDelete = true } = thread;
 
@@ -83,7 +80,6 @@ function ThreadCard(
       className={`bg-transparent ${className} text-white pt-4 pb-1 px-0 sm:px-0 cursor-pointer`}
       onClick={() => redirectToThread(thread.id)}
       style={style}
-      ref={ref}
     >
       <div className="flex justify-between items-start">
         <div className={`flex gap-3 relative w-full`}>
@@ -128,7 +124,7 @@ function ThreadCard(
               ></MediaViewer>
             )}
             <div className={`flex  gap-2 text-white items-center left-[-24px] relative`}>
-              <AnimatedLike value={isUserLikedThread} onClick={reactToThread} />
+              <AnimatedLike value={isUserLikedThread} onClickHandler={reactToThread} />
               <div className="icon-hover">
                 <Reply width="25" height="25" />
               </div>

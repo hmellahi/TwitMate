@@ -1,7 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import "./AnimatedLike.scss";
 
-export default function AnimatedLike({ value }: { value: boolean }) {
+export default function AnimatedLike({
+  value,
+  onClickHandler,
+}: {
+  value: boolean;
+  onClickHandler: Function;
+}) {
   const [firstLoad, setFirstLoad] = useState(true);
 
   useEffect(() => {
@@ -21,5 +27,12 @@ export default function AnimatedLike({ value }: { value: boolean }) {
     return divClasses;
   }, [value]);
 
-  return <div className={classes}></div>;
+  return (
+    <button
+      onClick={onClickHandler}
+      className="icon-hover relative right-[-10px] flex justify-center items-center w-[3rem] h-[3rem] overflow-visible scale-[.66]"
+    >
+      <div className={classes}></div>
+    </button>
+  );
 }

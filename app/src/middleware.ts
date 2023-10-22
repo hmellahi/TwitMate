@@ -8,8 +8,20 @@ export default authMiddleware({
   publicRoutes: ["/api/clerk/webhooks", "/api/uploadthing"],
   debug: false,
   afterAuth: (auth, request) => {
-    if (auth.isPublicRoute || !auth?.userId) return;
-    request.headers.append("Cookie", `currentUserClerkId=${auth.userId}`);
+    const { isPublicRoute, userId } = auth;
+    const { NEXT_PUBLIC_BASE_URL, NEXT_PUBLIC_CLERK_SIGN_IN_URL } = process.env;
+
+    if (!userId) {
+      if (!isPublicRoute) {
+        return;
+      }
+
+      // Redirect to the login page 
+      // if he tries to access public page while being unauthenicated
+      return NextResponse.redirect(`${NEXT_PUBLIC_BASE_URL}${NEXT_PUBLIC_CLERK_SIGN_IN_URL}`);
+    }
+
+    request.headers.append("Cookie", `currentUserClerkId=${userId}`);
     return NextResponse.rewrite(request.url.toString(), { request });
   },
 });

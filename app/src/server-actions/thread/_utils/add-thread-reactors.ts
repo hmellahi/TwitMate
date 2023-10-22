@@ -1,6 +1,6 @@
 import { Thread } from "@prisma/client";
 import { getThreadReactors } from "./get-thread-reactors";
-import isUserLikedThread from "./isUserLikedThread";
+import isUserLikedThread from "./is-user-liked-thread";
 
 function canDeleteThread(thread: Thread, userId: string) {
   const { author } = thread;

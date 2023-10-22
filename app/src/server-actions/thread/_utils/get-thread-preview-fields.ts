@@ -18,8 +18,6 @@ export const getThreadPreviewFields = (userId: string) => ({
   images: {
     select: {
       imageUrl: true,
-      width: true,
-      height: true,
     },
   },
   childrens: {

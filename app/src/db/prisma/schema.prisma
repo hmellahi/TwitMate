@@ -79,6 +79,7 @@ model Community {
 
 }
 
+// TODO: should be changed to ThreadLike
 model ThreadLikes {
   id        String   @id @default(uuid())
   user      User     @relation(fields: [userId], references: [id], map: "liker")
@@ -92,6 +93,7 @@ model ThreadLikes {
   @@unique([userId, threadId])
 }
 
+// TODO: should be changed to ThreadImage
 model ThreadImages {
   id        String   @id @default(uuid())
   imageUrl  String

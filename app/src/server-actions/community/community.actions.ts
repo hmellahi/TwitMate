@@ -199,7 +199,7 @@ async function fetchCommunities({
         },
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: "asc",
       },
       take: limit,
     });
