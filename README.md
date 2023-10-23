@@ -97,14 +97,15 @@ Once the application is built and launched, access it by visiting [http://localh
 
 - **Feed:**
   - Implemented a Virtual List to optimize the rendering of feed posts.
-  - Utilized Cloudnify for optimized image uploading and loading.
 - **General:**
+  - Utilized Cloudnify for optimized image uploading and loading.
   - Leveraged Server-Side Rendering (SSR) for efficient page rendering.
-  - Used Lazy loading to reduce the bundle size
+  - Used lazy loading to reduce the bundle size.
+  - Loaded third-party libraries using a service worker (Party Town).
+  - Compressed images before uploading them. (on new post creation)
+  - Loaded images with the appropriate size depending on the screen size.
 - **Nginx:**
   - Used brotli to compress assets
-  - Enabled http2
-
 
 ### Security Concerns
 
