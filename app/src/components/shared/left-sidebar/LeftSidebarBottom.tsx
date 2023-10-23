@@ -1,19 +1,17 @@
 "use client";
 
-import logout from "@/server-actions/user/user.actions";
 import { SignOutButton, SignedIn } from "@clerk/clerk-react";
 import { OrganizationSwitcher } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-export default function LeftSidebarBottom({currentUserId}:{currentUserId:string}) {
+export default function LeftSidebarBottom({ currentUserId }: { currentUserId: string }) {
   const router = useRouter();
 
   const onLogout = async () => {
-    await logout(currentUserId);
-    router.push("/sign-in")
-  }
+    router.push("/sign-in");
+  };
 
   return (
     <div className="flex flex-col gap-y-4">
@@ -25,7 +23,7 @@ export default function LeftSidebarBottom({currentUserId}:{currentUserId:string}
             rootBox: "py-2 px-8 w-[10rem] max-lg:w-[1rem]",
             organizationSwitcherTriggerIcon: "max-lg:hidden",
             userPreviewTextContainer: "max-lg:hidden",
-            organizationPreviewMainIdentifier__organizationSwitcher:"max-lg:hidden"
+            organizationPreviewMainIdentifier__organizationSwitcher: "max-lg:hidden",
           },
         }}
       />
