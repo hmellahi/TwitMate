@@ -19,11 +19,11 @@ export default function CommunityCard({
       <div className="flex gap-4 items-center ">
         <Link href={`/community/${community.id}`} className="w-14 h-14 relative">
           <Image
-            width={60}
-            height={60}
+            fill
             alt="avatar"
             src={community.image || ""}
             className="cursor-pointer object-cover rounded-full"
+            sizes="100px"
           />
         </Link>
         <div>
