@@ -67,3 +67,7 @@ export const showLikesCount = (likesCount: number) => {
 
   return `${likesCount} likes`;
 };
+
+export const getImgUrl = (imageUrl: string, imgWidth: number) => {
+  return `${imageUrl}?w=${imgWidth}`;
+};

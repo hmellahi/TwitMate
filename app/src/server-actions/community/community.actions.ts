@@ -42,9 +42,7 @@ async function addMemberToCommunity({
     }
 
     // Check if the user is already a member of the community
-    const isMember = community.members.some(
-      (member: User) => member.id === userId
-    );
+    const isMember = community.members.some((member: User) => member.id === userId);
 
     if (isMember) {
       throw new UserAlreadyMemberError();
@@ -60,10 +58,7 @@ async function addMemberToCommunity({
     revalidatePath("/communities");
     return updatedCommunity;
   } catch (error: any) {
-    if (
-      error instanceof CommunityNotFoundError ||
-      error instanceof UserAlreadyMemberError
-    ) {
+    if (error instanceof CommunityNotFoundError || error instanceof UserAlreadyMemberError) {
       throw error;
     }
     throw new Error(`Failed to add member to community: ${error.message}`);
@@ -125,9 +120,7 @@ async function removeUserFromCommunity({
     }
 
     // Check if the user is a member of the community
-    const isMemberIndex = community.members.findIndex(
-      (member) => member.id === userId
-    );
+    const isMemberIndex = community.members.findIndex((member) => member.id === userId);
 
     if (isMemberIndex === -1) {
       throw new UserNotMemberError();
@@ -151,7 +144,7 @@ async function updateCommunityInfo(
   updatedCommunityData: updateCommunity
 ): Promise<Community | null> {
   try {
-    console.log({updatedCommunityData})
+    console.log({ updatedCommunityData });
     // Assuming you have a valid structure for updating a community
     const { id: communityId, ...communityUpdateData } = updatedCommunityData;
 

@@ -1,3 +1,4 @@
+import { getImgUrl } from "@/lib/utils";
 import Image from "next/image";
 
 export function MediaViewer({
@@ -19,7 +20,7 @@ export function MediaViewer({
       {imageURLs.map((imageSrc, index) => (
         <div key={index} className=" w-full ">
           <Image
-            src={imageSrc}
+            src={getImgUrl(imageSrc, 536)}
             className="!relative w-full object-cover rounded-xl !h-auto bodder-2 border-white"
             alt={`Avatar ${index + 1}`}
             onLoad={onLoad}
