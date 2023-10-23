@@ -1,6 +1,7 @@
 "use server";
 
 import { THREADS_LIMIT } from "@/constants";
+import { getCurrentUserId } from "@/lib/get-current-user";
 import { CreateThreadParams, FetchThreadsParams } from "@/types/thread";
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
@@ -8,7 +9,6 @@ import { prisma } from "../../lib/prisma";
 import { addThreadReactors } from "./_utils/add-thread-reactors";
 import { getThreadPreviewFields } from "./_utils/get-thread-preview-fields";
 import { feedSortingFields, sortByLatest } from "./constants/feed-sorting-fields";
-import { getCurrentUserId } from "@/lib/get-current-user";
 
 export async function createThread({
   userId,
@@ -156,7 +156,7 @@ export async function fetchUserThreads({
   limit?: number;
 }) {
   const currentUserId = getCurrentUserId();
-  if (!currentUserId){
+  if (!currentUserId) {
     return;
   }
 
@@ -173,7 +173,7 @@ export async function fetchUserThreads({
           createdAt: "desc",
         },
         select: {
-          ...getThreadPreviewFields(null),
+          ...getThreadPreviewFields(currentUserId),
         },
       }),
       prisma.thread.count({ where: query.where }),
@@ -257,6 +257,8 @@ export async function removeThread({
   threadId: string;
   path: string;
 }) {
+  const currentUserId = getCurrentUserId();
+
   try {
     let deleteThreadLikesPromise = prisma.threadLikes.deleteMany({
       where: {
@@ -267,23 +269,22 @@ export async function removeThread({
     let deleteThreadImagesPromise = prisma.threadImages.deleteMany({
       where: {
         threadId,
-        userId: authorId,
+        userId: currentUserId,
       },
     });
 
     await Promise.all([deleteThreadLikesPromise, deleteThreadImagesPromise]);
 
-    console.log({ threadId, authorId });
-
     await prisma.thread.delete({
       where: {
         id: threadId,
-        authorId,
+        authorId: currentUserId,
       },
     });
-    revalidatePath(path);
   } catch (e) {
     throw e;
+  } finally {
+    revalidatePath(path);
   }
 }
 

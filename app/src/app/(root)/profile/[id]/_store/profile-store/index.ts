@@ -29,7 +29,7 @@ const deleteThread = ({
 };
 
 const fetchUserThreads = async (params: FetchThreadsParams, clearOldList: boolean = false) => {
-  const { threads, setIsThreadsLoading, setThreads } = useProfileStore.getState();
+  const { threads = [], setIsThreadsLoading, setThreads } = useProfileStore.getState();
 
   if (clearOldList) {
     setThreads([]);

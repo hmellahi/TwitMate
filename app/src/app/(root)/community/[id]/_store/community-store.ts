@@ -29,7 +29,7 @@ const deleteThread = ({
 };
 
 const fetchThreads = async (params: FetchThreadsParams, clearOldList: boolean = false) => {
-  const { threads, setIsThreadsLoading, setThreads } = useCommunityStore.getState();
+  const { threads = [], setIsThreadsLoading, setThreads } = useCommunityStore.getState();
 
   if (clearOldList) {
     setThreads([]);

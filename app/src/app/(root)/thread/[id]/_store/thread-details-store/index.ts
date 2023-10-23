@@ -37,7 +37,7 @@ const fetchReplies = async (params: FetchThreadsParams, clearOldList: boolean = 
 
   setIsRepliesLoading(true);
 
-  let { threads: newThreads, totalCount } = await threadActions.fetchThreadReplies(params);
+  let { threads: newThreads = [], totalCount } = await threadActions.fetchThreadReplies(params);
 
   if (!clearOldList && threads) {
     newThreads = [...threads, ...newThreads];

@@ -45,7 +45,7 @@ const fetchThreads = async (params: FetchThreadsParams, clearOldList: boolean = 
     setThreads([]);
   }
 
-  let { threads: newThreads, totalCount } = await threadActions.fetchThreads({
+  let { threads: newThreads = [], totalCount } = await threadActions.fetchThreads({
     ...params,
     sortByLikesAndReplies: true,
   });
