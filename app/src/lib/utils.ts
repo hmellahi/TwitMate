@@ -69,5 +69,9 @@ export const showLikesCount = (likesCount: number) => {
 };
 
 export const getImgUrl = (imageUrl: string, imgWidth: number) => {
+  if (!imageUrl.includes('res.cloudinary.com')){
+    return imageUrl
+  }
+
   return `${imageUrl}?w=${imgWidth}`;
 };

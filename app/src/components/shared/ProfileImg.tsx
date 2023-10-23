@@ -20,9 +20,6 @@ export function ProfileImg({
   return (
     <button
       onClick={(event) => redirectToProfile(event, user.id)}
-      // role="link"
-      // tabIndex={0}
-      // aria-label={`Profile of ${user.name}`}
       className={`${className} w-7 h-7 relative rounded-full overflow-hidden avatar border-2 border-dark-2 transition-opacity group hover:opacity-100 hover:bg-opacity-75`}
     >
       <Image

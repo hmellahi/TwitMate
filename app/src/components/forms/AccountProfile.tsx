@@ -16,11 +16,10 @@ import { isBase64Image } from "@/lib/utils";
 import { UserValidation } from "@/lib/validations/user";
 import { updateUser } from "@/server-actions/user/user.actions";
 import { UserData } from "@/types/user";
-import { useSessionList } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Label } from "../ui/Label";
@@ -30,8 +29,6 @@ export default function AccountProfile({ user, btnTitle }: { user: UserData; btn
   const router = useRouter();
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(false);
-  const { sessions } = useSessionList();
-  const currentUserToken = useRef<string | null>(null);
 
   const form = useForm({
     resolver: zodResolver(UserValidation),
@@ -43,12 +40,6 @@ export default function AccountProfile({ user, btnTitle }: { user: UserData; btn
     },
   });
 
-  useEffect(() => {
-    let l = async () => {
-      if (sessions?.length) currentUserToken.current = await sessions[0].getToken();
-    };
-    l();
-  }, []);
 
   async function onSubmit(values: z.infer<typeof UserValidation>) {
     setIsLoading(true);
@@ -73,13 +64,12 @@ export default function AccountProfile({ user, btnTitle }: { user: UserData; btn
       `/profile/${user.id}`
     ); 
 
+    setIsLoading(false);
     if (pathname === "/settings") {
       router.back();
     } else {
-      // First Time
       router.push("/");
     }
-    setIsLoading(false);
   }
 
   function updateProfilePhoto(
