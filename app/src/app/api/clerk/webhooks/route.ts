@@ -50,13 +50,14 @@ export const POST = async (request: Request) => {
 
   let evnt: Event | null = null;
 
+
   try {
     evnt = wh.verify(
       JSON.stringify(payload),
       heads as IncomingHttpHeaders & WebhookRequiredHeaders
     ) as Event;
   } catch (err) {
-    return NextResponse.json({ message: err }, { status: 400 });
+  return NextResponse.json({ message: err }, { status: 400 });
   }
 
   const eventType: EventType = evnt?.type!;

@@ -12,7 +12,7 @@ export default authMiddleware({
     const { NEXT_PUBLIC_BASE_URL, NEXT_PUBLIC_CLERK_SIGN_IN_URL } = process.env;
 
     if (!userId) {
-      if (!isPublicRoute) {
+      if (isPublicRoute) {
         return;
       }
 

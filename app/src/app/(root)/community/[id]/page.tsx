@@ -37,7 +37,6 @@ export default async function profile({ params }: { params: { id: string } }) {
             <h3 className="text-gray-1">@{camelToSnakeCase(community.name)}</h3>
           </div>
         </div>
-        <h3 className="text-body-medium mb-3 ml-2">{user.bio}</h3>
 
         <Tabs defaultValue="threads" className="w-full">
           <TabsList className="w-full flex justify-between text-center tab">
