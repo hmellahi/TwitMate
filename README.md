@@ -29,6 +29,22 @@ This project employs a range of cutting-edge technologies:
   <span style="margin-left: 5px;"><strong>TypeScript:</strong> Superset of JavaScript with static typing for enhanced development.</span>
 </div>
 
+<div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
+  <img src="https://zustand-demo.pmnd.rs/favicon.ico" width="18" height="18" alt="Zustland" />
+  <span style="margin-left: 5px;"><strong>Zustland:</strong> State management library</span>
+</div>
+
+<div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
+  <img src="https://www.prisma.io/images/favicon-32x32.png" width="18" height="18" alt="Prisma" />
+  <span style="margin-left: 5px;"><strong>Prisma:</strong> Database toolkit</span>
+</div>
+
+<div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
+  <img src="https://res-s.cloudinary.com/prod/image/upload/w_32/console/favicon.png?_s=dam" width="18" height="18" alt="Cloudnify" />
+  <span style="margin-left: 5px;"><strong>Cloudnify:</strong> Cloud storage for images</span>
+</div>
+
+
 ## Installation
 
 To run Twitter Clone locally, follow these steps:
