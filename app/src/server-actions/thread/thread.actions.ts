@@ -8,6 +8,7 @@ import { prisma } from "../../lib/prisma";
 import { addThreadReactors } from "./_utils/add-thread-reactors";
 import { getThreadPreviewFields } from "./_utils/get-thread-preview-fields";
 import { feedSortingFields, sortByLatest } from "./constants/feed-sorting-fields";
+import { getCurrentUserId } from "@/lib/get-current-user";
 
 export async function createThread({
   userId,
@@ -154,6 +155,11 @@ export async function fetchUserThreads({
   page?: number;
   limit?: number;
 }) {
+  const currentUserId = getCurrentUserId();
+  if (!currentUserId){
+    return;
+  }
+
   const query: Prisma.ThreadFindManyArgs = {
     where: { authorId: userId },
   };
@@ -167,13 +173,13 @@ export async function fetchUserThreads({
           createdAt: "desc",
         },
         select: {
-          ...getThreadPreviewFields(userId),
+          ...getThreadPreviewFields(null),
         },
       }),
       prisma.thread.count({ where: query.where }),
     ]);
 
-    await addThreadReactors(threads, userId);
+    await addThreadReactors(threads, currentUserId);
     return { threads, totalCount };
   } catch (error: any) {
     throw error;

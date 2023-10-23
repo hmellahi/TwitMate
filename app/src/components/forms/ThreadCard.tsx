@@ -64,6 +64,8 @@ export default function ThreadCard({
   }
 
   const hasReplies = thread?._count?.childrens > 0;
+  const repliesCount = thread?._count?.childrens;
+
   let threadLikes = thread?._count?.likes || 0;
   let likesCount = isUserLikedThread + threadLikes + (isLikedByCurrentUser ? -1 : 0);
   if (isUserLikedThread && likesCount == 0) {
@@ -142,7 +144,7 @@ export default function ThreadCard({
             <div className="text-[#A0A0A0] flex items-center gap-x-2 ml-2 ">
               {hasReplies && (
                 <>
-                  <p>{thread?.childrens?.length} replies</p>
+                  <p>{repliesCount} replies</p>
                   {hasLikes && <div className="rounded-full w-1 h-1 bg-gray-1"></div>}
                 </>
               )}

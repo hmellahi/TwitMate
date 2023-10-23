@@ -1,4 +1,4 @@
-export const getThreadPreviewFields = (userId: string) => ({
+export const getThreadPreviewFields = (userId: string|null) => ({
   id: true,
   text: true,
   createdAt: true,

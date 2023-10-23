@@ -41,7 +41,9 @@ export async function updateUser(newUserData: UpdateUser, path: string) {
 
     revalidatePath(path);
     return updateUser;
-  } catch (error: any) {}
+  } catch (error: any) {
+    console.log({error})
+  }
 }
 
 export async function fetchUser(userId: string) {
