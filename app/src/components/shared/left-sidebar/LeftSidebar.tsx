@@ -26,7 +26,7 @@ export default function LeftSidebar({ currentUser }: { currentUser: User }) {
           return <SidebarLink sidebarLink={sidebarLink} key={index}></SidebarLink>;
         })}
       </div>
-      <LeftSidebarBottom></LeftSidebarBottom>
+      <LeftSidebarBottom currentUserId={currentUser.id}></LeftSidebarBottom>
     </div>
   );
 }

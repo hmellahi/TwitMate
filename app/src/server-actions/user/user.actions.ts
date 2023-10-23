@@ -111,3 +111,9 @@ export async function fetchUsers({
     console.log(error);
   }
 }
+
+
+export default async function logout(userId:string) {
+  console.log({userId})
+  revalidatePath(`/profile/${userId}`)
+}

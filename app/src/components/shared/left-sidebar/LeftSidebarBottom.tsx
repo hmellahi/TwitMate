@@ -1,13 +1,20 @@
 "use client";
 
+import logout from "@/server-actions/user/user.actions";
 import { SignOutButton, SignedIn } from "@clerk/clerk-react";
 import { OrganizationSwitcher } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-export default function LeftSidebarBottom() {
+export default function LeftSidebarBottom({currentUserId}:{currentUserId:string}) {
   const router = useRouter();
+
+  const onLogout = async () => {
+    await logout(currentUserId);
+    router.push("/sign-in")
+  }
+
   return (
     <div className="flex flex-col gap-y-4">
       <OrganizationSwitcher
@@ -23,7 +30,7 @@ export default function LeftSidebarBottom() {
         }}
       />
       <SignedIn>
-        <SignOutButton signOutCallback={() => router.push("/sign-in")}>
+        <SignOutButton signOutCallback={onLogout}>
           <div className="flex px-10 gap-4 cursor-pointer">
             <Image
               className="cursor-pointer"
