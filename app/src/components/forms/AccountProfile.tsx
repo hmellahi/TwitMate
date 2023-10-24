@@ -68,7 +68,7 @@ export default function AccountProfile({ user, btnTitle }: { user: UserData; btn
     if (pathname === "/settings") {
       router.back();
     } else {
-      router.push("/");
+      window.location.href = '/'
     }
   }
 

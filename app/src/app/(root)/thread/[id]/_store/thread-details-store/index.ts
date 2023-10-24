@@ -29,7 +29,7 @@ const deleteThread = ({
 };
 
 const fetchReplies = async (params: FetchThreadsParams, clearOldList: boolean = false) => {
-  const { threads, setIsRepliesLoading, setThreads } = useThreadDetailsStore.getState();
+  const { threads = [], setIsRepliesLoading, setThreads } = useThreadDetailsStore.getState();
 
   if (clearOldList) {
     setThreads([]);
@@ -39,8 +39,9 @@ const fetchReplies = async (params: FetchThreadsParams, clearOldList: boolean = 
 
   let { threads: newThreads = [], totalCount } = await threadActions.fetchThreadReplies(params);
 
-  if (!clearOldList && threads) {
-    newThreads = [...threads, ...newThreads];
+  if (!clearOldList) {
+    const oldThreads = threads || []
+    newThreads = [...oldThreads, ...newThreads];
   }
 
   useThreadDetailsStore.setState({

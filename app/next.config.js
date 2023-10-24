@@ -3,6 +3,7 @@ const path = require('path')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  compress:false,
   images: {
     minimumCacheTTL: 864000, // 10days
   },
@@ -69,7 +70,7 @@ const nextConfig = {
       new CompressionPlugin({
         filename: "[path][base].gz",
         algorithm: "gzip",
-        test: /\.js$|\.css$|\.html$/,
+        test: /\.(js|css|html|svg|txt|css|xml|js|vtt|xml|rss|atom|json|atomxml|fontobject|fonttff|fontotf|fonttruetype|webappjson|xhtml|bin|woff2|ico|bmp|webp|woff|woff2|eot|otf|ttf|woff|woff2|eot|otf|ttf|svg|ico|bmp|webp|woff|woff2|eot|otf|ttf|bin)$/,
         threshold: 10240,
         minRatio: 0.8,
       })
@@ -79,7 +80,7 @@ const nextConfig = {
       new CompressionPlugin({
         filename: "[path][base].br",
         algorithm: "brotliCompress",
-        test: /\.(js|css|html|svg)$/,
+        test: /\.(js|css|html|svg|txt|css|xml|js|vtt|xml|rss|atom|json|atomxml|fontobject|fonttff|fontotf|fonttruetype|webappjson|xhtml|bin|woff2|ico|bmp|webp|woff|woff2|eot|otf|ttf|woff|woff2|eot|otf|ttf|svg|ico|bmp|webp|woff|woff2|eot|otf|ttf|bin)$/,
         compressionOptions: {
           level: 11,
         },
