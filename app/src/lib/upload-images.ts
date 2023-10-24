@@ -1,6 +1,8 @@
 import { compressImage } from "./compress-image";
 import { downloadImage } from "./download-img";
 
+const { NEXT_PUBLIC_CLOUDINARY_BUCKET_URL } = process.env
+
 export default async function uploadImages(
   images: any[],
   compress = true,
@@ -18,13 +20,15 @@ export default async function uploadImages(
       const { imgLink, imgName } = file;
       file = await downloadImage(imgLink, imgName);
     }
-    if (compress) file = await compressionFunc(file);
+    if (compress){
+      file = await compressionFunc(file);
+    }
     formData.append("file", file);
   }
 
   formData.append("upload_preset", "threads-images");
 
-  const data = await fetch("https://api.cloudinary.com/v1_1/dv2xxj5vi/image/upload", {
+  const data = await fetch(NEXT_PUBLIC_CLOUDINARY_BUCKET_URL as string, {
     method: "POST",
     body: formData,
   }).then((r) => r.json());

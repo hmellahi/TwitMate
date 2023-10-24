@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import "./AnimatedLike.scss";
+import "./AnimatedLike.css";
 
 export default function AnimatedLike({
   value,
