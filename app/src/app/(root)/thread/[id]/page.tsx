@@ -1,4 +1,3 @@
-import ThreadCard from "@/components/forms/ThreadCard";
 import { getCurrentUserId } from "@/lib/get-current-user";
 import { fetchThread } from "@/server-actions/thread/thread.actions";
 import { fetchUser } from "@/server-actions/user/user.actions";
@@ -24,10 +23,5 @@ export default async function page({ params }: { params: { id: string } }) {
     redirect("/");
   }
 
-  return (
-    <div>
-      <ThreadCard thread={thread} userId={userInfo.id} path="/thread" />
-      <ThreadDetails threadId={thread.id} user={userInfo} />
-    </div>
-  );
+  return <ThreadDetails thread={thread} user={userInfo} />;
 }
