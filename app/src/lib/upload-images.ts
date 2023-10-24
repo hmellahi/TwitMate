@@ -1,13 +1,13 @@
 import { compressImage } from "./compress-image";
 import { downloadImage } from "./download-img";
 
-const { NEXT_PUBLIC_CLOUDINARY_BUCKET_URL } = process.env
-
 export default async function uploadImages(
   images: any[],
   compress = true,
   compressionFunc = compressImage
 ) {
+  const cloudinaryUrl = process.env.NEXT_PUBLIC_CLOUDINARY_BUCKET_URL as string;
+
   if (!images.length) {
     return [];
   }
@@ -20,7 +20,7 @@ export default async function uploadImages(
       const { imgLink, imgName } = file;
       file = await downloadImage(imgLink, imgName);
     }
-    if (compress){
+    if (compress) {
       file = await compressionFunc(file);
     }
     formData.append("file", file);
@@ -28,7 +28,7 @@ export default async function uploadImages(
 
   formData.append("upload_preset", "threads-images");
 
-  const data = await fetch(NEXT_PUBLIC_CLOUDINARY_BUCKET_URL as string, {
+  const data = await fetch(cloudinaryUrl, {
     method: "POST",
     body: formData,
   }).then((r) => r.json());

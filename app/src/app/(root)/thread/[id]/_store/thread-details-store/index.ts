@@ -16,6 +16,8 @@ const deleteThread = ({
   threadId: string;
 }) => {
   let { totalCount, threads } = useThreadDetailsStore.getState();
+  threadActions.removeThread({ path, authorId, threadId });
+
   const thread = threads.find((thread) => thread.id === threadId);
   const threadIndex = threads.indexOf(thread);
   if (!thread) return;
@@ -24,8 +26,6 @@ const deleteThread = ({
 
   useThreadDetailsStore.setState({ totalCount: --totalCount, threads });
 
-  threadActions.removeThread({ path, authorId, threadId });
-  if (path.includes("thread")) useRouter().push("/");
 };
 
 const fetchReplies = async (params: FetchThreadsParams, clearOldList: boolean = false) => {
@@ -40,7 +40,7 @@ const fetchReplies = async (params: FetchThreadsParams, clearOldList: boolean = 
   let { threads: newThreads = [], totalCount } = await threadActions.fetchThreadReplies(params);
 
   if (!clearOldList) {
-    const oldThreads = threads || []
+    const oldThreads = threads || [];
     newThreads = [...oldThreads, ...newThreads];
   }
 
