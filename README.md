@@ -1,9 +1,9 @@
-# Twitter Clone Project
 
 ## Project Overview
 
 Taking inspiration from Twitter, I embarked on this project for the purpose of learning and personal growth. It brings together the best of social media, allowing you to post updates, join conversations, and even create your own communities. Your account is protected with secure login options, and the platform ensures everything runs smoothly. It's a safe and engaging space for connecting with others, all while serving as a valuable learning experience
 
+<img width="1343" alt="Screenshot 2023-10-23 at 23 43 57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/786af78f-997e-4d94-8f81-d4d653131eb3">
 
 ## Technology Stack
 
@@ -28,6 +28,22 @@ This project employs a range of cutting-edge technologies:
   <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/typescript-colored.svg" width="18" height="18" alt="TypeScript" />
   <span style="margin-left: 5px;"><strong>TypeScript:</strong> Superset of JavaScript with static typing for enhanced development.</span>
 </div>
+
+<div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
+  <img src="https://zustand-demo.pmnd.rs/favicon.ico" width="18" height="18" alt="Zustland" />
+  <span style="margin-left: 5px;"><strong>Zustland:</strong> State management library</span>
+</div>
+
+<div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
+  <img src="https://www.prisma.io/images/favicon-32x32.png" width="18" height="18" alt="Prisma" />
+  <span style="margin-left: 5px;"><strong>Prisma:</strong> Database toolkit</span>
+</div>
+
+<div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
+  <img src="https://res-s.cloudinary.com/prod/image/upload/w_32/console/favicon.png?_s=dam" width="18" height="18" alt="Cloudnify" />
+  <span style="margin-left: 5px;"><strong>Cloudnify:</strong> Cloud storage for images</span>
+</div>
+
 
 ## Installation
 
@@ -81,14 +97,15 @@ Once the application is built and launched, access it by visiting [http://localh
 
 - **Feed:**
   - Implemented a Virtual List to optimize the rendering of feed posts.
-  - Utilized Cloudnify for optimized image uploading and loading.
 - **General:**
+  - Utilized Cloudnify for optimized image uploading and loading.
   - Leveraged Server-Side Rendering (SSR) for efficient page rendering.
-  - Used Lazy loading to reduce the bundle size
+  - Used lazy loading to reduce the bundle size.
+  - Loaded third-party libraries using a service worker (Party Town).
+  - Compressed images before uploading them. (on new post creation)
+  - Loaded images with the appropriate size depending on the screen size.
 - **Nginx:**
   - Used brotli to compress assets
-  - Enabled http2
-
 
 ### Security Concerns
 
