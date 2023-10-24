@@ -105,14 +105,13 @@ export default function PostThread({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className={`w-full ${className}`}>
-        <div className={`flex justify-cdenter gap-1 items-start`}>
+        <div className={`flex justify-cdenter gap-2 items-start`}>
           <div className="relative h-14 w-14 mt-1">
             <Image
               src={organization?.imageUrl || userImage}
               alt="avatar"
-              width={40}
-              height={40}
               className="cursor-pointer rounded-full object-cover"
+              fill
             />
           </div>
           <FormField
