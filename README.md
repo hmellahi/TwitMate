@@ -3,7 +3,7 @@
 
 Taking inspiration from Twitter, I embarked on this project for the purpose of learning and personal growth. It brings together the best of social media, allowing you to post updates, join conversations, and even create your own communities. Your account is protected with secure login options, and the platform ensures everything runs smoothly. It's a safe and engaging space for connecting with others, all while serving as a valuable learning experience
 
-<img width="1343" alt="Screenshot 2023-10-23 at 23 43 57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/786af78f-997e-4d94-8f81-d4d653131eb3">
+<img width="1000" alt="Screenshot 2023-10-23 at 23 43 57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/786af78f-997e-4d94-8f81-d4d653131eb3">
 
 ## Technology Stack
 
@@ -11,7 +11,7 @@ This project employs a range of cutting-edge technologies:
 
 <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
   <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/nextjs-colored.svg" width="18" height="18" alt="Vue" />
-  <span style="margin-left: 5px;"><strong>Next:</strong> Full stack Framework</span>
+  <span style="margin-left: 5px;"><strong>Next JS:</strong> Full stack Framework</span>
 </div>
 
 <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
@@ -43,26 +43,6 @@ This project employs a range of cutting-edge technologies:
   <img src="https://res-s.cloudinary.com/prod/image/upload/w_32/console/favicon.png?_s=dam" width="18" height="18" alt="Cloudnify" />
   <span style="margin-left: 5px;"><strong>Cloudnify:</strong> Cloud storage for images</span>
 </div>
-
-
-## Installation
-
-To run Twitter Clone locally, follow these steps:
-
-1. Clone the project repository to your local machine.
-2. Setup .env.local (you need clerk)
-```bash
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_publishable_key
-CLERK_SECRET_KEY=your_secret_key
-NEXT_CLERK_WEBHOOK_SECRET=your_webhook_secret
-```
-2. Run The following commands to start the application.
-```bash
-npm i
-npm run start
-```
-
-Once the application is built and launched, access it by visiting [http://localhost:3000](http://localhost:3000) in your web browser. If you encounter any issues during installation, please let me know.
 
 ## Key Features
 
@@ -109,7 +89,12 @@ Once the application is built and launched, access it by visiting [http://localh
   <div align="center" style="margin: 20px 20px;">
     <img align="center" width="800" alt="Screenshot 2023-10-23 at 23:43:57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/0c0d4bd8-069c-4379-a089-5af9a240d044" style="border-radius: 20px;">
   </div>
-  
+&nbsp;&nbsp;&nbsp;
+  <div align="center" style="margin: 20px">
+    <img align="center" width="800" alt="Screenshot 2023-10-23 at 23:43:57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/92813157-b58b-4f7b-b0bb-d7fe1375aaa1" style="border-radius: 20px;">
+  </div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
 ### Performance & Optimization
 
 - **Feed:**
@@ -128,6 +113,27 @@ Once the application is built and launched, access it by visiting [http://localh
 
   - Comprehensive form validation on the frontend.
   - Robust form validation in server actions.
+
+
+## Installation
+
+To run Twitter Clone locally, follow these steps:
+
+1. Clone the project repository to your local machine.
+2. Setup .env.local (you need clerk)
+```bash
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_publishable_key
+CLERK_SECRET_KEY=your_secret_key
+NEXT_CLERK_WEBHOOK_SECRET=your_webhook_secret
+```
+2. Run The following commands to start the application.
+```bash
+npm i
+npm run start
+```
+
+Once the application is built and launched, access it by visiting [http://localhost:3000](http://localhost:3000) in your web browser. If you encounter any issues during installation, please let me know.
+
 
 ## Contributing
 
