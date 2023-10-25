@@ -3,7 +3,11 @@
 
 Taking inspiration from Twitter, I embarked on this project for the purpose of learning and personal growth. It brings together the best of social media, allowing you to post updates, join conversations, and even create your own communities. Your account is protected with secure login options, and the platform ensures everything runs smoothly. It's a safe and engaging space for connecting with others, all while serving as a valuable learning experience
 
-<img width="1000" alt="Screenshot 2023-10-23 at 23 43 57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/786af78f-997e-4d94-8f81-d4d653131eb3">
+&nbsp;&nbsp;
+<div align="center" style="margin: 20px 0;">
+  <img width="800" alt="Screenshot 2023-10-23 at 23 43 57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/af677130-d8ea-494c-82af-1a41403f6a93">
+</div>
+&nbsp;&nbsp;
 
 ## Technology Stack
 
