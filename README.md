@@ -85,8 +85,11 @@ Once the application is built and launched, access it by visiting [http://localh
 - **Profile Viewing:**
   - User can lookup other users
   - View other users profiles, including their posts and activity.
-  - Current users can edit their own profiles.
-### Community
+  - users can edit their own profiles.
+    
+<img width="800" alt="Screenshot 2023-10-23 at 23 43 57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/e25e2961-aefb-4711-b1fa-c4d833baea70">
+
+### Community!
 
   - Users can create communities.
   - Invite members via email to join a community.
