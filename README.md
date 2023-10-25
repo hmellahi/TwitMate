@@ -14,6 +14,12 @@ Taking inspiration from Twitter, I embarked on this project for the purpose of l
 This project employs a range of cutting-edge technologies:
 
 <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
+  <span style="margin-left: 5px;"><strong>OpenAI API:</strong> Generate users bios</span>
+</div>
+<div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
+  <span style="margin-left: 5px;"><strong>Clerk js:</strong> Handle authentication and communities</span>
+</div>
+<div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
   <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/nextjs-colored.svg" width="18" height="18" alt="Vue" />
   <span style="margin-left: 5px;"><strong>Next JS:</strong> Full stack Framework</span>
 </div>
@@ -66,10 +72,11 @@ This project employs a range of cutting-edge technologies:
   - Users can log in with Google/GitHub OAuth (customizable).
   - Users can log in using a password.
   - Access granted after completing onboarding.
- 
+&nbsp;
 <div align="center" style="margin: 20px 0;">
   <img align="center" width="753" alt="Screenshot 2023-10-23 at 23:43:57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/f40729c7-38d5-4383-bf8c-5bdcf8334789" style="border-radius: 20px;">
 </div>
+&nbsp;&nbsp;&nbsp;
 
 - **Profile Viewing:**
   - User can lookup other users
