@@ -82,12 +82,21 @@ Once the application is built and launched, access it by visiting [http://localh
   - Users can log in with Google/GitHub OAuth (customizable).
   - Users can log in using a password.
   - Access granted after completing onboarding.
+ 
+<div align="center" style="margin: 20px 0;">
+  <img align="center" width="753" alt="Screenshot 2023-10-23 at 23:43:57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/f40729c7-38d5-4383-bf8c-5bdcf8334789" style="border-radius: 20px;">
+</div>
+
 - **Profile Viewing:**
   - User can lookup other users
   - View other users profiles, including their posts and activity.
   - users can edit their own profiles.
-    
-<img width="800" alt="Screenshot 2023-10-23 at 23 43 57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/e25e2961-aefb-4711-b1fa-c4d833baea70">
+
+
+<div align="center" style="margin: 20px 0;">
+  <img align="center" width="800" alt="Screenshot 2023-10-23 at 23:43:57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/e25e2961-aefb-4711-b1fa-c4d833baea70" style="border-radius: 20px;">
+</div>
+
 
 ### Community!
 
@@ -96,6 +105,11 @@ Once the application is built and launched, access it by visiting [http://localh
   - Users can update/remove their communities.
   - Community admins can manage members' roles.
 
+
+  <div align="center" style="margin: 20px 20px;">
+    <img align="center" width="800" alt="Screenshot 2023-10-23 at 23:43:57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/0c0d4bd8-069c-4379-a089-5af9a240d044" style="border-radius: 20px;">
+  </div>
+  
 ### Performance & Optimization
 
 - **Feed:**
