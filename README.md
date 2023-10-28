@@ -3,15 +3,25 @@
 
 Taking inspiration from Twitter, I embarked on this project for the purpose of learning and personal growth. It brings together the best of social media, allowing you to post updates, join conversations, and even create your own communities. Your account is protected with secure login options, and the platform ensures everything runs smoothly. It's a safe and engaging space for connecting with others, all while serving as a valuable learning experience
 
-<img width="1343" alt="Screenshot 2023-10-23 at 23 43 57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/786af78f-997e-4d94-8f81-d4d653131eb3">
+&nbsp;&nbsp;
+<div align="center" style="margin: 20px 0;">
+  <img width="800" alt="Screenshot 2023-10-23 at 23 43 57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/af677130-d8ea-494c-82af-1a41403f6a93">
+</div>
+&nbsp;&nbsp;
 
 ## Technology Stack
 
 This project employs a range of cutting-edge technologies:
 
 <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
+  <span style="margin-left: 5px;"><strong>OpenAI API:</strong> Generate users bios</span>
+</div>
+<div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
+  <span style="margin-left: 5px;"><strong>Clerk js:</strong> Handle authentication and communities</span>
+</div>
+<div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
   <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/nextjs-colored.svg" width="18" height="18" alt="Vue" />
-  <span style="margin-left: 5px;"><strong>Next:</strong> Full stack Framework</span>
+  <span style="margin-left: 5px;"><strong>Next JS:</strong> Full stack Framework</span>
 </div>
 
 <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
@@ -44,6 +54,77 @@ This project employs a range of cutting-edge technologies:
   <span style="margin-left: 5px;"><strong>Cloudnify:</strong> Cloud storage for images</span>
 </div>
 
+## Key Features
+
+### Feed
+
+- **Primary Purpose:** Share posts and view other users' posts.
+  - The feed includes:
+    - See suggested threads.
+    - Users can react/reply to a thread.
+    - Users can see who replied.
+    - Users can write a thread with images.
+    - User can delete his thread
+
+### User Account
+
+- **User Authentication:**
+  - Users can log in with Google/GitHub OAuth (customizable).
+  - Users can log in using a password.
+  - Access granted after completing onboarding.
+&nbsp;
+<div align="center" style="margin: 20px 0;">
+  <img align="center" width="753" alt="Screenshot 2023-10-23 at 23:43:57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/f40729c7-38d5-4383-bf8c-5bdcf8334789" style="border-radius: 20px;">
+</div>
+&nbsp;&nbsp;&nbsp;
+
+- **Profile Viewing:**
+  - User can lookup other users
+  - View other users profiles, including their posts and activity.
+  - users can edit their own profiles.
+
+
+<div align="center" style="margin: 20px 0;">
+  <img align="center" width="800" alt="Screenshot 2023-10-23 at 23:43:57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/e25e2961-aefb-4711-b1fa-c4d833baea70" style="border-radius: 20px;">
+</div>
+
+
+### Community!
+
+  - Users can create communities.
+  - Invite members via email to join a community.
+  - Users can update/remove their communities.
+  - Community admins can manage members' roles.
+
+
+  <div align="center" style="margin: 20px 20px;">
+    <img align="center" width="800" alt="Screenshot 2023-10-23 at 23:43:57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/0c0d4bd8-069c-4379-a089-5af9a240d044" style="border-radius: 20px;">
+  </div>
+&nbsp;&nbsp;&nbsp;
+  <div align="center" style="margin: 20px">
+    <img align="center" width="800" alt="Screenshot 2023-10-23 at 23:43:57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/92813157-b58b-4f7b-b0bb-d7fe1375aaa1" style="border-radius: 20px;">
+  </div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+### Performance & Optimization
+
+- **Feed:**
+  - Implemented a Virtual List to optimize the rendering of feed posts.
+- **General:**
+  - Utilized Cloudnify for optimized image uploading and loading.
+  - Leveraged Server-Side Rendering (SSR) for efficient page rendering.
+  - Used lazy loading to reduce the bundle size.
+  - Loaded third-party libraries using a service worker (Party Town).
+  - Compressed images before uploading them. (on new post creation)
+  - Loaded images with the appropriate size depending on the screen size.
+- **Nginx:**
+  - Used brotli to compress assets
+
+### Security Concerns
+
+  - Comprehensive form validation on the frontend.
+  - Robust form validation in server actions.
+
 
 ## Installation
 
@@ -64,53 +145,6 @@ npm run start
 
 Once the application is built and launched, access it by visiting [http://localhost:3000](http://localhost:3000) in your web browser. If you encounter any issues during installation, please let me know.
 
-## Key Features
-
-### Feed
-
-- **Primary Purpose:** Share posts and view other users' posts.
-  - The feed includes:
-    - See suggested threads.
-    - Users can react/reply to a thread.
-    - Users can see who replied.
-    - Users can write a thread with images.
-    - User can delete his thread
-
-### User Account
-
-- **User Authentication:**
-  - Users can log in with Google/GitHub OAuth (customizable).
-  - Users can log in using a password.
-  - Access granted after completing onboarding.
-- **Profile Viewing:**
-  - User can lookup other users
-  - View other users profiles, including their posts and activity.
-  - Current users can edit their own profiles.
-### Community
-
-  - Users can create communities.
-  - Invite members via email to join a community.
-  - Users can update/remove their communities.
-  - Community admins can manage members' roles.
-
-### Performance & Optimization
-
-- **Feed:**
-  - Implemented a Virtual List to optimize the rendering of feed posts.
-- **General:**
-  - Utilized Cloudnify for optimized image uploading and loading.
-  - Leveraged Server-Side Rendering (SSR) for efficient page rendering.
-  - Used lazy loading to reduce the bundle size.
-  - Loaded third-party libraries using a service worker (Party Town).
-  - Compressed images before uploading them. (on new post creation)
-  - Loaded images with the appropriate size depending on the screen size.
-- **Nginx:**
-  - Used brotli to compress assets
-
-### Security Concerns
-
-  - Comprehensive form validation on the frontend.
-  - Robust form validation in server actions.
 
 ## Contributing
 
