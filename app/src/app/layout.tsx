@@ -28,10 +28,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {!isDevelopment && (
           <>
             <Script
-              strategy="lazyOnload"
+              strategy="worker"
               src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
             />
-            <Script strategy="lazyOnload">
+            <Script strategy="worker">
               {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
