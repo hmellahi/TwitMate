@@ -11,6 +11,10 @@ const useRedirect = () => {
     event.preventDefault()
     event.stopPropagation();
 
+    if (!userId){
+      return;
+    }
+
     router.push(`/profile/${userId}`);
   };
 

@@ -8,11 +8,11 @@ import { CreateThreadValidation } from "@/lib/validations/thread";
 import { useOrganization } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { ProfileImg } from "../shared/ProfileImg";
 import MediaUploader from "../shared/Thread/MediaUploader";
 import { useToast } from "../ui/toast/use-toast";
 
@@ -105,13 +105,12 @@ export default function PostThread({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className={`w-full ${className}`}>
-        <div className={`flex gap-4 items-start`}>
-          <div className="relative h-12 w-12 mt-1">
-            <Image
-              src={organization?.imageUrl || userImage}
-              alt="avatar"
-              className="cursor-pointer rounded-full object-cover"
-              fill
+        <div className={`flex gap-3 items-start`}>
+          <div>
+            <ProfileImg
+              user={{ image: organization?.imageUrl || userImage }}
+              className="!h-12 !w-12"
+              size={33}
             />
           </div>
           <FormField
