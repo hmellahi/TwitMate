@@ -1,19 +1,16 @@
+"use client";
+
 import { appName, sidebarLinks } from "@/constants";
-import { User } from "@clerk/nextjs/server";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { SidebarLink } from "../SidebarLink";
 import LogoImg from "../LogoImg";
+import { SidebarLink } from "../SidebarLink";
 
 const LeftSidebarBottom = dynamic(() => import("./LeftSidebarBottom").then((module) => module), {
   ssr: false,
 });
 
-export default function LeftSidebar({ currentUser }: { currentUser: User }) {
-  if (!currentUser) {
-    return null;
-  }
-
+export default function LeftSidebar({ currentUserId }: { currentUserId: string }) {
   return (
     <div className="custom-scrollbar leftsidebar text-white h-[calc(100vh)] py-10 lg:w-[17rem]">
       <div className="flex flex-col gap-4 px-5">
@@ -22,11 +19,11 @@ export default function LeftSidebar({ currentUser }: { currentUser: User }) {
           <span className="max-lg:hidden">{appName}</span>
         </Link>
         {sidebarLinks.map((sidebarLink, index) => {
-          if (sidebarLink.route == "/profile") sidebarLink.route += `/${currentUser.id}`;
+          if (sidebarLink.route == "/profile") sidebarLink.route += `/${currentUserId}`;
           return <SidebarLink sidebarLink={sidebarLink} key={index}></SidebarLink>;
         })}
       </div>
-      <LeftSidebarBottom currentUserId={currentUser.id}></LeftSidebarBottom>
+      <LeftSidebarBottom currentUserId={currentUserId}></LeftSidebarBottom>
     </div>
   );
 }
