@@ -26,7 +26,7 @@ This project employs a range of cutting-edge technologies:
 
 <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
   <img src="https://avatars.githubusercontent.com/u/139895814?s=200&v=4" width="18" height="18" alt="TailwindCSS" />
-  <span style="margin-left: 5px;"><strong>Tailwind CSS:</strong> Styling library for modern and responsive user interfaces.</span>
+  <span style="margin-left: 5px;"><strong>Shadcn/ui</strong> Styling library for modern and responsive user interfaces.</span>
 </div>
 
 <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
