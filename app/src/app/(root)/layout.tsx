@@ -26,7 +26,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
       <div className={`sm:px-[2rem] md:px-[2rem] xl:px-[6rem] 2xl:px-[4rem] h-screen`}>
         <AppHeader />
         <main className="flex items-start justify-center overflow-hiddden">
-          <LeftSidebar currentUserId={user.id}/>
+          <LeftSidebar/>
           <section className="main-container">
             <div className="w-full py-20 md:py-16">{children}</div>
           </section>

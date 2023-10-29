@@ -6,7 +6,7 @@ import { dark } from "@clerk/themes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-export default function LeftSidebarBottom({ currentUserId }: { currentUserId: string }) {
+export default function LeftSidebarBottom() {
   const router = useRouter();
 
   const onLogout = async () => {
