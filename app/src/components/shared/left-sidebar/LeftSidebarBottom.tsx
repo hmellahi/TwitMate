@@ -7,10 +7,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function LeftSidebarBottom() {
-  const router = useRouter();
-
   const onLogout = async () => {
-    router.push("/sign-in");
+    window.location.href= '/sign-in'
   };
 
   return (

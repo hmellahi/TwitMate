@@ -1,5 +1,3 @@
-"use client";
-
 import { appName, sidebarLinks } from "@/constants";
 import dynamic from "next/dynamic";
 import Link from "next/link";
