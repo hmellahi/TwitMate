@@ -5,7 +5,7 @@ Taking inspiration from Twitter, I embarked on this project for the purpose of l
 
 &nbsp;&nbsp;
 <div align="center" style="margin: 20px 0;">
-  <img width="800" alt="Screenshot 2023-10-23 at 23 43 57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/af677130-d8ea-494c-82af-1a41403f6a93">
+  <img width="800" alt="Screenshot 2023-10-23 at 23 43 57" src="screenshots/feed.jpg">
 </div>
 &nbsp;&nbsp;
 
