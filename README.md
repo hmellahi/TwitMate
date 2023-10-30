@@ -5,7 +5,7 @@ Taking inspiration from Twitter, I embarked on this project for the purpose of l
 
 &nbsp;&nbsp;
 <div align="center" style="margin: 20px 0;">
-  <img width="800" alt="Screenshot 2023-10-23 at 23 43 57" src="https://github.com/hmellahi/Twitter-Clone/screenshots/feed.jpg">
+  <img width="800" alt="Screenshot 2023-10-23 at 23 43 57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/af677130-d8ea-494c-82af-1a41403f6a93">
 </div>
 &nbsp;&nbsp;
 
@@ -26,7 +26,7 @@ This project employs a range of cutting-edge technologies:
 
 <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
   <img src="https://avatars.githubusercontent.com/u/139895814?s=200&v=4" width="18" height="18" alt="TailwindCSS" />
-  <span style="margin-left: 5px;"><strong>Shadcn/ui</strong> Styling library for modern and responsive user interfaces.</span>
+  <span style="margin-left: 5px;"><strong>Tailwind CSS:</strong> Styling library for modern and responsive user interfaces.</span>
 </div>
 
 <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
