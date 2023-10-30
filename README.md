@@ -51,7 +51,7 @@ This project employs a range of cutting-edge technologies:
 
 <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
   <img src="https://res-s.cloudinary.com/prod/image/upload/w_32/console/favicon.png?_s=dam" width="18" height="18" alt="Cloudnify" />
-  <span style="margin-left: 5px;"><strong>Cloudnify:</strong> Cloud storage for images</span>
+  <span style="margin-left: 5px;"><strong>Cloudinary:</strong> Cloud storage for images</span>
 </div>
 
 ## Key Features
