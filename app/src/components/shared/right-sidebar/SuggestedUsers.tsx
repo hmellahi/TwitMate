@@ -11,7 +11,7 @@ export default async function SuggestedUsers({ currentUserId }: { currentUserId:
 
   return (
     <div>
-      <h3 className="text-heading3-medium text-light-1">Similair Minds</h3>
+      <h3 className="text-heading4-medium text-light-1">Similair Minds</h3>
       <div className="flex flex-col gap-1 mt-5 ">
         {users?.map((user: User, index: number) => (
           <UserCard user={user} isSmall={true} key={index} />

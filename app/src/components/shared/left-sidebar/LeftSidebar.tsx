@@ -8,7 +8,7 @@ const LeftSidebarBottom = dynamic(() => import("./LeftSidebarBottom").then((modu
   ssr: false,
 });
 
-export default function LeftSidebar() {
+export default function LeftSidebar({ currentUserId }) {
   return (
     <div className="custom-scrollbar leftsidebar text-white h-[calc(100vh)] py-10 lg:w-[17rem]">
       <div className="flex flex-col gap-4 px-5">
@@ -17,7 +17,11 @@ export default function LeftSidebar() {
           <span className="max-lg:hidden">{appName}</span>
         </Link>
         {sidebarLinks.map((sidebarLink, index) => (
-          <SidebarLink sidebarLink={sidebarLink} key={index}></SidebarLink>
+          <SidebarLink
+            key={index}
+            sidebarLink={sidebarLink}
+            currentUserId={currentUserId}
+          ></SidebarLink>
         ))}
       </div>
       <LeftSidebarBottom></LeftSidebarBottom>

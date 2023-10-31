@@ -6,11 +6,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Search } from "../../svgs";
 
-export function MobileSidebarLink({ sidebarLink }: { sidebarLink: sidebarLink }) {
+export function MobileSidebarLink({
+  sidebarLink,
+  currentUserId,
+}: {
+  sidebarLink: sidebarLink;
+  currentUserId: string;
+}) {
+  const { route } = sidebarLink;
   const pathname = usePathname();
   const isActive =
-    pathname === sidebarLink.route ||
-    (pathname.includes(sidebarLink.route) && sidebarLink.route !== "/");
+    pathname === route ||
+    (route.startsWith("/profile") && pathname === `/profile/${currentUserId}`);
 
   return (
     <Link

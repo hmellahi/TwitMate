@@ -18,6 +18,7 @@ export async function getUserActivity({ userId, path }: { userId: string; path?:
             id: true,
             author: true,
             createdAt: true,
+            parentId:true
           },
         },
         likes: {
@@ -44,7 +45,7 @@ export async function getUserActivity({ userId, path }: { userId: string; path?:
       thread.childrens.forEach((reply: Thread) => {
         activities.push({
           type: "reply",
-          threadId: reply.id,
+          threadId: reply.parentId,
           user: reply.author,
           createdAt: reply.createdAt,
         });
