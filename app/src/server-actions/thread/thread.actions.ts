@@ -142,6 +142,7 @@ export async function fetchThreads({
 
     return { threads, totalCount };
   } catch (error: any) {
+    console.log({error})
     throw error;
   }
 }

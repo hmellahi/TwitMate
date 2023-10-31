@@ -23,8 +23,8 @@ export default async function profile({ params }: { params: { id: string } }) {
             <div className="flex gap-4 items-start">
               <ProfileImg className="!h-20 !w-20" user={user} size={65} />
               <div>
-                <p className="text-heading3-bold font-bold capitalize">{user.username}</p>
-                <h3 className="text-gray-1">@{user.name}</h3>
+                <p className="text-heading3-bold font-bold capitalize">{user.name}</p>
+                <h3 className="text-gray-1">@{user.username}</h3>
               </div>
             </div>
             <div>

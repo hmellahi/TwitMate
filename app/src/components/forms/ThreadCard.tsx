@@ -99,7 +99,7 @@ export default function ThreadCard({
               <div className="flex justify-between w-full items-start ">
                 <div className="w-full">
                   <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
-                    {author?.username}
+                    {author?.name}
                   </Link>
                 </div>
                 <div

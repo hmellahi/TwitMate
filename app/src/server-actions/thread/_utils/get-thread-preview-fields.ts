@@ -7,6 +7,7 @@ export const getThreadPreviewFields = (userId: string | null) => {
       select: {
         id: true,
         username: true,
+        name:true,
         image: true,
       },
     },

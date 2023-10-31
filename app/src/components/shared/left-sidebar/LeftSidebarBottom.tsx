@@ -4,7 +4,6 @@ import { SignOutButton, SignedIn } from "@clerk/clerk-react";
 import { OrganizationSwitcher } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 export default function LeftSidebarBottom() {
   const onLogout = async () => {
