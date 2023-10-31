@@ -1,6 +1,5 @@
 import { ProfileImg } from "@/components/shared/ProfileImg";
 import { Thread, User } from "@prisma/client";
-import Link from "next/link";
 import { Button } from "../../../../../../../components/ui/Button";
 
 export default function Reply({
@@ -26,8 +25,7 @@ export default function Reply({
             <span className="text-gray-4 ml-2">2d</span>
           </div>
           <p className="text-gray-4 text-small-regular sm:text-base-regular">
-            Replied to
-              {" "}
+            Replied to{" "}
             <a href={`/thread/${reply.parentId}`} className="text-primary-500 text-bold">
               thread
             </a>
