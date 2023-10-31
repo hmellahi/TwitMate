@@ -27,16 +27,16 @@ export default function Reply({
           </div>
           <p className="text-gray-4 text-small-regular sm:text-base-regular">
             Replied to
-            <Link href={`/thread/${reply.parentId}`} className="text-primary-500 text-bold">
               {" "}
+            <a href={`/thread/${reply.parentId}`} className="text-primary-500 text-bold">
               thread
-            </Link>
+            </a>
           </p>
         </div>
       </div>
-      <Link href={`/thread/${reply.parentId}`}>
+      <a href={`/thread/${reply.parentId}`}>
         <Button className={`px-8 ${isSmall && "text-small-medium"}`}>View</Button>
-      </Link>
+      </a>
     </div>
   );
 }

@@ -144,7 +144,6 @@ async function updateCommunityInfo(
   updatedCommunityData: updateCommunity
 ): Promise<Community | null> {
   try {
-    console.log({ updatedCommunityData });
     // Assuming you have a valid structure for updating a community
     const { id: communityId, ...communityUpdateData } = updatedCommunityData;
 

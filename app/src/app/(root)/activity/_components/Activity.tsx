@@ -25,9 +25,8 @@ export default function Activity({
             <span className="text-gray-4 ml-2">{timeAgo(activity.createdAt)}</span>
           </div>
           <p className="text-gray-4 text-small-regular sm:text-base-regular">
-            {activity.type === "like" ? "liked" : "replied to"} your
+            {activity.type === "like" ? "liked"  : "replied to "} your
             <Link href={`/thread/${activity.threadId}`} className="text-primary-500 text-bold">
-              {" "}
               thread
             </Link>
           </p>
