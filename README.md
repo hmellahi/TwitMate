@@ -5,7 +5,7 @@ Taking inspiration from Twitter, I embarked on this project for the purpose of l
 
 &nbsp;&nbsp;
 <div align="center" style="margin: 20px 0;">
-  <img width="800" alt="Screenshot 2023-10-23 at 23 43 57" src="screenshots/feed.jpg">
+  <img width="800" alt="Screenshot 2023-10-23 at 23 43 57" src="screenshots/feed-with-active-tab.png">
 </div>
 &nbsp;&nbsp;
 
@@ -51,7 +51,7 @@ This project employs a range of cutting-edge technologies:
 
 <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
   <img src="https://res-s.cloudinary.com/prod/image/upload/w_32/console/favicon.png?_s=dam" width="18" height="18" alt="Cloudnify" />
-  <span style="margin-left: 5px;"><strong>Cloudnify:</strong> Cloud storage for images</span>
+  <span style="margin-left: 5px;"><strong>Cloudinary:</strong> Cloud storage for images</span>
 </div>
 
 ## Key Features
