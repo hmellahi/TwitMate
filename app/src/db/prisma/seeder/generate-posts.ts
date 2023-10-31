@@ -108,10 +108,6 @@ const preparethreads = async (users: User[]) => {
     if (numberOfLikes > users.length - 1) {
       numberOfLikes = randomNumberOfLikes;
     }
-    console.log({ numberOfLikes, upVotes });
-
-    console.log();
-
     // Randomly select users to like the thread
     const likedByUsers = getRandomUsers(users, numberOfLikes);
 
