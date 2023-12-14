@@ -3,7 +3,7 @@
 import { THREADS_LIMIT } from "@/constants";
 import { getCurrentUserId } from "@/lib/get-current-user";
 import { CreateThreadParams, FetchThreadsParams } from "@/types/thread";
-import { Prisma } from "@prisma/client";
+import { Prisma, Thread } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { prisma } from "../../lib/prisma";
 import { addThreadReactors } from "./_utils/add-thread-reactors";
@@ -75,7 +75,7 @@ export async function fetchThread({ threadId, userId }: { threadId: string; user
 export async function fetchThreadReplies({
   threadId,
   userId,
-  limit = THREADS_LIMIT,
+  limit = 20,
   page = 1,
 }: {
   threadId: string;
@@ -101,7 +101,6 @@ export async function fetchThreadReplies({
     ]);
 
     await addThreadReactors(threads, userId);
-
     return { threads, totalCount };
   } catch (error: any) {
     throw error;
@@ -142,7 +141,7 @@ export async function fetchThreads({
 
     return { threads, totalCount };
   } catch (error: any) {
-    console.log({error})
+    console.log({ error });
     throw error;
   }
 }
@@ -275,6 +274,20 @@ export async function removeThread({
     });
 
     await Promise.all([deleteThreadLikesPromise, deleteThreadImagesPromise]);
+
+    // Step 3: Find all replies of the thread
+    const replyThreads: Thread[] = await prisma.thread.findMany({
+      where: { parentId: threadId },
+      select: {
+        id: true,
+      },
+    });
+
+    // Step 4: Delete each reply using removeThread
+    for (const replyThread of replyThreads) {
+      const { id, authorId } = replyThread;
+      await removeThread({ threadId: id, authorId, path });
+    }
 
     await prisma.thread.delete({
       where: {

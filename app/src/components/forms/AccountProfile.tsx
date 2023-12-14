@@ -117,7 +117,7 @@ export default function AccountProfile({ user, btnTitle }: { user: UserData; btn
                   />
                 </div>
               </FormLabel>
-              <FormControl className="text-gray-200 text-base-semibold flex-1">
+              <FormControl className="text-gray-200 text-base-medium flex-1">
                 <>
                   <Label htmlFor="picture">Upload Profile Image</Label>
                   <Input
@@ -140,7 +140,7 @@ export default function AccountProfile({ user, btnTitle }: { user: UserData; btn
           render={({ field }) => (
             <FormItem className="flex flex-col gap-2">
               <FormLabel>Name</FormLabel>
-              <FormControl className="text-gray-200 text-base-semibold flex-1">
+              <FormControl className="text-gray-200 flex-1">
                 <Input
                   type="text"
                   placeholder="Enter your name"
@@ -159,7 +159,7 @@ export default function AccountProfile({ user, btnTitle }: { user: UserData; btn
           render={({ field }) => (
             <FormItem className="flex flex-col gap-2">
               <FormLabel>Username</FormLabel>
-              <FormControl className="text-gray-200 text-base-semibold flex-1">
+              <FormControl className="text-gray-200 flex-1">
                 <Input
                   type="text"
                   placeholder="Enter your username"
@@ -178,7 +178,7 @@ export default function AccountProfile({ user, btnTitle }: { user: UserData; btn
           render={({ field }) => (
             <FormItem className="flex flex-col gap-2">
               <FormLabel>Bio</FormLabel>
-              <FormControl className="text-gray-200 text-base-semibold flex-1">
+              <FormControl className="text-gray-200 flex-1">
                 <Textarea
                   rows={7}
                   placeholder="Enter your bio"

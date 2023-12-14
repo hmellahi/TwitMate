@@ -18,7 +18,7 @@ export default function UserCard({
         <ProfileImg user={user} className="!h-12 !w-12" size={40} />
         <div>
           <p className={isSmall ? "text-small-medium" : ""}>{user.name}</p>
-          <p className={`text-gray-300 ${isSmall ? "text-subtle-medium" : "text-base-medium"}`}>
+          <p className={`text-gray-300  ${isSmall ? "text-subtle-medium" : "text-small-medium"}`}>
             @{user.username}
           </p>
         </div>
