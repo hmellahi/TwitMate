@@ -21,7 +21,7 @@ export default async function page({
 
   return (
     <div>
-      <h3 className="text-heading1-bold text-white mb-5">Communities</h3>
+      <h3 className="text-heading1-semibold text-white mb-5">Communities</h3>
       <SearchInput
         className="mb-4 w-[23rem]"
         keyword={searchKeyword}

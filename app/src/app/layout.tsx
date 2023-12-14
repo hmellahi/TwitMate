@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], weight: "400" });
+const inter = Poppins({ subsets: ["latin"], weight: ["400", "800", "500", "600"] });
 
 // const Toaster = dynamic(() => import("@/components/ui/toast/Toaster").then((module) => module), {
 //   ssr: false,

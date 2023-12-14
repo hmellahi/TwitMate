@@ -10,7 +10,7 @@ export default async function page() {
 
   return (
     <div className="text-white">
-      <h3 className="text-heading1-bold text-[40px] mb-10">Activity</h3>
+      <h3 className="text-heading1-semibold text-[40px] mb-10">Activity</h3>
       <div className=" flex flex-col gap-4">
         {userActivity.map((activity, index) => {
           return (

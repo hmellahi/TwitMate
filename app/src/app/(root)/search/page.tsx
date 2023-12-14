@@ -16,7 +16,7 @@ export default async function page({
 
   return (
     <div className="flex flex-col gap-9">
-      <h3 className="text-heading1-bold text-white">Search</h3>
+      <h3 className="text-heading1-semibold text-white">Search</h3>
       <SearchInput
         className="w-[23rem]"
         keyword={searchKeyword}

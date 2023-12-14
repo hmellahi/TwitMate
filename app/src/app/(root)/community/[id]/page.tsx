@@ -33,7 +33,7 @@ export default async function profile({ params }: { params: { id: string } }) {
             />
           </div>
           <div>
-            <p className="text-heading3-bold font-bold capitalize">{community.name}</p>
+            <p className="text-heading4-medium capitalize">{community.name}</p>
             <h3 className="text-gray-1">@{camelToSnakeCase(community.name)}</h3>
           </div>
         </div>
