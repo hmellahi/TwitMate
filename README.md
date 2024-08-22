@@ -5,7 +5,7 @@ Taking inspiration from Twitter, I embarked on this project for the purpose of l
 
 &nbsp;&nbsp;
 <div align="center" style="margin: 20px 0;">
-  <img width="800" alt="Screenshot 2023-10-23 at 23 43 57" src="screenshots/feed-with-active-tab.png">
+<!--   <img width="800" alt="Screenshot 2023-10-23 at 23 43 57" src="screenshots/feed-with-active-tab.png"> -->
 </div>
 &nbsp;&nbsp;
 
