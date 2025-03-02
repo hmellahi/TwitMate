@@ -161,3 +161,11 @@ Contributions and feedback are welcome! Please feel free to create issues or sub
 ---
 
 **Disclaimer:** This project, Twitter Clone, is created for educational purposes and is not affiliated with Twitter or any other social media platform.
+
+---
+
+## credits
+
+## Credits
+
+This project was inspired by [JavaScript Mastery](https://www.youtube.com/watch?v=O5cmLDVTgAs). 
