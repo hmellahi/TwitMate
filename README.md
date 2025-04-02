@@ -122,7 +122,7 @@ This project employs a range of cutting-edge technologies:
   - Utilized Cloudnify for optimized image uploading and loading.
   - Leveraged Server-Side Rendering (SSR) for efficient page rendering.
   - Used lazy loading to reduce the bundle size.
-  - Loaded third-party libraries using a service worker (Party Town).
+  - (didn't work) Loaded third-party libraries using a service worker (Party Town).
   - Compressed images before uploading them. (on new post creation)
   - Loaded images with the appropriate size depending on the screen size.
 - **Nginx:**
