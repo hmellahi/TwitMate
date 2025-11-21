@@ -85,7 +85,7 @@ This project employs a range of cutting-edge technologies:
 
 
 <div align="center" style="margin: 20px 0;">
-  <img align="center" width="800" alt="Screenshot 2023-10-23 at 23:43:57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/e25e2961-aefb-4711-b1fa-c4d833baea70" style="border-radius: 20px;">
+  <!-- <img align="center" width="800" alt="Screenshot 2023-10-23 at 23:43:57" src="https://github.com/hmellahi/Twitter-Clone/assets/47065280/e25e2961-aefb-4711-b1fa-c4d833baea70" style="border-radius: 20px;"> -->
 </div>
 
 
