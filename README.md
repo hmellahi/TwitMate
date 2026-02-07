@@ -101,12 +101,12 @@ This project employs a range of cutting-edge technologies:
 - **Feed:**
   - Implemented a Virtual List to optimize the rendering of feed posts.
 - **General:**
-  - Utilized Cloudnify for optimized image uploading and loading.
+  - Utilized Cloudinary for optimized image uploading and loading.
   - Leveraged Server-Side Rendering (SSR) for efficient page rendering.
   - Used lazy loading to reduce the bundle size.
   - (didn't work) Loaded third-party libraries using a service worker (Party Town).
   - Compressed images before uploading them. (on new post creation)
-  - Loaded images with the appropriate size depending on the screen size.
+  - (probably i disabled this bcz it was kinda messy) Loaded images with the appropriate size depending on the screen size.
 - **Nginx:**
   - Used brotli to compress assets
 
